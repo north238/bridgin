@@ -4,3 +4,5 @@ docker/mysql/sql
 
 # logs
 logs
+
+.env
