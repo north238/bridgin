@@ -1,5 +1,5 @@
 FROM php:8.2-fpm
-EXPOSE 8888
+EXPOSE 5173
 COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
