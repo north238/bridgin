@@ -3,6 +3,7 @@ version: '3.9'
 services:
   app:
     container_name: app
+    user: "1000:1000"
     build: 
       context: ./docker/php
       dockerfile: php.Dockerfile
@@ -40,6 +41,8 @@ services:
       - MYSQL_PASSWORD=${DB_PASS}
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
       - TZ=${TZ}
+    command:
+      mysqld --default-authentication-plugin=mysql_native_password
     volumes:
       - ./logs:/var/log/mysql
       - ./docker/mysql/data:/var/lib/mysql
