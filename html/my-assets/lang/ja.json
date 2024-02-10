@@ -835,5 +835,13 @@
   "Zambia": "ザンビア",
   "Zimbabwe": "ジンバブエ",
   "Zip / Postal Code": "郵便番号",
-  "Åland Islands": "オーランド諸島"
+  "Åland Islands": "オーランド諸島",
+
+  "assets": "資産一覧",
+  "total_amount": "資産総額",
+  "asset_name": "資産額",
+  "category_name": "カテゴリ名",
+  "amount": "金額",
+  "edit": "編集・詳細"
+
 }

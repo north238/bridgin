@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        // リスクIDとジャンルIDとの中間テーブル
+        Schema::create('genres_risks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->dateTime('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('risk_id')->constrained()->comment('リスクID'); //リスクidの外部キー制約の付与
+            $table->foreignId('genre_id')->constrained()->comment('ジャンルID'); //ジャンルidの外部キー制約の付与
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('genres_risks');
     }
 };

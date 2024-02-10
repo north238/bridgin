@@ -4,23 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Asset extends Model
 {
     use HasFactory;
 
-    protected $attribute = [
-        'name'  => '',
-        'amount'  => 0
+    protected $guarded = [
+        'id',
+        'category_id',
+        'user_id'
     ];
+    protected $fillable = [
+        'name',
+        'amount',
+    ];
+    public function user(): BelongsTo
+    {
+        return $this->BelongsTo(User::class);
+    }
 
-    protected $hidden = [
-        'created_at',
-        'updated_at'
-    ];
-
-    protected $casts = [
-        'name' => 'string',
-        'amount' => 'integer',
-    ];
+    public function category(): BelongsTo
+    {
+        return $this->BelongsTo(Category::class);
+    }
 }

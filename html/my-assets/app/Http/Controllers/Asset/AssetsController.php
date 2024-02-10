@@ -1,17 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Asset;
 
+use App\Models\Asset;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AssetsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * 資産表示画面（ログイン済かつ作成したユーザーのみ）
+     * 登録内容をテーブルで表示させる
+     * 
      */
     public function index()
     {
-        //
+        // $user = Auth::user();
+        $users = User::all();
+        $user = $users->first();
+        $category = Category::all();
+        
+        $assets = Asset::get();
+        // $assets = Asset::where('category_id', $category->id)->get();
+        // dd($assets);
+        return view('assets.index', ['assets' => $assets]);
     }
 
     /**
