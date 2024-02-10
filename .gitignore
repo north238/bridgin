@@ -1,6 +1,7 @@
 # docker
 docker/mysql/data
 docker/mysql/sql
+docker/redis/data
 
 # logs
 logs

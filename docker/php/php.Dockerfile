@@ -33,6 +33,8 @@ ENV PATH $PATH:/composer/vendor/bin
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
     apt-get install -y nodejs
 
+RUN useradd -m f-kitayama
+
 WORKDIR /var/www/html
 
 RUN chown -R www-data:www-data /var/www
