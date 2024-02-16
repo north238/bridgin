@@ -13,6 +13,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $guarded = [
+        'id',
+    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -47,5 +50,9 @@ class User extends Authenticatable
     public function assets(): HasMany
     {
         return $this->hasMany(Asset::class);
+    }
+    public function userComments(): HasMany
+    {
+        return $this->hasMany(UserComment::class);
     }
 }

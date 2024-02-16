@@ -837,11 +837,16 @@
   "Zip / Postal Code": "郵便番号",
   "Åland Islands": "オーランド諸島",
 
+  "admin_system": "ユーザー管理システム",
   "assets": "資産一覧",
-  "total_amount": "資産総額",
   "asset_name": "資産額",
-  "category_name": "カテゴリ名",
   "amount": "金額",
-  "edit": "編集・詳細"
+  "admin_register": "管理者登録",
+  "category_name": "カテゴリ名",
+  "edit": "編集・詳細",
+  "total_amount": "資産総額",
+  "login": "ログイン",
+  "register": "ユーザー登録",
+  "my_assets": "My資産"
 
 }

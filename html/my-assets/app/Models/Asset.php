@@ -12,12 +12,15 @@ class Asset extends Model
 
     protected $guarded = [
         'id',
-        'category_id',
-        'user_id'
     ];
     protected $fillable = [
         'name',
         'amount',
+        'registration_date',
+        'user_id',
+        'category_id',
+        'created_at',
+        'updated_at'
     ];
     public function user(): BelongsTo
     {

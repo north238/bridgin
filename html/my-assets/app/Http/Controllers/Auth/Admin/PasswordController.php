@@ -11,7 +11,7 @@ use Illuminate\Validation\Rules\Password;
 class PasswordController extends Controller
 {
     /**
-     * Update the user's password.
+     * 新規パスワード作成
      */
     public function update(Request $request): RedirectResponse
     {
@@ -20,7 +20,7 @@ class PasswordController extends Controller
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
-        $request->user()->update([
+        $request->admin()->update([
             'password' => Hash::make($validated['password']),
         ]);
 

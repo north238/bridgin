@@ -4,21 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Risk extends Model
+class Notification extends Model
 {
     use HasFactory;
 
     protected $guarded = [
         'id',
     ];
+    /**
+     * ユーザーへのお知らせ機能
+     * 何かを促したいときのためのもの
+     *
+     * @var array<string>
+     */
     protected $fillable = [
-        'name',
+        'title',
+        'body',
     ];
-
-    public function genresRisks(): BelongsToMany
-    {
-        return $this->belongsToMany(GenreRisk::class, 'genres_risks');
-    }
 }

@@ -3,9 +3,7 @@
         <div class="flex flex-col text-center w-full mb-20">
             <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">{{ __('total_amount') }}</h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-                @foreach ($assets as $asset)
-                    <p class="text-lg">{{ $asset['amount'] }}</p>
-                @endforeach
+            <p class="text-lg">{{ $totalAmount }}</p>
             </p>
         </div>
         <div class="lg:w-2/3 w-full mx-auto overflow-auto">
@@ -27,7 +25,7 @@
                     @foreach ($assets as $asset)
                         <tr>
                             <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">{{ $asset['name'] }}</td>
-                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">{{ $asset['category_id'] }}
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">{{ $asset['category']['name'] }}
                             </td>
                             <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
                                 {{ $asset['amount'] }}</td>

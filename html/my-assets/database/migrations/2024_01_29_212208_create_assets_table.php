@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->comment('ユーザーID'); //カテゴリーidの外部キー制約の付与
             $table->string('name')->nullable(false)->comment('口座名'); //nullを許容しない
             $table->integer('amount')->nullable(false)->comment('資産額');
+            $table->dateTime('registration_date')->comment('登録時間');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             $table->softDeletes();

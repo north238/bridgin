@@ -22,9 +22,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $admin_roles = AdminRole::orderBy('role_name', 'asc')->get();
+        $admin = Admin::orderBy('name', 'asc')->get();
 
-        return view('auth.admin.register', compact('admin_roles'));
+        return view('auth.admin.register', compact('admin'));
     }
 
     /**
@@ -41,16 +41,16 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = Admin::create([
+        $admin = Admin::create([
             'name' => $request->name,
             'login_name' => $request->login_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        event(new Registered($admin));
 
-        Auth::login($user);
+        Auth::login($admin);
 
         return redirect(RouteServiceProvider::ADMIN_HOME);
     }
