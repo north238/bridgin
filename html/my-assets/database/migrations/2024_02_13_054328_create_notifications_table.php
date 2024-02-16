@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // リスクIDとジャンルIDとの中間テーブル
-        Schema::create('genres_risks', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('risk_id')->constrained()->comment('リスクID'); //リスクidの外部キー制約の付与
-            $table->foreignId('genre_id')->constrained()->comment('ジャンルID'); //ジャンルidの外部キー制約の付与
+            $table->string('title')->comment('タイトル');
+            $table->text('body')->comment('本文');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('genres_risks');
+        Schema::dropIfExists('notifications');
     }
 };

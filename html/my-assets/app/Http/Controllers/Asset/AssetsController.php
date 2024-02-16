@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Catch_;
 
 class AssetsController extends Controller
 {
@@ -18,19 +20,25 @@ class AssetsController extends Controller
      */
     public function index()
     {
-        // $user = Auth::user();
-        $users = User::all();
-        $user = $users->first();
-        $category = Category::all();
-        
-        $assets = Asset::get();
-        // $assets = Asset::where('category_id', $category->id)->get();
-        // dd($assets);
-        return view('assets.index', ['assets' => $assets]);
+        // 直近の30日間のデータを取得
+        $startDate = Carbon::now()->subDays(30);
+        $endDate = Carbon::now();
+
+        $user = Auth::user();
+
+        $assets = Asset::with(['category:id,name'])
+            ->whereBetween('registration_date', ['2023-10-01', '2023-11-01'])
+            ->get();
+
+        $totalAmount = Asset::whereBetween('registration_date', ['2023-10-01', '2023-11-01'])->sum('amount');
+        // dd($totalAmount);
+
+        // $assets = Asset::whereBetween('registration_date', ['2023-10-01', '2023-11-01'])->get();
+        return view('assets.index', compact('assets', 'totalAmount'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 資産登録画面
      */
     public function create()
     {
@@ -38,7 +46,7 @@ class AssetsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 資産をデータベースに保存
      */
     public function store(Request $request)
     {
@@ -46,7 +54,7 @@ class AssetsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 資産詳細画面
      */
     public function show(string $id)
     {
@@ -54,7 +62,7 @@ class AssetsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 資産編集画面表示
      */
     public function edit(string $id)
     {
@@ -62,7 +70,7 @@ class AssetsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 資産更新
      */
     public function update(Request $request, string $id)
     {
@@ -70,7 +78,7 @@ class AssetsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 資産削除
      */
     public function destroy(string $id)
     {

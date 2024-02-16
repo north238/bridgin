@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('login_name');
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
     }
 

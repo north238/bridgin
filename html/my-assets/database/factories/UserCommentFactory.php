@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Genre;
-use App\Models\Risk;
+use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class GenreRiskFactory extends Factory
+class UserCommentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,8 +20,8 @@ class GenreRiskFactory extends Factory
     {
         $date = $this->faker->dateTimeBetween('-1year');
         return [
-            'genre_id' => Genre::factory(),
-            'risk_id' => Risk::factory(),
+            'user_id' => User::factory(),
+            'comment_id' => Comment::factory(),
             'created_at' => $date,
             'updated_at' => $date,
         ];

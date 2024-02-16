@@ -12,16 +12,6 @@ use App\Http\Controllers\Auth\Admin\RegisteredUserController;
 use App\Http\Controllers\Auth\Admin\VerifyEmailController;
 use App\Http\Controllers\Backend\AdminController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('backend.welcome');
@@ -52,11 +42,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth:admins')->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view('admin.dashboard');
-    // })->middleware('verified')->name('dashboard');
     Route::controller(AdminController::class)->group(function () {
-        Route::get('/dashboard', 'index')->middleware('verified')->name('dashboard');
+        Route::get('dashboard', 'index')->middleware('verified')->name('dashboard');
     });
 
     Route::get('verify-email', EmailVerificationPromptController::class)
@@ -81,9 +68,3 @@ Route::middleware('auth:admins')->group(function () {
         ->name('logout');
     
 });
-
-// Route::middleware('auth:admins')->group(function () {
-//     Route::controller(AdminController::class)->group(function () {
-//         Route::get('/dashboard', 'index')->middleware('verified')->name('dashboard');
-//     });
-// });
