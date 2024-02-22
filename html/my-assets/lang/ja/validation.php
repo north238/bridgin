@@ -186,6 +186,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "name" => "資産名",
+        "amount" => "資産額",
+        "registration_date" => "登録日",
+        "category" => "カテゴリ",
+        "genre" => "ジャンル"
+    ],
 
 ];

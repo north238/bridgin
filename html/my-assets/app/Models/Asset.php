@@ -22,6 +22,10 @@ class Asset extends Model
         'created_at',
         'updated_at'
     ];
+    protected $casts = [
+        'registration_date' => 'date:Y-m-d'
+    ];
+    
     public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class);
