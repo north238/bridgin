@@ -2,18 +2,21 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\User;
+use App\Models\Asset;
+use App\Policies\AssetPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The model to policy mappings for the application.
+     * AssetPolicyからアクセス制限を設ける
      *
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Asset::class => AssetPolicy::class
     ];
 
     /**
@@ -21,6 +24,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('user-view', [AssetPolicy::class, 'index']);
     }
 }
