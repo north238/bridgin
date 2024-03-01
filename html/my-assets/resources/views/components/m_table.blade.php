@@ -1,324 +1,130 @@
 <section class="text-gray-600 body-font">
-    @if (session('success-message'))
-        <x-alert-message name="success" color="bg-green-50">
-            {{ session('success-message') }}
-        </x-alert-message>
-    @endif
+    <div class="flex flex-col text-center w-full my-5">
+        <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900"><svg
+                class="w-7 h-7 text-gray-800 dark:text-white inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 8H5m12 0c.6 0 1 .4 1 1v2.6M17 8l-4-4M5 8a1 1 0 0 0-1 1v10c0 .6.4 1 1 1h12c.6 0 1-.4 1-1v-2.6M5 8l4-4 4 4m6 4h-4a2 2 0 1 0 0 4h4c.6 0 1-.4 1-1v-2c0-.6-.4-1-1-1Z" />
+            </svg>{{ __('total_amount') }}</h1>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+        <p class="text-lg">{{ number_format($totalAmount) }}円</p>
+        </p>
+    </div>
     <div class="container px-5 py-24 mx-auto">
-        <div class="flex flex-col text-center w-full mb-20">
-            <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">{{ __('total_amount') }}</h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-            <p class="text-lg">{{ $totalAmount }}円</p>
-            </p>
-        </div>
-        <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-            <table class="divide-gray-200 table-auto w-full text-left whitespace-no-wrap">
-                <thead>
+        @if (session('success-message'))
+            <x-alert-message name="success" color="bg-green-50">
+                {{ session('success-message') }}
+            </x-alert-message>
+        @endif
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <div
+                class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+                <div class="relative">
+                    <a href="#"
+                        class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 5H1m0 0 4 4M1 5l4-4" />
+                        </svg>
+                        前月
+                    </a>
+                    <span>2024年〇月〇日</span>
+                    {{-- クリックしたら日付が選択できる仕様 --}}
+                    <a href="#"
+                        class="flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        翌月
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="relative">
+                    <button type="button"
+                        class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                        </svg>
+                        Export
+                    </button>
+                </div>
+            </div>
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th
-                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-50 rounded-tl rounded-bl">
+                        <th scope="col" class="px-3 py-3">
                             {{ __('asset_name') }}</th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-50">
-                            {{ __('category_name') }}</th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-50">
-                            {{ __('amount') }}</th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-50">
-                            {{ __('edit') }}</th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center">
+                                {{ __('category_name') }}
+                                <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                    </svg></a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            <div class="flex items-center">
+                                {{ __('amount') }}
+                                <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                    </svg></a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center">
+                                {{ __('registration_date') }}
+                                <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                    </svg></a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-3 py-3">
+                            {{ __('action') }}</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-gray-200">
+                <tbody>
                     @foreach ($assets as $asset)
-                        <tr>
-                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">{{ $asset['name'] }}</td>
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="text-gray-900 dark:text-white border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                {{ $asset['name'] }}</td>
                             <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">{{ $asset['category']['name'] }}
                             </td>
                             <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
-                                {{ $asset['amount'] }}円</td>
+                                {{ number_format($asset['amount']) }}円</td>
                             <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
-                                <x-primary-button class="" :href="route('assets.show', [$asset->id])">
+                                {{ $asset['registration_date'] }}</td>
+                            {{-- <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3"> --}}
+                            {{-- <x-flowbite-primary-button link="{{ route('assets.show', [$asset->id]) }}">
                                     {{ __('edit') }}
-                                </x-primary-button>
-                                <a class="" href="{{route('assets.show', [$asset->id])}}">
+                                </x-flowbite-primary-button> --}}
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                <button id="updateProductButton" data-modal-target="updateProductModal"
+                                    data-modal-toggle="updateProductModal"
+                                    class="block text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                    type="button">
                                     {{ __('edit') }}
-                                </a>
+                                </button>
+                                <a id="updateProductButton" data-modal-target="updateProductModal"
+                                    data-modal-toggle="updateProductModal"
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('edit') }}</a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto">
-            <x-primary-button class="flex ml-auto" :href="route('assets.index')">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
     </div>
+    <x-update-modal>
+    </x-update-modal>
 </section>
-
-
-
-<div class="container max-w-3xl px-4 mx-auto sm:px-8">
-    <div class="py-8">
-        <div class="flex flex-row justify-between w-full mb-1 sm:mb-0">
-            <h2 class="text-2xl leading-tight">
-                Users
-            </h2>
-            <div class="text-end">
-                <form
-                    class="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
-                    <div class=" relative ">
-                        <input type="text" id="&quot;form-subscribe-Filter"
-                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            placeholder="name" />
-                    </div>
-                    <button
-                        class="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
-                        type="submit">
-                        Filter
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-            <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-                <table class="min-w-full leading-normal">
-                    <thead>
-                        <tr>
-                            <th scope="col"
-                                class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                User
-                            </th>
-                            <th scope="col"
-                                class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                Role
-                            </th>
-                            <th scope="col"
-                                class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                Created at
-                            </th>
-                            <th scope="col"
-                                class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                status
-                            </th>
-                            <th scope="col"
-                                class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <a href="#" class="relative block">
-                                            <img alt="profil" src="/images/person/8.jpg"
-                                                class="mx-auto object-cover rounded-full h-10 w-10 " />
-                                        </a>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Jean marc
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    Admin
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    12/09/2020
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <span
-                                    class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span aria-hidden="true"
-                                        class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                    </span>
-                                    <span class="relative">
-                                        active
-                                    </span>
-                                </span>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                                    Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <a href="#" class="relative block">
-                                            <img alt="profil" src="/images/person/9.jpg"
-                                                class="mx-auto object-cover rounded-full h-10 w-10 " />
-                                        </a>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Marcus coco
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    Designer
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    01/10/2012
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <span
-                                    class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span aria-hidden="true"
-                                        class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                    </span>
-                                    <span class="relative">
-                                        active
-                                    </span>
-                                </span>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                                    Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <a href="#" class="relative block">
-                                            <img alt="profil" src="/images/person/10.jpg"
-                                                class="mx-auto object-cover rounded-full h-10 w-10 " />
-                                        </a>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Ecric marc
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    Developer
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    02/10/2018
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <span
-                                    class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span aria-hidden="true"
-                                        class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                    </span>
-                                    <span class="relative">
-                                        active
-                                    </span>
-                                </span>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                                    Edit
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <a href="#" class="relative block">
-                                            <img alt="profil" src="/images/person/6.jpg"
-                                                class="mx-auto object-cover rounded-full h-10 w-10 " />
-                                        </a>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Julien Huger
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    User
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    23/09/2010
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <span
-                                    class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span aria-hidden="true"
-                                        class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                    </span>
-                                    <span class="relative">
-                                        active
-                                    </span>
-                                </span>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                                    Edit
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
-                    <div class="flex items-center">
-                        <button type="button"
-                            class="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100">
-                            <svg width="9" fill="currentColor" height="8" class=""
-                                viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z">
-                                </path>
-                            </svg>
-                        </button>
-                        <button type="button"
-                            class="w-full px-4 py-2 text-base text-indigo-500 bg-white border-t border-b hover:bg-gray-100 ">
-                            1
-                        </button>
-                        <button type="button"
-                            class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100">
-                            2
-                        </button>
-                        <button type="button"
-                            class="w-full px-4 py-2 text-base text-gray-600 bg-white border-t border-b hover:bg-gray-100">
-                            3
-                        </button>
-                        <button type="button"
-                            class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100">
-                            4
-                        </button>
-                        <button type="button"
-                            class="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100">
-                            <svg width="9" fill="currentColor" height="8" class=""
-                                viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

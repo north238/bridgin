@@ -42,27 +42,36 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             required>
                             @foreach ($categories as $category)
-                                <option value="{{ $category['genre']['id'] }}">{{ $category['genre']['name'] }}</option>
+                                <option value="{{ $category->genre->id }}">{{ $category->genre->name }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('genre')" class="mt-2" />
                     </div>
+
                     <div>
                         <label for="category_id"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">カテゴリ</label>
                         <select id="category_id" name="category_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             required>
+                            {{-- ジャンルに基づいてカテゴリをフィルタリング --}}
                             @foreach ($categories as $category)
-                                <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+                                {{-- @if ($category->genre_id == $selectedGenreId) --}}
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                {{-- @endif --}}
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('category')" class="mt-2" />
                     </div>
                 </div>
                 <button type="submit"
-                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                    登録する
+                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 rounded-full dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"><svg
+                        class="w-6 h-6 me-1 text-white dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    {{ __('create') }}
                 </button>
             </form>
         </div>

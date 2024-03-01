@@ -19,58 +19,60 @@ class AssetsController extends Controller
     public function __construct()
     {
         // $this->authorizeResource(Asset::class, 'assets');
+        
     }
     /**
      * 資産表示画面（ログイン済かつ作成したユーザーのみ）
      * 登録内容をテーブルで表示させる
-     * 表示させる日付の調整
+     * todo: 表示させる日付の調整
+     * ページネーション実装
+     * ソート機能を実装
      */
     public function index()
     {
         // 直近の30日間のデータを取得
         $startDate = Carbon::now()->subDays(30);
         $endDate = Carbon::now();
-        $user = Auth::user();
+        $userId = Auth::user()->id;
 
-        $assets = Asset::where('user_id', $user->id)
+        $assets = Asset::where('user_id', $userId)
             ->with(['category:id,name'])
             // ->whereBetween('registration_date', [$startDate, $endDate])
             ->get();
 
-        $totalAmount = Asset::where('user_id', $user->id)
+        $totalAmount = Asset::where('user_id', $userId)
             // ->whereBetween('registration_date', ['2023-10-01', '2023-11-01'])
             ->sum('amount');
 
-        return view('assets.index', compact('assets', 'totalAmount', 'user'));
+        return view('assets.index', compact('assets', 'totalAmount', 'userId'));
     }
 
     /**
      * 資産登録画面
-     * ジャンル指定すると対応したカテゴリが
-     * 出現するロジックを追加したい
-     * 登録するボタン背景色バグ
+     * todo:: ジャンル指定すると対応したカテゴリが
+     * todo:: 出現するロジックを追加したい
      */
     public function create()
     {
-        $categories = Category::with(['genre:id,name'])->get();
+        $categories = Category::query()->with(['genre:id,name'])->distinct()->get();
         return view('assets.create', compact('categories'));
     }
 
     /**
      * 資産をデータベースに保存
-     * データベースに資産が登録してある場合表示させる
-     * 文字を入力してもvalidationが消えない
+     * todo:: データベースに資産が登録してある場合表示させる
+     * todo:: 文字を入力してもvalidationが消えない
      */
     public function store(AssetCreateRequest $request)
     {
-        $user = auth()->id();
+        $userId = Auth::user()->id;
         $asset = new Asset();
         $validated = $request->validated();
         $asset->name = $validated['name'];
         $asset->amount = $validated['amount'];
         $asset->registration_date = $validated['registration_date'];
         $asset->category_id = $validated['category_id'];
-        $asset->user_id = $user;
+        $asset->user_id = $userId;
         try {
             DB::beginTransaction();
             $asset->save();
@@ -85,42 +87,71 @@ class AssetsController extends Controller
 
     /**
      * 資産詳細画面
-     * カテゴリIDとジャンルIDの紐づけ
+     * todo:: カテゴリIDとジャンルIDの紐づけ
      */
     public function show(string $id)
     {
-        $user = auth()->id();
-        $assetData = Asset::with(['category:id,name'])
-            ->where('user_id', $user)
-            ->where('id', $id)
-            ->get();
-        $categories = Category::with(['genre:id,name'])->get();
-        return view('assets.show', compact('assetData', 'categories'));
-    }
+        $userId = Auth::user()->id;
 
-    /**
-     * 資産編集画面表示
-     */
-    public function edit(string $id)
-    {
-        //
+        $assetData = Asset::query()
+            ->join('categories as c', 'assets.category_id', '=', 'c.id')
+            ->join('genres as g', 'c.genre_id', '=', 'g.id')
+            ->select('assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id')
+            ->where('assets.user_id', $userId)
+            ->where('assets.id', $id)
+            ->first();
+
+        $categories = Category::query()
+            ->with('genre')
+            ->get();
+
+        return view('assets.show', compact('assetData', 'categories'));
     }
 
     /**
      * 資産更新
      */
-    public function update(Request $request, string $id)
+    public function update(AssetCreateRequest $request, string $id)
     {
-        // if (!Gate::allows('update-asset')) {
-        //     abort(403);
-        // }
+        $userId = Auth::user()->id;
+        $asset = Asset::find($id);
+        $validated = $request->validated();
+        $asset->name = $validated['name'];
+        $asset->amount = $validated['amount'];
+        $asset->registration_date = $validated['registration_date'];
+        $asset->category_id = $validated['category_id'];
+        $asset->user_id = $userId;
+        try {
+            DB::beginTransaction();
+            $asset->save();
+            DB::commit();
+
+            return redirect()->route('assets.index')->with('success-message', '更新に成功しました。');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('error-message', '更新に失敗しました。' . $e->getMessage());
+        }
     }
 
     /**
      * 資産削除
+     * 論理削除のため検索可能
+     * todo: 削除したものを復元するロジックを考える
      */
     public function destroy(string $id)
     {
-        //
-    }
+
+        $asset = Asset::find($id);
+
+        try {
+            DB::beginTransaction();
+            $asset->delete();
+            DB::commit();
+
+            return redirect()->route('assets.index')->with('success-message', '削除に成功しました。');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('error-message', '削除に失敗しました。' . $e->getMessage());
+        }
+    }    
 }
