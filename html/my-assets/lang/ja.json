@@ -836,17 +836,22 @@
   "Zimbabwe": "ジンバブエ",
   "Zip / Postal Code": "郵便番号",
   "Åland Islands": "オーランド諸島",
-
+  "action": "操作",
   "admin_system": "ユーザー管理システム",
-  "assets": "資産一覧",
-  "asset_name": "資産額",
-  "amount": "金額",
   "admin_register": "管理者登録",
+  "asset_all": "資産一覧",
+  "asset_name": "資産名",
+  "asset_create": "資産登録",
+  "amount": "資産額",
   "category_name": "カテゴリ名",
-  "edit": "編集・詳細",
+  "create": "登録する",
+  "edit": "編集",
+  "delete": "削除",
+  "genre": "ジャンル",
+  "update": "更新",
   "total_amount": "資産総額",
   "login": "ログイン",
   "register": "ユーザー登録",
+  "registration_date": "登録日",
   "my_assets": "My資産"
-
 }

@@ -1,4 +1,4 @@
-@props(['message'])
+@props(['message', 'name', 'color'])
 
 <div id="{{ $name }}-alert-message"
     class="flex items-center p-4 mb-4 {{ $color }} rounded-lg dark:bg-gray-800 dark:text-{{ $color == 'bg-gray-50' ? 'gray-300' : $color }} dark:hover:bg-gray-700"

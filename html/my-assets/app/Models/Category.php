@@ -13,10 +13,10 @@ class Category extends Model
 
     protected $guarded = [
         'id',
-        'genre_id'
     ];
     protected $fillable = [
         'name',
+        'genre_id'
     ];
     public function assets(): HasMany
     {
