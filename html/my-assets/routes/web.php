@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Asset\AssetsController;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('assets', AssetsController::class)->middleware('auth');
+
+// Ajaxのルーティング
+Route::middleware('auth')->group(function() {
+    Route::get('/assets/{asset}/edit', [AjaxController::class, 'ajax.showAsset'])->name('ajax.updateAsset');
+    Route::post('/assets/{asset}/edit', [AjaxController::class, 'ajax.updateAsset'])->name('ajax.updateAsset');
+    
+});
 
 require __DIR__.'/auth.php';

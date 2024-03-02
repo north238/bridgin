@@ -27,6 +27,7 @@ class AssetsController extends Controller
      * todo: 表示させる日付の調整
      * ページネーション実装
      * ソート機能を実装
+     * todo: モーダル実装途中
      */
     public function index()
     {
@@ -34,6 +35,7 @@ class AssetsController extends Controller
         $startDate = Carbon::now()->subDays(30);
         $endDate = Carbon::now();
         $userId = Auth::user()->id;
+        // $id = 128;
 
         $assets = Asset::where('user_id', $userId)
             ->with(['category:id,name'])
@@ -43,8 +45,17 @@ class AssetsController extends Controller
         $totalAmount = Asset::where('user_id', $userId)
             // ->whereBetween('registration_date', ['2023-10-01', '2023-11-01'])
             ->sum('amount');
+        // $assetData =
+        // Asset::query()
+        //     ->join('categories as c', 'assets.category_id', '=', 'c.id')
+        //     ->join('genres as g', 'c.genre_id', '=', 'g.id')
+        //     ->select('assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id')
+        //     ->where('assets.user_id', $userId)
+        //     ->where('assets.id', $id)
+        //     ->first();
 
-        return view('assets.index', compact('assets', 'totalAmount', 'userId'));
+        // dd($assetData);
+        return view('assets.index', compact('assets', 'assetData', 'totalAmount', 'userId'));
     }
 
     /**

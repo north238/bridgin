@@ -104,10 +104,6 @@
                                 {{ number_format($asset['amount']) }}円</td>
                             <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
                                 {{ $asset['registration_date'] }}</td>
-                            {{-- <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3"> --}}
-                            {{-- <x-flowbite-primary-button link="{{ route('assets.show', [$asset->id]) }}">
-                                    {{ __('edit') }}
-                                </x-flowbite-primary-button> --}}
                             <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
                                 <button id="updateProductButton" data-modal-target="updateProductModal"
                                     data-modal-toggle="updateProductModal"
@@ -115,7 +111,7 @@
                                     type="button">
                                     {{ __('edit') }}
                                 </button>
-                                <a id="updateProductButton" data-modal-target="updateProductModal"
+                                <a href="{{ route('assets.show', [$asset->id]) }}" id="updateProductButton" data-modal-target="updateProductModal"
                                     data-modal-toggle="updateProductModal"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('edit') }}</a>
                             </td>
@@ -125,6 +121,11 @@
             </table>
         </div>
     </div>
-    <x-update-modal>
-    </x-update-modal>
+    {{-- todo: モーダルの実装途中 --}}
+    {{-- memo: ここで渡されている$assetDataはストリングに変換されている。
+        そのためエラーになっている
+        対応案: それぞれに変数を渡してあげる--}}
+    {{-- <pre>@dd($assetData)</pre> --}}
+    {{-- <x-update-modal assetData="{{ $assetData }}">
+    </x-update-modal> --}}
 </section>

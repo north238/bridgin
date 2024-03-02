@@ -14,8 +14,8 @@ export default {
     ],
     theme: {
         colors: {
-            gray: colors.coolGray,
-            blue: colors.lightBlue,
+            gray: colors.gray,
+            blue: colors.sky,
             red: colors.rose,
             pink: colors.fuchsia,
         },
@@ -39,7 +39,7 @@ export default {
                     800: "#1e40af",
                     900: "#1e3a8a",
                     950: "#172554",
-                }
+                },
             },
             // spacing: {
             //     128: "32rem",
