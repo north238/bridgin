@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
 
 export default defineConfig({
     server: {
@@ -21,4 +21,19 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        rollupOptions: {
+            external: ["jquery"],
+            output: {
+                globals: {
+                    jquery: "$",
+                },
+            },
+        },
+    },
+    resolve: {
+        alias: {
+            "@": "/resources/js",
+        },
+    },
 });

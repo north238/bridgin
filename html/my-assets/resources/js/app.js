@@ -1,10 +1,9 @@
+import $ from "jquery";
+import Alpine from "alpinejs";
 import "./bootstrap";
 import "flowbite";
-import "./darkSwitch"
-// import "./admin";
 
-import Alpine from "alpinejs";
-
+window.jQuery = window.$ = $;
 window.Alpine = Alpine;
 
 Alpine.start();
