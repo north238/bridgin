@@ -3,7 +3,7 @@
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">資産の追加</h2>
             @if (session('error-message'))
-                <x-alert-message name="error" color="bg-red-50">
+                <x-alert-message name="error" color="bg-red">
                     {{ session('error-message') }}
                 </x-alert-message>
             @endif

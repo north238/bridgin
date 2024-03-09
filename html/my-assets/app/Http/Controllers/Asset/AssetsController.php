@@ -6,45 +6,89 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AssetCreateRequest;
 use App\Models\Asset;
 use App\Models\Category;
-use App\Models\Genre;
-use App\Models\User;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class AssetsController extends Controller
 {
     public function __construct()
     {
         // $this->authorizeResource(Asset::class, 'assets');
-        
+
     }
     /**
      * 資産表示画面（ログイン済かつ作成したユーザーのみ）
      * 登録内容をテーブルで表示させる
-     * todo: 表示させる日付の調整
-     * ページネーション実装
      * ソート機能を実装
      */
-    public function index()
+    public function index(Request $request)
     {
-        // 直近の30日間のデータを取得
-        $startDate = Carbon::now()->subDays(30);
-        $endDate = Carbon::now();
-        $userId = Auth::user()->id;
 
-        $assets = Asset::where('user_id', $userId)
+        $userId = Auth::user()->id;
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+
+        $assets = Asset::query()
+            ->where('user_id', $userId)
             ->with(['category:id,name'])
-            // ->whereBetween('registration_date', [$startDate, $endDate])
+            ->whereBetween('registration_date', [$startDate, $endDate])
             ->get();
 
-        $totalAmount = Asset::where('user_id', $userId)
-            // ->whereBetween('registration_date', ['2023-10-01', '2023-11-01'])
-            ->sum('amount');
+        $totalAmount = $assets->sum('amount');
 
-        return view('assets.index', compact('assets', 'totalAmount', 'userId'));
+        $assetsByMonth = $assets->groupBy(function ($asset) {
+            return Carbon::parse($asset->registration_date)->format('Y-m');
+        });
+
+        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId'));
+    }
+
+    // テーブル上部にある日時のページネーション
+    // ajaxによる非同期処理
+    // クリックされたボタンにより表示する月を変更
+    // todo: 真ん中にある日時をクリックするとカレンダー表示
+    public function monthPaginationAjax(Request $request)
+    {
+        $requestData = $request->all();
+        $userId = Auth::user()->id;
+        $clickedBtn = $requestData['clicked-btn'];
+        $prevMonthData = Carbon::parse($requestData['prev-month'])->format('Y-m-d');
+        $nextMonthData = Carbon::parse($requestData['next-month'])->format('Y-m-d');
+
+        if ($clickedBtn === 'prev-month-btn') {
+            // 前月
+            $betweenMonthArray = [
+                Carbon::parse($prevMonthData)->startOfMonth(),
+                Carbon::parse($prevMonthData)->endOfMonth()
+            ];
+        } elseif ($clickedBtn === 'next-month-btn') {
+            // 翌月
+            $betweenMonthArray = [
+                Carbon::parse($nextMonthData)->startOfMonth(),
+                Carbon::parse($nextMonthData)->endOfMonth()
+            ];
+        } else {
+            // 今月
+            $betweenMonthArray = [
+                Carbon::now()->startOfMonth(),
+                Carbon::now()->endOfMonth()
+            ];
+        }
+
+        $assets = Asset::query()
+            ->where('user_id', $userId)
+            ->with(['category:id,name'])
+            ->whereBetween('registration_date', [$betweenMonthArray])
+            ->get();
+        $totalAmount = $assets->sum('amount');
+        $assetsByMonth = $assets->groupBy(function ($asset) {
+            return Carbon::parse($asset->registration_date)->format('Y-m');
+        });
+
+        return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'requestData'))->render();
     }
 
     /**
@@ -153,5 +197,5 @@ class AssetsController extends Controller
             DB::rollBack();
             return back()->withInput()->with('error-message', '削除に失敗しました。' . $e->getMessage());
         }
-    }    
+    }
 }

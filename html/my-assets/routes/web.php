@@ -31,4 +31,9 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('assets', AssetsController::class)->middleware('auth');
 
+Route::middleware('auth')->group(function() {
+    Route::post('/assets/month-pagination', [AssetsController::class, 'monthPaginationAjax'])->name('assets.monthPaginationAjax');
+    Route::get('/assets/next_month', 'AssetController@nextMonth')->name('assets.nextMonth');
+});
+
 require __DIR__.'/auth.php';
