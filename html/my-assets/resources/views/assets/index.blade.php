@@ -2,7 +2,7 @@
     <div id="m-assets-table">
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('assets') }}
+                {{ __('all_assets') }}
             </h2>
         </x-slot>
         @if (session('success-message'))

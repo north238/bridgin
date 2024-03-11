@@ -7,18 +7,23 @@ use App\Http\Requests\AssetCreateRequest;
 use App\Models\Asset;
 use App\Models\Category;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class AssetsController extends Controller
 {
+    private $userId;
+    private $assetMinDate;
+
     public function __construct()
     {
         // $this->authorizeResource(Asset::class, 'assets');
-
+        if(Auth::check()){
+            $this->userId = Auth::user()->id;
+        }
     }
+
     /**
      * 資産表示画面（ログイン済かつ作成したユーザーのみ）
      * 登録内容をテーブルで表示させる
@@ -26,10 +31,15 @@ class AssetsController extends Controller
      */
     public function index(Request $request)
     {
-
         $userId = Auth::user()->id;
+        $formatDate = Carbon::now()->format('Y-m');
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
+
+        $assetMinDate = Asset::query()
+            ->where('user_id', $userId)
+            ->min('registration_date');
+        $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
 
         $assets = Asset::query()
             ->where('user_id', $userId)
@@ -43,18 +53,18 @@ class AssetsController extends Controller
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
 
-        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId'));
+        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate'));
     }
 
     // テーブル上部にある日時のページネーション
     // ajaxによる非同期処理
     // クリックされたボタンにより表示する月を変更
-    // todo: 真ん中にある日時をクリックするとカレンダー表示
     public function monthPaginationAjax(Request $request)
     {
         $requestData = $request->all();
         $userId = Auth::user()->id;
         $clickedBtn = $requestData['clicked-btn'];
+        $formatDate = Carbon::now()->format('Y-m');
         $prevMonthData = Carbon::parse($requestData['prev-month'])->format('Y-m-d');
         $nextMonthData = Carbon::parse($requestData['next-month'])->format('Y-m-d');
 
@@ -88,7 +98,7 @@ class AssetsController extends Controller
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
 
-        return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'requestData'))->render();
+        return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'requestData', 'formatDate'))->render();
     }
 
     /**

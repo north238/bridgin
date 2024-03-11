@@ -8,6 +8,9 @@
                         @php
                             $prevMonth = date('Y-m', strtotime('-1 month', strtotime($month)));
                             $nextMonth = date('Y-m', strtotime('1 month', strtotime($month)));
+                            $firstDayOfMonth = date('Y-m-01', strtotime($month));
+                            $lastDayOfMonth = date('Y-m-t', strtotime($month));
+                            $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
                         @endphp
                         <form id="month-form-data" method="POST" action="{{ route('assets.monthPaginationAjax') }}">
                             @csrf
@@ -18,23 +21,33 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                                 </svg>
-                                前月
+                                {{ __('prev_month') }}
                             </button>
-                            <div id="month-data">
-                                {{ $month }}
+                            <div id="month-data" class="relative max-w-sm col-span-2">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1H5a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Zm3-7h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Zm-8 4h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Z" />
+                                    </svg>
+                                </div>
+                                <input type="text"
+                                    class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    name="month-selecter" id="month-selecter" value="{{ $monthSelectorVal }}" disabled>
                             </div>
                             <button id="next-month-btn"
                                 class="month-btn flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                翌月
+                                {{ __('next_month') }}
                                 <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                 </svg>
                             </button>
-                            <button id="now-month"
+                            <button id="now-month-btn"
                                 class="month-btn flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                >今月
+                                {{ __('now_month') }}
                             </button>
                             <input type="hidden" id="now-month" name="now-month" value="{{ $month }}">
                             <input type="hidden" id="prev-month" name="prev-month" value="{{ $prevMonth }}">
@@ -44,16 +57,20 @@
                     </div>
                     <div
                         class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                        <button type="button" id="export-btn"
-                            class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
-                            <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                            </svg>
-                            Export
-                        </button>
+                        <form action="{{ route('assets.csvExport') }}" method="post">
+                            @csrf
+                            <input type="hidden" id="export-data" name="export-data" value="{{ $assets }}">
+                            <button type="submit" id="export-btn"
+                                class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                                <svg class="w-3.5 h-3.5 mx-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                </svg>
+                                {{ __('csv_download') }}
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
@@ -131,7 +148,23 @@
 </section>
 
 <script type="module" defer>
+
+    // 表示のデータが今月の場合「今月」ボタンを非表示
+    // データがなければ「前月・今月」のボタンを非表示
+
+    function monthButtonChange() {
+        let formatDate = "{{$formatDate}}";
+        let nowMonth = $("#now-month").val();
+
+        if(formatDate === nowMonth) {
+            $("#now-month-btn").addClass('hidden');
+            $("#next-month-btn").addClass('hidden');
+        }
+
+    }
+
     $(document).ready(function() {
+        monthButtonChange();
         $(".month-btn").click(function() {
             let btnId = $(this).attr("id"); // クリックされたボタンのidを取得
             $("#clicked-btn").val(btnId);
@@ -139,13 +172,14 @@
         // 前月のボタンがクリックされたら
         $("#month-form-data").submit(function(event) {
             event.preventDefault(); // デフォルトのクリック動作を無効化
+
             const tableId = $("#m-assets-table");
             const url = "{{ route('assets.monthPaginationAjax') }}";
             let monthFormData = $(this).serialize();
             let formData = new URLSearchParams(
-            monthFormData); //serialize()で取得した文字列をURLSearchParamsオブジェクトに変換
+                monthFormData); //serialize()で取得した文字列をURLSearchParamsオブジェクトに変換
             let formDataObject = Object.fromEntries(formData
-        .entries()); // URLSearchParamsオブジェクトからJavaScriptのオブジェクトに変換
+                .entries()); // URLSearchParamsオブジェクトからJavaScriptのオブジェクトに変換
 
             $.ajax({
                     headers: {
