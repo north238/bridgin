@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Asset\AssetsController;
+use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +34,7 @@ Route::resource('assets', AssetsController::class)->middleware('auth');
 
 Route::middleware('auth')->group(function() {
     Route::post('/assets/month-pagination', [AssetsController::class, 'monthPaginationAjax'])->name('assets.monthPaginationAjax');
-    Route::get('/assets/next_month', 'AssetController@nextMonth')->name('assets.nextMonth');
+    Route::post('/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
 });
 
 require __DIR__.'/auth.php';

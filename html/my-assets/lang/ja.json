@@ -839,7 +839,8 @@
   "action": "操作",
   "admin_system": "ユーザー管理システム",
   "admin_register": "管理者登録",
-  "asset_all": "資産一覧",
+  "all_assets": "資産一覧",
+  "assets_data": "資産データ",
   "asset_name": "資産名",
   "asset_create": "資産登録",
   "amount": "資産額",
@@ -847,11 +848,18 @@
   "create": "登録する",
   "edit": "編集",
   "delete": "削除",
-  "genre": "ジャンル",
+  "genre_name": "ジャンル名",
   "update": "更新",
   "total_amount": "資産総額",
   "login": "ログイン",
   "register": "ユーザー登録",
   "registration_date": "登録日",
-  "my_assets": "My資産"
+  "my_assets": "My資産",
+  "csv_download": "CSVダウンロード",
+  "prev_month": "前月",
+  "next_month": "翌月",
+  "now_month": "今月",
+  "create_asset": "資産の追加",
+  "edit_asset": "資産の編集"
+
 }
