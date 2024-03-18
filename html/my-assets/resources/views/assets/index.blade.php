@@ -5,11 +5,13 @@
                 {{ __('all_assets') }}
             </h2>
         </x-slot>
-        @if (session('success-message'))
-            <x-alert-message name="success" color="bg-green">
-                {{ session('success-message') }}
-            </x-alert-message>
-        @endif
+        <div>
+            @if (session('success-message'))
+                <x-alert-message name="success" color="green">
+                    {{ session('success-message') }}
+                </x-alert-message>
+            @endif
+        </div>
         <div class="flex flex-col text-center w-full my-5">
             <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900"><svg
                     class="w-7 h-7 text-gray-800 dark:text-white inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

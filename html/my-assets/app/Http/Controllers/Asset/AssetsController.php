@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AssetCreateRequest;
 use App\Models\Asset;
 use App\Models\Category;
+use App\Models\Genre;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,14 +14,17 @@ use Illuminate\Http\Request;
 
 class AssetsController extends Controller
 {
-    private $userId;
-    private $assetMinDate;
+    private $user;
+    private $assets;
+    private $categories;
+    private $genres;
 
-    public function __construct()
+    public function __construct(Asset $assets, )
     {
+        $assets = $this->assets;
         // $this->authorizeResource(Asset::class, 'assets');
         if(Auth::check()){
-            $this->userId = Auth::user()->id;
+            $this->user = Auth::user()->id;
         }
     }
 
@@ -28,8 +32,12 @@ class AssetsController extends Controller
      * 資産表示画面（ログイン済かつ作成したユーザーのみ）
      * 登録内容をテーブルで表示させる
      * ソート機能を実装
+     * todo:当月にデータがない場合データが表示されない
+     * →データがない場合でも前月ボタンを表示させる
+     * 負債の表示切替機能
+     * →トグルボタンで切り替える
      */
-    public function index(Request $request)
+    public function index()
     {
         $userId = Auth::user()->id;
         $formatDate = Carbon::now()->format('Y-m');
@@ -45,77 +53,46 @@ class AssetsController extends Controller
             ->where('user_id', $userId)
             ->with(['category:id,name'])
             ->whereBetween('registration_date', [$startDate, $endDate])
+            ->orderBy('name', 'ASC')
             ->get();
+
+        // array_multisort($sort, SORT_DESC, $assets);
 
         $totalAmount = $assets->sum('amount');
 
         $assetsByMonth = $assets->groupBy(function ($asset) {
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
+
+        if($assets->count() === 0) {
+            return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
+        }
+        // データがない場合の処理（今月はないが過去のデータはある場合）
+        // 全月のデータをいったん取得
+        // →それから送信するデータを仕分ける
+        // 今月のデータがからの場合の処理
+        // Ajaxを使ってデータをコントローラに送信している
+        // だからフォームから送信するデータがないとエラーになる
+        // 代案）空の場合の処理を分ける
+        // または同じ処理で特定の場合には空を渡す処理にする
 
         return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate'));
     }
 
-    // テーブル上部にある日時のページネーション
-    // ajaxによる非同期処理
-    // クリックされたボタンにより表示する月を変更
-    public function monthPaginationAjax(Request $request)
-    {
-        $requestData = $request->all();
-        $userId = Auth::user()->id;
-        $clickedBtn = $requestData['clicked-btn'];
-        $formatDate = Carbon::now()->format('Y-m');
-        $prevMonthData = Carbon::parse($requestData['prev-month'])->format('Y-m-d');
-        $nextMonthData = Carbon::parse($requestData['next-month'])->format('Y-m-d');
-
-        if ($clickedBtn === 'prev-month-btn') {
-            // 前月
-            $betweenMonthArray = [
-                Carbon::parse($prevMonthData)->startOfMonth(),
-                Carbon::parse($prevMonthData)->endOfMonth()
-            ];
-        } elseif ($clickedBtn === 'next-month-btn') {
-            // 翌月
-            $betweenMonthArray = [
-                Carbon::parse($nextMonthData)->startOfMonth(),
-                Carbon::parse($nextMonthData)->endOfMonth()
-            ];
-        } else {
-            // 今月
-            $betweenMonthArray = [
-                Carbon::now()->startOfMonth(),
-                Carbon::now()->endOfMonth()
-            ];
-        }
-
-        $assets = Asset::query()
-            ->where('user_id', $userId)
-            ->with(['category:id,name'])
-            ->whereBetween('registration_date', [$betweenMonthArray])
-            ->get();
-        $totalAmount = $assets->sum('amount');
-        $assetsByMonth = $assets->groupBy(function ($asset) {
-            return Carbon::parse($asset->registration_date)->format('Y-m');
-        });
-
-        return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'requestData', 'formatDate'))->render();
-    }
-
     /**
      * 資産登録画面
-     * todo:: ジャンル指定すると対応したカテゴリが
-     * todo:: 出現するロジックを追加したい
      */
     public function create()
     {
-        $categories = Category::query()->with(['genre:id,name'])->distinct()->get();
-        return view('assets.create', compact('categories'));
+        $genres = Genre::query()->get();
+        $categories = Category::query()->with(['genre:id,name'])->get();
+        return view('assets.create', compact('genres', 'categories'));
     }
 
     /**
      * 資産をデータベースに保存
-     * todo:: データベースに資産が登録してある場合表示させる
      * todo:: 文字を入力してもvalidationが消えない
+     * フォームバリデーションを導入する
      */
     public function store(AssetCreateRequest $request)
     {
@@ -141,25 +118,26 @@ class AssetsController extends Controller
 
     /**
      * 資産詳細画面
-     * todo:: カテゴリIDとジャンルIDの紐づけ
      */
     public function show(string $id)
     {
         $userId = Auth::user()->id;
+        $query = ['assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id'];
 
         $assetData = Asset::query()
             ->join('categories as c', 'assets.category_id', '=', 'c.id')
             ->join('genres as g', 'c.genre_id', '=', 'g.id')
-            ->select('assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id')
+            ->select($query)
             ->where('assets.user_id', $userId)
             ->where('assets.id', $id)
             ->first();
 
+        $genres = Genre::query()->get();
         $categories = Category::query()
-            ->with('genre')
+            ->with(['genre:id,name'])
             ->get();
 
-        return view('assets.show', compact('assetData', 'categories'));
+        return view('assets.show', compact('assetData', 'categories', 'genres'));
     }
 
     /**
@@ -206,6 +184,26 @@ class AssetsController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withInput()->with('error-message', '削除に失敗しました。' . $e->getMessage());
+        }
+    }
+
+    // 理論削除されたデータの復元
+    // todo:どの画面に実装するのか検討
+    // →検索して表示する画面
+    // →どこから検索を走らせるのか？
+    public function restore(string $id)
+    {
+        $asset = Asset::withTrashed()->findOrFail($id);
+
+        try {
+            DB::beginTransaction();
+            $asset->restore();
+            DB::commit();
+
+            return redirect()->back()->with('success-message', '復元に成功しました。');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error-message', '復元に失敗しました。' . $e->getMessage());
         }
     }
 }

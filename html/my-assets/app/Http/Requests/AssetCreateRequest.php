@@ -23,8 +23,8 @@ class AssetCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|max:20',
-            'amount' => 'required',
-            'registration_date' => 'required|date',
+            'amount' => 'required|min:-9999999999999|max:9999999999999',
+            'registration_date' => 'required|before_or_equal:today',
             'category_id' => 'required',
         ];
     }

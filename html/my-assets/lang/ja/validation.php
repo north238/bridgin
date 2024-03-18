@@ -173,6 +173,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'registration_date' => [
+            'before_or_equal' => '登録日には今日より前の日付を入力してください。'
+        ]
     ],
 
     /*

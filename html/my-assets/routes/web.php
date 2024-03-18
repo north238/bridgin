@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Asset\AssetsController;
 use App\Http\Controllers\CsvFilesController;
@@ -31,9 +32,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('assets', AssetsController::class)->middleware('auth');
-
 Route::middleware('auth')->group(function() {
-    Route::post('/assets/month-pagination', [AssetsController::class, 'monthPaginationAjax'])->name('assets.monthPaginationAjax');
+    Route::post('/month-pagination', [AjaxController::class, 'monthPagination'])->name('ajax.monthPagination');
+    Route::post('/sortable', [AjaxController::class, 'sortable'])->name('ajax.sortable');
     Route::post('/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
 });
 
