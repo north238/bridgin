@@ -5,27 +5,27 @@ namespace App\Http\Controllers\Asset;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssetCreateRequest;
 use App\Models\Asset;
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Genre;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Services\SortService;
 use Illuminate\Http\Request;
 
 class AssetsController extends Controller
 {
-    private $user;
+    private $users;
     private $assets;
-    private $categories;
-    private $genres;
+    private $sortService;
 
-    public function __construct(Asset $assets, )
+    public function __construct(Asset $assets, User $users, SortService $sortService)
     {
-        $assets = $this->assets;
+        $this->assets = $assets;
+        $this->users = $users;
+        $this->sortService = $sortService;
         // $this->authorizeResource(Asset::class, 'assets');
-        if(Auth::check()){
-            $this->user = Auth::user()->id;
-        }
     }
 
     /**
@@ -43,20 +43,14 @@ class AssetsController extends Controller
         $formatDate = Carbon::now()->format('Y-m');
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
+        $betweenMonthArray = [$startDate, $endDate];
+        session()->put('month-data', $betweenMonthArray);
+        $sortData = ['order' => 'name', 'type' => 'ASC'];
 
-        $assetMinDate = Asset::query()
-            ->where('user_id', $userId)
-            ->min('registration_date');
+        $assetMinDate = $this->assets->minAsset($userId);
         $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
 
-        $assets = Asset::query()
-            ->where('user_id', $userId)
-            ->with(['category:id,name'])
-            ->whereBetween('registration_date', [$startDate, $endDate])
-            ->orderBy('name', 'ASC')
-            ->get();
-
-        // array_multisort($sort, SORT_DESC, $assets);
+        $assets = $this->assets->assetsQuery($userId, $betweenMonthArray, $sortData);
 
         $totalAmount = $assets->sum('amount');
 
@@ -76,7 +70,7 @@ class AssetsController extends Controller
         // 代案）空の場合の処理を分ける
         // または同じ処理で特定の場合には空を渡す処理にする
 
-        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate'));
+        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate', 'sortData'));
     }
 
     /**

@@ -31,11 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('assets', AssetsController::class)->middleware('auth');
+// 資産全般の処理、資産表示、CSVダウンロード機能
 Route::middleware('auth')->group(function() {
-    Route::post('/month-pagination', [AjaxController::class, 'monthPagination'])->name('ajax.monthPagination');
-    Route::post('/sortable', [AjaxController::class, 'sortable'])->name('ajax.sortable');
-    Route::post('/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
+    Route::resource('assets', AssetsController::class);
+    Route::post('/assets/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
+    Route::get('/assets/ajax/index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
+    Route::post('/assets/ajax/index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
+    Route::post('/assets/sort', [AjaxController::class, 'sortIndex'])->name('ajax.sort.index');
+    Route::get('/assets/sort', [AjaxController::class, 'sortUpdate'])->name('ajax.sort.update');
 });
 
 require __DIR__.'/auth.php';

@@ -1,6 +1,6 @@
 <section id="m-assets-table-section">
-    <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-        <div class="bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
+    <div class="mx-auto max-w-screen-xl px-4 m-3 lg:px-12">
+        <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-mg overflow-hidden">
             {{-- 資産が登録されていない場合の処理 --}}
             {{-- @if ($assets->count() === 0)
                 <div class="text-center mt-3">
@@ -18,7 +18,7 @@
                         <div class="absolute top-2 left-12">
                             今月('{{ $formatDate }}')のデータはありません。
                         </div>
-                        <form id="month-form-data" method="POST" action="{{ route('ajax.monthPagination') }}">
+                        <form id="month-form-data" method="POST" action="{{ route('ajax.pagination.index') }}">
                             @csrf
                             <button id="prev-month-btn"
                                 class="month-btn inline-flex absolute bottom-2 items-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -36,7 +36,8 @@
                     </div> --}}
             @else
                 @foreach ($assetsByMonth as $month => $assets)
-                    <div class="bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
+                    <div
+                        class="border border-gray-200 bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
                         <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6">
                             @php
                                 $prevMonth = date('Y-m', strtotime('-1 month', strtotime($month)));
@@ -45,7 +46,8 @@
                                 $lastDayOfMonth = date('Y-m-t', strtotime($month));
                                 $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
                             @endphp
-                            <form id="month-form-data" class="flex flex-col sm:flex-row justify-around items-center" method="POST" action="{{ route('ajax.monthPagination') }}">
+                            <form id="month-form-data" class="flex flex-col sm:flex-row justify-around items-center"
+                                method="POST" action="{{ route('ajax.pagination.index') }}">
                                 @csrf
                                 <div>
                                     <button id="prev-month-btn"
@@ -111,6 +113,10 @@
                                 </button>
                             </form>
                         </div>
+
+                        @php
+                            $sortData = json_encode($sortData);
+                        @endphp
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
@@ -121,10 +127,10 @@
                                         <th scope="col" class="px-6 py-3">
                                             <div class="flex items-center">
                                                 {{ __('category_name') }}
-                                                {{-- todo: ソート機能実装 --}}
-                                                <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                        viewBox="0 0 24 24">
+                                                <a href="{{ route('ajax.sort.index') }}" id="category-sort"
+                                                    data-sort="{{ $sortData }}"><svg class="w-3 h-3 ms-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
                                                         <path
                                                             d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
                                                     </svg></a>
@@ -133,10 +139,10 @@
                                         <th scope="col" class="px-3 py-3">
                                             <div class="flex items-center">
                                                 {{ __('amount') }}
-                                                {{-- todo: ソート機能実装 --}}
-                                                <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                        viewBox="0 0 24 24">
+                                                <a href="{{ route('ajax.sort.index') }}" id="amount-sort"
+                                                    data-sort="{{ $sortData }}"><svg class="w-3 h-3 ms-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
                                                         <path
                                                             d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
                                                     </svg></a>
@@ -145,10 +151,10 @@
                                         <th scope="col" class="px-6 py-3">
                                             <div class="flex items-center">
                                                 {{ __('registration_date') }}
-                                                {{-- todo: ソート機能実装 --}}
-                                                <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                        viewBox="0 0 24 24">
+                                                <a href="{{ route('ajax.sort.index') }}" id="registration-date-sort"
+                                                    data-sort="{{ $sortData }}"><svg class="w-3 h-3 ms-1.5"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 24 24">
                                                         <path
                                                             d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
                                                     </svg></a>
@@ -218,13 +224,12 @@
             event.preventDefault(); // デフォルトのクリック動作を無効化
 
             const tableId = $("#m-assets-table");
-            const url = "{{ route('ajax.monthPagination') }}";
+            const url = "{{ route('ajax.pagination.index') }}";
             let monthFormData = $(this).serialize();
             let formData = new URLSearchParams(
                 monthFormData); //serialize()で取得した文字列をURLSearchParamsオブジェクトに変換
             let formDataObject = Object.fromEntries(formData
                 .entries()); // URLSearchParamsオブジェクトからJavaScriptのオブジェクトに変換
-            console.log(formDataObject);
             $.ajax({
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -240,5 +245,53 @@
                     console.log("エラーが発生しています。", err);
                 });
         });
+    });
+
+    $(document).ready(function() {
+        const tableId = $("#m-assets-table");
+        const categoryNameSort = $("#category-sort");
+        const amountSort = $("#amount-sort");
+        const registrationDateSort = $("#registration-date-sort");
+
+        const url = "{{ route('ajax.sort.index') }}"
+
+        categoryNameSort.click(function(e) {
+            e.preventDefault();
+            let sortData = categoryNameSort.data('sort');
+            sortData.newOrder = 'category_id';
+            submitSortData(sortData);
+        });
+
+        amountSort.click(function(e) {
+            e.preventDefault();
+            let sortData = amountSort.data('sort');
+            sortData.newOrder = 'amount';
+            submitSortData(sortData);
+        });
+
+        registrationDateSort.click(function(e) {
+            e.preventDefault();
+            let sortData = registrationDateSort.data('sort');
+            sortData.newOrder = 'registration_date';
+            submitSortData(sortData);
+        });
+
+        function submitSortData(sortData) {
+            $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    url: url,
+                    data: sortData,
+                    type: "POST",
+                })
+                .done(function(res) {
+                    console.log('ajax成功');
+                    tableId.html(res);
+                })
+                .fail(function(err) {
+                    console.log('エラーが発生しています。', err);
+                });
+        }
     });
 </script>
