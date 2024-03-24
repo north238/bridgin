@@ -11,6 +11,10 @@ RUN apt-get update \
     &&  pecl install redis \
     && docker-php-ext-enable redis
 
+# xdebag install
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 RUN docker-php-ext-install \
     zip \
     pdo_mysql 
