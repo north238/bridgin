@@ -18,7 +18,7 @@ class GenreFactory extends Factory
      */
     public function definition(): array
     {
-        $date = $this->faker->dateTimeBetween('-1year');        
+        $date = $this->faker->dateTimeBetween('-1year');
         return [
             'name' => $this->faker->country(),
             'created_at' => $date,

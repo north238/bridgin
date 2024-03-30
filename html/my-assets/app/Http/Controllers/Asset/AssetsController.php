@@ -11,31 +11,29 @@ use App\Models\Genre;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Services\SortService;
+use App\Services\AssetService;
 use Illuminate\Http\Request;
 
 class AssetsController extends Controller
 {
     private $users;
     private $assets;
-    private $sortService;
+    private $assetService;
 
-    public function __construct(Asset $assets, User $users, SortService $sortService)
-    {
+    public function __construct(
+        Asset $assets,
+        User $users,
+        AssetService $assetService
+    ) {
         $this->assets = $assets;
         $this->users = $users;
-        $this->sortService = $sortService;
+        $this->assetService = $assetService;
         // $this->authorizeResource(Asset::class, 'assets');
     }
 
     /**
      * 資産表示画面（ログイン済かつ作成したユーザーのみ）
      * 登録内容をテーブルで表示させる
-     * ソート機能を実装
-     * todo:当月にデータがない場合データが表示されない
-     * →データがない場合でも前月ボタンを表示させる
-     * 負債の表示切替機能
-     * →トグルボタンで切り替える
      */
     public function index()
     {
@@ -44,31 +42,24 @@ class AssetsController extends Controller
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
         $betweenMonthArray = [$startDate, $endDate];
-        session()->put('month-data', $betweenMonthArray);
         $sortData = ['order' => 'name', 'type' => 'ASC'];
 
         $assetMinDate = $this->assets->minAsset($userId);
         $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
 
+        $assetsAllData = $this->assets->assetsAllData($userId, $sortData);
+        if ($assetsAllData->count() === 0) {
+            return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
+        }
+
         $assets = $this->assets->assetsQuery($userId, $betweenMonthArray, $sortData);
-
-        $totalAmount = $assets->sum('amount');
-
         $assetsByMonth = $assets->groupBy(function ($asset) {
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
 
-        if($assets->count() === 0) {
-            return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
-        }
-        // データがない場合の処理（今月はないが過去のデータはある場合）
-        // 全月のデータをいったん取得
-        // →それから送信するデータを仕分ける
-        // 今月のデータがからの場合の処理
-        // Ajaxを使ってデータをコントローラに送信している
-        // だからフォームから送信するデータがないとエラーになる
-        // 代案）空の場合の処理を分ける
-        // または同じ処理で特定の場合には空を渡す処理にする
+        $totalAmount = $assets->sum('amount');
+
+        session()->put('month-data', $betweenMonthArray);
 
         return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate', 'sortData'));
     }
@@ -161,8 +152,6 @@ class AssetsController extends Controller
 
     /**
      * 資産削除
-     * 論理削除のため検索可能
-     * todo: 削除したものを復元するロジックを考える
      */
     public function destroy(string $id)
     {

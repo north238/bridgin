@@ -1,19 +1,20 @@
 <x-app-layout>
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{ __('create_asset') }}</h2>
+    <section
+        class="max-w-screen-md my-10 mx-auto block bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900">
+        <div class="py-8 mx-auto max-w-lg lg:py-16">
             <div>
                 @if (session('new-create-message'))
-                <x-alert-message name="new-create" color="blue">
-                    {{ session('new-create-message') }}
-                </x-alert-message>
-            @endif
-            @if (session('error-message'))
-                <x-alert-message name="error" color="red">
-                    {{ session('error-message') }}
-                </x-alert-message>
-            @endif
+                    <x-alert-message name="new-create" color="blue">
+                        {{ session('new-create-message') }}
+                    </x-alert-message>
+                @endif
+                @if (session('error-message'))
+                    <x-alert-message name="error" color="red">
+                        {{ session('error-message') }}
+                    </x-alert-message>
+                @endif
             </div>
+            <h2 class="mb-10 text-xl font-bold text-gray-900 dark:text-white">{{ __('create_asset') }}</h2>
             <form id="created-form" class="validated-form mb-2" method="post" action="{{ route('assets.store') }}"
                 novalidate>
                 @csrf

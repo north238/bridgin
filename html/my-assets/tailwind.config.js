@@ -14,10 +14,17 @@ export default {
     ],
     theme: {
         colors: {
-            gray: colors.coolGray,
-            blue: colors.lightBlue,
-            red: colors.rose,
+            gray: colors.gray,
+            sky: colors.sky,
+            rose: colors.rose,
             pink: colors.fuchsia,
+            zinc: colors.zinc,
+            slate: colors.slate,
+            amber: colors.amber,
+            cyan: colors.cyan,
+            transparent: "transparent",
+            current: "currentColor",
+            white: "#ffffff",
         },
         screens: {
             sm: "480px",
@@ -39,7 +46,7 @@ export default {
                     800: "#1e40af",
                     900: "#1e3a8a",
                     950: "#172554",
-                }
+                },
             },
             // spacing: {
             //     128: "32rem",

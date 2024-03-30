@@ -3,6 +3,7 @@
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Asset\AssetsController;
+use App\Http\Controllers\Asset\YearlyAssetsController;
 use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function() {
+    Route::get('/assets/yearly', [YearlyAssetsController::class, 'yearlyAssetsIndex'])->name('assets.yearly.index');
 });
 
 // 資産全般の処理、資産表示、CSVダウンロード機能

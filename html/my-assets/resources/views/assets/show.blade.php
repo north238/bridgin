@@ -1,12 +1,15 @@
 <x-app-layout>
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{ __('edit_asset') }}</h2>
-            @if (session('error-message'))
-                <x-alert-message name="error" color="red">
-                    {{ session('error-message') }}
-                </x-alert-message>
-            @endif
+    <section
+        class="max-w-screen-md my-10 mx-auto block bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900">
+        <div class="py-5 mx-auto max-w-lg lg:py-16">
+            <div class="alert-message">
+                @if (session('error-message'))
+                    <x-alert-message name="error" color="red">
+                        {{ session('error-message') }}
+                    </x-alert-message>
+                @endif
+            </div>
+            <h2 class="mb-10 text-xl font-bold text-gray-900 dark:text-white">{{ __('create_asset') }}</h2>
             <form id="updated-form" class="validated-form mb-2" method="post"
                 action="{{ route('assets.update', [$assetData->id]) }}" novalidate>
                 @csrf
