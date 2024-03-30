@@ -2,10 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Asset;
-use App\Models\Category;
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +20,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -33,6 +30,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -42,6 +40,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -51,6 +50,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -60,6 +60,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -69,6 +70,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -78,6 +80,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -87,6 +90,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -96,6 +100,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -105,6 +110,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -114,6 +120,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -123,6 +130,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -132,6 +140,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -141,6 +150,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -150,6 +160,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -159,6 +170,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-04-29',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
 
@@ -169,6 +181,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -178,6 +191,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -187,6 +201,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -196,6 +211,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -205,6 +221,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -214,6 +231,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -223,6 +241,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -232,6 +251,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -241,6 +261,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -250,6 +271,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -259,6 +281,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -268,6 +291,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -277,6 +301,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -286,6 +311,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -295,6 +321,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -304,6 +331,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-05-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
 
@@ -314,6 +342,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -323,6 +352,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -332,6 +362,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -341,6 +372,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -350,6 +382,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -359,6 +392,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -368,6 +402,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -377,6 +412,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -386,6 +422,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -395,6 +432,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -404,6 +442,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -413,6 +452,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -422,6 +462,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -431,6 +472,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -440,6 +482,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -449,6 +492,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-06-25',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
 
@@ -459,6 +503,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -468,6 +513,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -477,6 +523,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -486,6 +533,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -495,6 +543,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -504,6 +553,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -513,6 +563,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -522,6 +573,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -531,6 +583,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -540,6 +593,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -549,6 +603,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -558,6 +613,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -567,6 +623,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -576,6 +633,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -585,6 +643,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -594,6 +653,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-07-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
 
@@ -604,6 +664,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -613,6 +674,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -622,6 +684,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -631,6 +694,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -640,6 +704,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -649,6 +714,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -658,6 +724,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -667,6 +734,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -676,6 +744,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -685,6 +754,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -694,6 +764,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -703,6 +774,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -712,6 +784,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -721,6 +794,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -730,6 +804,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -739,6 +814,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-08-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
 
@@ -749,6 +825,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -758,6 +835,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -767,6 +845,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -776,6 +855,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -785,6 +865,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -794,6 +875,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -803,6 +885,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -812,6 +895,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -821,6 +905,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -830,6 +915,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -839,6 +925,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -848,6 +935,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -857,6 +945,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -866,6 +955,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -875,6 +965,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -884,6 +975,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-09-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
 
@@ -894,6 +986,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -903,6 +996,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -912,6 +1006,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -921,6 +1016,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -930,6 +1026,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -939,6 +1036,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -948,6 +1046,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -957,6 +1056,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -966,6 +1066,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -975,6 +1076,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -984,6 +1086,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -993,6 +1096,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -1002,6 +1106,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -1011,6 +1116,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -1020,6 +1126,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -1029,6 +1136,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-10-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
 
@@ -1039,6 +1147,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 7,
             ],
             [
@@ -1048,6 +1157,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 3,
             ],
             [
@@ -1057,6 +1167,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 4,
             ],
             [
@@ -1066,6 +1177,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 2,
             ],
             [
@@ -1075,6 +1187,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 6,
             ],
             [
@@ -1084,6 +1197,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 8,
             ],
             [
@@ -1093,6 +1207,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -1102,6 +1217,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -1111,6 +1227,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -1120,6 +1237,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 12,
             ],
             [
@@ -1129,6 +1247,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -1138,6 +1257,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -1147,6 +1267,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
             [
@@ -1156,6 +1277,7 @@ class AssetsSeeder extends Seeder
                 'created_at' => '2023-11-26',
                 'updated_at' => now(),
                 'user_id' => 1,
+                'asset_type_flg' => 1,
                 'category_id' => 1,
             ],
         ];

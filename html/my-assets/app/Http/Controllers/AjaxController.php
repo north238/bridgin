@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use Carbon\Carbon;
-use App\Services\SortService;
+use App\Services\AssetService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
     private $assets;
-    private $sortService;
+    private $assetService;
 
-    public function __construct(Asset $assets, SortService $sortService)
+    public function __construct(Asset $assets, AssetService $assetService)
     {
         $this->assets = $assets;
-        $this->sortService = $sortService;
+        $this->assetService = $assetService;
         // $this->authorizeResource(Asset::class, 'assets');
     }
 
@@ -103,9 +103,6 @@ class AjaxController extends Controller
     /**
      * SortIndexから受け取った値でデータを書き換える
      * ソートされたデータをajaxへ送信する
-     * セッションにどの月の情報なのかをもたせる
-     * ページが読み込まれた時にセッションは書き換わる
-     * その時に保持させる
      * 
      * @param Request $request
      * @return json
@@ -141,6 +138,5 @@ class AjaxController extends Controller
         });
 
         return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'requestData', 'formatDate', 'assetMinDate', 'sortData'))->render();
-
     }
 }

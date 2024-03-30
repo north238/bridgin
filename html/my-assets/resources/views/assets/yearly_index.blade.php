@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div id="m-assets-table" class="block m-6 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow">
+    <div id="" class="block m-6 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow">
         <x-slot name="header">
             <h2 class="font-semibold text-gray-800 leading-tight">
                 {{ __('all_assets') }}
@@ -17,7 +17,7 @@
                 <h2 class="text-2xl font-medium title-font text-gray-900 dark:text-white">
                     {{ __('total_amount') }}</h2>
                 <p class="text-base dark:text-white">
-                <p class="text-xl">{{ number_format($totalAmount) }}<span>円</span></p>
+                <p class="text-xl">{{ number_format($totalAmounts[0]) }}<span>円</span></p>
                 </p>
             </div>
             <div class="p-3 bg-white dark:bg-gray-800 border border-gray-200 rounded-lg align-middle">
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div>
-            @include('components.m_table')
+            @include('components.m_yearly_table')
         </div>
     </div>
 </x-app-layout>

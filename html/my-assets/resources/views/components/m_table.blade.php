@@ -1,44 +1,53 @@
 <section id="m-assets-table-section">
     <div class="mx-auto max-w-screen-xl px-4 m-3 lg:px-12">
         <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-mg overflow-hidden">
-            {{-- 資産が登録されていない場合の処理 --}}
-            {{-- @if ($assets->count() === 0)
-                <div class="text-center mt-3">
-                    <p>表示させる資産のデータはありません。資産を追加しましょう。</p>
-                    <a href="{{route('assets.create')}}" class="inline-flex justify-center px-5 py-2.5 mt-3 sm:mt-3 text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 rounded-full dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">登録する</a>
-                </div>
-            @endif --}}
             @if ($assetsByMonth->isEmpty())
-                {{-- <div class="flex relative md:flex-row md:space-y-0 md:space-x-4 p-4">
-                    <div class="w-full md:w-1/2 p-6">
+                <div class="border border-gray-200 bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
+                    <div class="flex flex-col justify-center items-center w-full p-6">
                         @php
                             $prevMonth = date('Y-m', strtotime('-1 month', strtotime($formatDate)));
                             $nextMonth = date('Y-m', strtotime('1 month', strtotime($formatDate)));
+                            $nowMonth = date('Y-m', strtotime('1 month', strtotime($formatDate)));
                         @endphp
-                        <div class="absolute top-2 left-12">
-                            今月('{{ $formatDate }}')のデータはありません。
+                        <div class="">
+                            今月のデータはありません。
                         </div>
-                        <form id="month-form-data" method="POST" action="{{ route('ajax.pagination.index') }}">
+                        <form id="month-form-data" class="flex flex-row items-center gap-7 my-3" method="POST"
+                            action="{{ route('ajax.pagination.index') }}">
                             @csrf
-                            <button id="prev-month-btn"
-                                class="month-btn inline-flex absolute bottom-2 items-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-                                </svg>
-                                {{ __('prev_month') }}
-                            </button>
+                            <div>
+                                <button id="prev-month-btn"
+                                    class="month-btn inline-flex items-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
+                                    </svg>
+                                    {{ __('prev_month') }}
+                                </button>
+                            </div>
+                            <div>
+                                <button id="next-month-btn"
+                                    class="month-btn flex items-center px-4 h-10 me-2 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    {{ __('next_month') }}
+                                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                                </button>
+                            </div>
                             <input type="hidden" id="prev-month" name="prev-month" value="{{ $prevMonth }}">
-                            <input type="hidden" id="prev-month" name="prev-month" value="{{ $nextMonth }}">
+                            <input type="hidden" id="next-month" name="next-month" value="{{ $nextMonth }}">
                             <input type="hidden" id="clicked-btn" name="clicked-btn">
                         </form>
-                    </div> --}}
+                    </div>
+                </div>
             @else
                 @foreach ($assetsByMonth as $month => $assets)
                     <div
-                        class="border border-gray-200 bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
-                        <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6">
+                        class="border border-gray-200 bg-zinc-50 dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
+                        <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6 border border-gray-200">
                             @php
                                 $prevMonth = date('Y-m', strtotime('-1 month', strtotime($month)));
                                 $nextMonth = date('Y-m', strtotime('1 month', strtotime($month)));
@@ -100,7 +109,8 @@
                             </form>
                             <form class="mb-2 sm:mb-0" action="{{ route('assets.csvExport') }}" method="post">
                                 @csrf
-                                <input type="hidden" id="export-data" name="export-data" value="{{ $assets }}">
+                                <input type="hidden" id="export-data" name="export-data"
+                                    value="{{ $assets }}">
                                 <button type="submit" id="export-btn"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
                                     <svg class="w-3.5 h-3.5 mx-1 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg"
@@ -120,9 +130,9 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
-                                    class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    class="font-medium text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
-                                        <th scope="col" class="px-3 py-3">
+                                        <th scope="col" class="px-6 py-3">
                                             {{ __('asset_name') }}</th>
                                         <th scope="col" class="px-6 py-3">
                                             <div class="flex items-center">
@@ -136,7 +146,7 @@
                                                     </svg></a>
                                             </div>
                                         </th>
-                                        <th scope="col" class="px-3 py-3">
+                                        <th scope="col" class="px-6 py-3">
                                             <div class="flex items-center">
                                                 {{ __('amount') }}
                                                 <a href="{{ route('ajax.sort.index') }}" id="amount-sort"
@@ -160,7 +170,7 @@
                                                     </svg></a>
                                             </div>
                                         </th>
-                                        <th scope="col" class="px-3 py-3">
+                                        <th scope="col" class="px-6 py-3">
                                             {{ __('action') }}</th>
                                     </tr>
                                 </thead>
@@ -169,22 +179,21 @@
                                         <tr
                                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <td
-                                                class="text-gray-900 dark:text-white border-t-2 border-b-2 border-gray-200 px-4 py-3 font-medium">
+                                                class="text-gray-900 dark:text-white border-t border-b border-gray-200 px-4 py-3 font-medium">
                                                 {{ $asset['name'] }}</td>
-                                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                            <td class="border-t border-b border-gray-200 px-6 py-3">
                                                 {{ $asset['category']['name'] }}
                                             </td>
-                                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                            <td class="border-t border-b border-gray-200 px-6 py-3">
                                                 {{ number_format($asset['amount']) }}円</td>
-                                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                            <td class="border-t border-b border-gray-200 px-6 py-3">
                                                 {{ $asset['registration_date'] }}</td>
-                                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                            <td class="border-t border-b border-gray-200 px-6 py-3">
                                                 <a href="{{ route('assets.show', [$asset->id]) }}" id="asset-edit"
                                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('edit') }}</a>
                                             </td>
                                         </tr>
                                     @endforeach
-                                </tbody>
                             </table>
                         </div>
                     </div>

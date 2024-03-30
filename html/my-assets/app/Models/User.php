@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,8 +50,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Asset::class);
     }
+
     public function userComments(): HasMany
     {
         return $this->hasMany(UserComment::class);
+    }
+
+    public function assetTargets(): HasMany
+    {
+        return $this->hasMany(AssetTarget::class);
     }
 }
