@@ -47,7 +47,8 @@
                 @foreach ($assetsByMonth as $month => $assets)
                     <div
                         class="border border-gray-200 bg-zinc-50 dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
-                        <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6 border border-gray-200">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between items-center p-6 border border-gray-200">
                             @php
                                 $prevMonth = date('Y-m', strtotime('-1 month', strtotime($month)));
                                 $nextMonth = date('Y-m', strtotime('1 month', strtotime($month)));
@@ -100,11 +101,20 @@
                                     <button id="now-month-btn"
                                         class="month-btn flex items-center px-4 h-10 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                         {{ __('now_month') }}
+                                        <svg class="w-4 h-4 ms-2 text-gray-800 dark:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="M21 9H8a5 5 0 0 0 0 10h9m4-10-4-4m4 4-4 4" />
+                                        </svg>
+
                                     </button>
                                 </div>
                                 <input type="hidden" id="now-month" name="now-month" value="{{ $month }}">
-                                <input type="hidden" id="prev-month" name="prev-month" value="{{ $prevMonth }}">
-                                <input type="hidden" id="next-month" name="next-month" value="{{ $nextMonth }}">
+                                <input type="hidden" id="prev-month" name="prev-month"
+                                    value="{{ $prevMonth }}">
+                                <input type="hidden" id="next-month" name="next-month"
+                                    value="{{ $nextMonth }}">
                                 <input type="hidden" id="clicked-btn" name="clicked-btn">
                             </form>
                             <form class="mb-2 sm:mb-0" action="{{ route('assets.csvExport') }}" method="post">
@@ -190,7 +200,16 @@
                                                 {{ $asset['registration_date'] }}</td>
                                             <td class="border-t border-b border-gray-200 px-6 py-3">
                                                 <a href="{{ route('assets.show', [$asset->id]) }}" id="asset-edit"
-                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('edit') }}</a>
+                                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><svg
+                                                        class="w-5 h-5 inline-block align-bottom  text-gray-500 dark:text-white"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        width="24" height="24" fill="none"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
+                                                    </svg>
+                                                    {{ __('edit') }}</a>
                                             </td>
                                         </tr>
                                     @endforeach

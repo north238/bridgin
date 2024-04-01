@@ -88,16 +88,17 @@ class AssetsController extends Controller
         $asset->amount = $validated['amount'];
         $asset->registration_date = $validated['registration_date'];
         $asset->category_id = $validated['category_id'];
+        $asset->asset_type_flg = $validated['asset-type-flg'];
         $asset->user_id = $userId;
         try {
             DB::beginTransaction();
             $asset->save();
             DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', '登録に成功しました。');
+            return redirect()->route('assets.index')->with('success-message', '資産の登録に成功しました。');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error-message', '登録に失敗しました。' . $e->getMessage());
+            return back()->withInput()->with('error-message', '資産の登録に失敗しました。' . $e->getMessage());
         }
     }
 
@@ -131,22 +132,47 @@ class AssetsController extends Controller
     public function update(AssetCreateRequest $request, string $id)
     {
         $userId = Auth::user()->id;
-        $asset = Asset::find($id);
+        $changedTypeFlg = $request->input('changed_type_flg');
         $validated = $request->validated();
-        $asset->name = $validated['name'];
-        $asset->amount = $validated['amount'];
-        $asset->registration_date = $validated['registration_date'];
-        $asset->category_id = $validated['category_id'];
-        $asset->user_id = $userId;
-        try {
-            DB::beginTransaction();
-            $asset->save();
-            DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', '更新に成功しました。');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->withInput()->with('error-message', '更新に失敗しました。' . $e->getMessage());
+        // 追加の場合の処理
+        if ($changedTypeFlg == 1) {
+            try {
+                DB::beginTransaction();
+                $asset = new Asset();
+                $asset->name = $validated['name'];
+                $asset->amount = $validated['amount'];
+                $asset->registration_date = $validated['registration_date'];
+                $asset->category_id = $validated['category_id'];
+                $asset->asset_type_flg = $validated['asset-type-flg'];
+                $asset->user_id = $userId;
+                $asset->save();
+                DB::commit();
+
+                return redirect()->route('assets.index')->with('success-message', '資産の追加に成功しました。');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return back()->withInput()->with('error-message', '資産の追加に失敗しました。' . $e->getMessage());
+            }
+        // 更新の場合の処理
+        } else {
+            try {
+                DB::beginTransaction();
+                $asset = Asset::find($id);
+                $asset->name = $validated['name'];
+                $asset->amount = $validated['amount'];
+                $asset->registration_date = $validated['registration_date'];
+                $asset->category_id = $validated['category_id'];
+                $asset->asset_type_flg = $validated['asset-type-flg'];
+                $asset->user_id = $userId;
+                $asset->save();
+                DB::commit();
+
+                return redirect()->route('assets.index')->with('success-message', '資産の更新に成功しました。');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return back()->withInput()->with('error-message', '資産の更新に失敗しました。' . $e->getMessage());
+            }
         }
     }
 
@@ -163,10 +189,10 @@ class AssetsController extends Controller
             $asset->delete();
             DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', '削除に成功しました。');
+            return redirect()->route('assets.index')->with('success-message', '資産の削除に成功しました。');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error-message', '削除に失敗しました。' . $e->getMessage());
+            return back()->withInput()->with('error-message', '資産の削除に失敗しました。' . $e->getMessage());
         }
     }
 

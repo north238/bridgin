@@ -26,6 +26,7 @@ class AssetCreateRequest extends FormRequest
             'amount' => 'required|min:-9999999999999|max:9999999999999',
             'registration_date' => 'required|before_or_equal:today',
             'category_id' => 'required',
+            'asset-type-flg' => 'required'
         ];
     }
 }
