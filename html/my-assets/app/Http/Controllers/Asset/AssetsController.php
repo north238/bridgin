@@ -88,7 +88,7 @@ class AssetsController extends Controller
         $asset->amount = $validated['amount'];
         $asset->registration_date = $validated['registration_date'];
         $asset->category_id = $validated['category_id'];
-        $asset->asset_type_flg = $validated['asset-type-flg'];
+        $asset->asset_type_flg = $validated['asset_type_flg'];
         $asset->user_id = $userId;
         try {
             DB::beginTransaction();
@@ -144,7 +144,7 @@ class AssetsController extends Controller
                 $asset->amount = $validated['amount'];
                 $asset->registration_date = $validated['registration_date'];
                 $asset->category_id = $validated['category_id'];
-                $asset->asset_type_flg = $validated['asset-type-flg'];
+                $asset->asset_type_flg = $validated['asset_type_flg'];
                 $asset->user_id = $userId;
                 $asset->save();
                 DB::commit();
@@ -163,7 +163,7 @@ class AssetsController extends Controller
                 $asset->amount = $validated['amount'];
                 $asset->registration_date = $validated['registration_date'];
                 $asset->category_id = $validated['category_id'];
-                $asset->asset_type_flg = $validated['asset-type-flg'];
+                $asset->asset_type_flg = $validated['asset_type_flg'];
                 $asset->user_id = $userId;
                 $asset->save();
                 DB::commit();
