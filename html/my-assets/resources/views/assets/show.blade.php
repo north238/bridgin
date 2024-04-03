@@ -10,9 +10,8 @@
                 @endif
             </div>
             <div class="heading-title mt-3">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('edit_asset') }}</h2>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ __('edit_asset') }}</h2>
             </div>
-            <hr class="h-px my-6 bg-gray-200 border-1 dark:bg-gray-700">
             <form id="updated-form" class="validated-form mb-2" method="post"
                 action="{{ route('assets.update', [$assetData->id]) }}" novalidate>
                 @csrf
@@ -20,47 +19,32 @@
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="action-checkbox flex sm:col-span-2">
                         <input type="hidden" name="changed_type_flg" value="0">
-                        <p class="me-4 text-sm font-medium text-gray-900 dark:text-white"><svg
-                                class="inline align-middle w-4 h-4 mb-0.5 me-0.5 text-green-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
+                        <p class="me-4 text-sm font-medium text-gray-900 dark:text-white"><i
+                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>
                             資産を追加する場合は、こちらをチェックしてください</p>
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="changed_type_flg" name="changed_type_flg" value="1"
                                 class="sr-only peer">
                             <div
-                                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-3 peer-focus:ring-blue-600 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                             </div>
                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
                         </label>
                     </div>
+                    <hr class="h-px mb-6 bg-gray-200 border-1 dark:bg-gray-700 sm:col-span-2">
                     <div class="name-input sm:col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><svg
-                                class="inline align-middle w-4 h-4 mb-0.5 me-0.5 text-red-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>{{ __('asset_name') }}</label>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
+                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('asset_name') }}</label>
                         <input type="text" name="name" id="name" value="{{ $assetData->name }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <div class="amount-input w-full">
-                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><svg
-                                class="inline align-middle w-4 h-4 mb-1 me-0.5 text-red-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>{{ __('amount') }}</label>
+                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
+                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('amount') }}</label>
                         <input type="number" name="amount" id="amount" value="{{ $assetData->amount }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required>
                         <input type="hidden" name="format-amount" id="format-amount"
                             value="{{ number_format($assetData->amount) }}" required>
@@ -68,30 +52,19 @@
                     </div>
                     <div class="registration_date-input w-full">
                         <label for="registration_date"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><svg
-                                class="inline align-middle w-4 h-4 mb-1 me-0.5 text-red-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>{{ __('registration_date') }}</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
+                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('registration_date') }}</label>
                         <input type="date" name="registration_date" id="registration_date"
                             value="{{ $assetData->registration_date }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required>
                         <x-input-error :messages="$errors->get('registration_date')" class="mt-2" />
                     </div>
                     <div class="genre-select-box">
-                        <label for="genre_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><svg
-                                class="inline align-middle w-4 h-4 mb-0.5 me-0.5 text-red-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>{{ __('genre_name') }}</label>
+                        <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
+                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required>
                             <option value="{{ $assetData->genre_id }}">{{ $assetData->genre_name }}</option>
                             @foreach ($genres as $genre)
@@ -99,21 +72,14 @@
                                 </option>
                             @endforeach
                         </select>
-                        <input type="hidden" name="{{ $assetData->genre_name }}"
-                            value="{{ $assetData->genre_id }}">
+                        <input type="hidden" name="{{ $assetData->genre_name }}" value="{{ $assetData->genre_id }}">
                         <x-input-error :messages="$errors->get('genre')" class="mt-2" />
                     </div>
                     <div class="catagory-select-box">
-                        <label for="category_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><svg
-                                class="inline align-middle w-4 h-4 mb-0.5 me-0.5 text-red-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>{{ __('category_name') }}</label>
+                        <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
+                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('category_name') }}</label>
                         <select id="category_id" name="category_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="{{ $assetData->category_id }}">{{ $assetData->category_name }}</option>
                         </select>
@@ -121,49 +87,36 @@
                             value="{{ $assetData->category_id }}">
                         <x-input-error :messages="$errors->get('category')" class="mt-2" />
                     </div>
-                    <div class="sm:col-span-2 mb-6">
-                        <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><svg
-                                class="inline align-middle w-4 h-4 mb-1 me-0.5 text-red-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>資産タイプ選択</p>
+                    <div class="sm:col-span-2">
+                        <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
+                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>資産タイプ選択</p>
                         <ul class="grid gap-6 md:grid-cols-2">
                             <li>
-                                <input type="checkbox" id="current-asset" name="asset-type-flg" value="0"
+                                <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
                                     class="hidden peer" checked>
                                 <label for="current-asset"
-                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-primary-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-500 hover:text-gray-600 dark:peer-checked:text-gray-500 peer-checked:text-gray-800 hover:bg-green-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                     <div class="block">
-                                        <div class="w-full text-sm font-semibold">【流動資産】</div>
-                                        <div class="w-full text-sm"><svg
-                                                class="w-4 h-4 mb-0.5 inline-block align-bottom text-blue-600 dark:text-white"
-                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                                height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"
-                                                    d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                            </svg>
-                                            資産の価値が毎月<u class="underline font-semibold">変動する</u>場合はこちらを選択してください</div>
+                                        <div class="w-full font-semibold mb-2"><i
+                                                class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>流動資産
+                                        </div>
+                                        <div class="w-full text-sm">
+                                            <i class="fa-solid fa-circle-info text-green-500 mb-0.5"></i>
+                                            資産の価値が毎月<u class="underline font-semibold">変動する</u>場合はこちらを選択してください
+                                        </div>
                                     </div>
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="fixed-asset" name="asset-type-flg" value="1"
+                                <input type="checkbox" id="fixed-asset" name="asset_type_flg" value="1"
                                     class="hidden peer">
                                 <label for="fixed-asset"
-                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-800 hover:bg-blue-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                     <div class="block">
-                                        <div class="w-full text-sm font-semibold">【固定資産】</div>
-                                        <div class="w-full text-sm"><svg
-                                                class="w-4 h-4 mb-0.5 inline-block align-bottom text-blue-600 dark:text-white"
-                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                                height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"
-                                                    d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                            </svg>
+                                        <div class="w-full font-semibold mb-2"><i
+                                                class="fa-solid fa-vault text-blue-600 me-1"></i>固定資産</div>
+                                        <div class="w-full text-sm"><i
+                                                class="fa-solid fa-circle-info text-blue-600 mb-0.5"></i>
                                             資産の価値が毎月<u class="underline font-semibold">変動しない</u>場合はこちらを選択してください
                                         </div>
                                     </div>
@@ -172,7 +125,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="edit-btn-group">
+                <div class="edit-btn-group mt-6">
                     <button id="updated-btn"
                         class="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-700 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"><svg
                             id="updated-icon" class="w-5 h-5 me-2 text-white dark:text-white" aria-hidden="true"
@@ -335,7 +288,7 @@
                     'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
                 );
                 $('#updated-btn').addClass(
-                    'bg-blue-500 hover:bg-blue-600 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
+                    'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
                 );
             } else {
                 $('#updated-text').text('更新');
@@ -343,7 +296,7 @@
                     'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
                 );
                 $('#updated-btn').removeClass(
-                    'bg-blue-500 hover:bg-blue-600 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
+                    'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
                 );
             }
         });

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Orchid\Icons\IconFinder;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +18,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(IconFinder $iconFinder): void
     {
-        //
+        $iconFinder->registerIconDirectory('fa', storage_path('app/icons'));
     }
 }

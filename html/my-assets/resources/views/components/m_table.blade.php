@@ -190,7 +190,13 @@
                                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <td
                                                 class="text-gray-900 dark:text-white border-t border-b border-gray-200 px-4 py-3 font-medium">
-                                                {{ $asset['name'] }}</td>
+                                                @if ($asset['asset_type_flg'] === 0)
+                                                    <i class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>
+                                                @else
+                                                    <i class="fa-solid fa-vault text-blue-600 me-1"></i>
+                                                @endif
+                                                {{ $asset['name'] }}
+                                            </td>
                                             <td class="border-t border-b border-gray-200 px-6 py-3">
                                                 {{ $asset['category']['name'] }}
                                             </td>

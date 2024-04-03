@@ -19,7 +19,7 @@
 <body class="font-sans antialiased">
     <div class="">
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800">
                 {{ __('assets') }}
             </h2>
         </x-slot>
