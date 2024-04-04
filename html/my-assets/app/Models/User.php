@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(AssetTarget::class);
     }
+
+    public function assetSwitchStatuses(): HasMany
+    {
+        return $this->hasMany(AssetSwitchStatus::class);
+    }
 }

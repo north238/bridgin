@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         Admin::truncate();
-        
+
         Admin::create([
             'name' => '北山文哉',
             'email' => 'fumiyama02@yahoo.co.jp',

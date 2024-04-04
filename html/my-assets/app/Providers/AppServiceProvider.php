@@ -20,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(IconFinder $iconFinder): void
     {
-        $iconFinder->registerIconDirectory('fa', storage_path('app/icons'));
+        // $iconFinder->registerIconDirectory('fa', storage_path('app/icons'));
     }
 }
