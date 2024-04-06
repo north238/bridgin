@@ -63,7 +63,7 @@ class AjaxController extends Controller
 
         session()->put('month-data', $betweenMonthArray);
 
-        $assets = $this->assets->assetsQuery($userId, $betweenMonthArray, $sortData);
+        $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sortData);
         $totalAmount = $assets->sum('amount');
 
         $assetsByMonth = $assets->groupBy(function ($asset) {
@@ -131,7 +131,7 @@ class AjaxController extends Controller
         $assetMinDate = $this->assets->minAsset($userId);
         $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
 
-        $assets = $this->assets->assetsQuery($userId, $betweenMonthArray, $sortData);
+        $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sortData);
         $totalAmount = $assets->sum('amount');
         $assetsByMonth = $assets->groupBy(function ($asset) {
             return Carbon::parse($asset->registration_date)->format('Y-m');

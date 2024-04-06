@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('asset_switch_statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->comment('ユーザーID');         // user_idの外部キー制約の付与
-            $table->tinyInteger('asset_type_status')->comment('0: 表示, 1: 非表示');    // ユーザーが選択した状態を管理
-            $table->tinyInteger('debut_status')->comment('0: 表示, 1: 非表示');         // ユーザーが選択した状態を管理
+            $table->tinyInteger('asset_type_status')->default(0)->comment('0: 表示, 1: 非表示');    // ユーザーが選択した状態を管理
+            $table->tinyInteger('debut_status')->default(0)->comment('0: 表示, 1: 非表示');         // ユーザーが選択した状態を管理
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });

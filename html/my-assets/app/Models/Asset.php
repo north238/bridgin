@@ -34,7 +34,7 @@ class Asset extends Model
      * @param array $sortData
      * @return query $result
      */
-    public function assetsAllData($userId, $sortData)
+    public function getAssetsAllData($userId, $sortData)
     {
         $sortOrder = $sortData['order'];
         $sortType = $sortData['type'];
@@ -57,7 +57,7 @@ class Asset extends Model
      * @param array $sortData
      * @return query $result
      */
-    public function assetsQuery($userId, $betweenMonthArray, $sortData)
+    public function fetchUserAssets($userId, $betweenMonthArray, $sortData)
     {
         $sortOrder = $sortData['order'];
         $sortType = $sortData['type'];
@@ -73,7 +73,6 @@ class Asset extends Model
 
     /**
      * データの最小値を取得
-     * 
      * @param int $userId
      * @return string $result
      */
@@ -84,6 +83,26 @@ class Asset extends Model
             ->min('registration_date');
 
         return $result;
+    }
+
+    /**
+     * 指定した資産を編集するときに使用する
+     * @param  integer $id
+     * @param  integer $userId
+     * @return query   $query
+     */
+    public function getAssetData($id, $userId)
+    {
+        $selectedColumns = ['assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id'];
+        $query = Asset::query()
+            ->join('categories as c', 'assets.category_id', '=', 'c.id')
+            ->join('genres as g', 'c.genre_id', '=', 'g.id')
+            ->select($selectedColumns)
+            ->where('assets.user_id', $userId)
+            ->where('assets.id', $id)
+            ->first();
+
+        return $query;
     }
 
     public function user(): BelongsTo
@@ -100,5 +119,4 @@ class Asset extends Model
     {
         return $this->hasMany(AssetChange::class);
     }
-
 }

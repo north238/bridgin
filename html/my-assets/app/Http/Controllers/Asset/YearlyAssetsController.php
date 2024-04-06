@@ -39,7 +39,7 @@ class YearlyAssetsController extends Controller
         $userId = Auth::user()->id;
         $sortData = ['order' => 'registration_date', 'type' => 'DESC'];
 
-        $assetsAllData = $this->assets->assetsAllData($userId, $sortData);
+        $assetsAllData = $this->assets->getAssetsAllData($userId, $sortData);
         if ($assetsAllData->count() === 0) {
             return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
         }

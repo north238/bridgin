@@ -21,7 +21,7 @@
                         <input type="hidden" name="changed_type_flg" value="0">
                         <p class="me-4 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-red-500 me-0.5"></i>
-                            資産を追加する場合は、こちらをチェックしてください</p>
+                            同じ資産を追加する場合は、こちらをチェックしてください</p>
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="changed_type_flg" name="changed_type_flg" value="1"
                                 class="sr-only peer">
@@ -93,7 +93,7 @@
                         <ul class="grid gap-6 md:grid-cols-2">
                             <li>
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
-                                    class="hidden peer" checked>
+                                    class="hidden peer">
                                 <label for="current-asset"
                                     class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-500 hover:text-gray-600 dark:peer-checked:text-gray-500 peer-checked:text-gray-800 hover:bg-green-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                     <div class="block">
@@ -123,6 +123,7 @@
                                 </label>
                             </li>
                         </ul>
+                        <input type="hidden" id="asset-type-flg" value="{{ $assetData->asset_type_flg }}">
                     </div>
                 </div>
                 <div class="edit-btn-group mt-6">
@@ -220,85 +221,96 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script type="module" defer>
+            // ボタンクリック時の制御（二重送信防止）
+            $("#updated-form").submit(function(e) {
+                $("#updated-btn").prop('disabled', true);
+                $("#updated-icon").addClass('hidden');
+                $("#updated-loading-icon").removeClass('hidden');
+                setTimeout(() => {
+                    $("#updated-btn").prop('disabled', false);
+                    $("#updated-loading-icon").addClass('hidden');
+                    $("#updated-icon").removeClass('hidden');
+                }, 5000);
+            });
 
-    <script type="module" defer>
-        // ボタンクリック時の制御（二重送信防止）
-        $("#updated-form").submit(function(e) {
-            $("#updated-btn").prop('disabled', true);
-            $("#updated-icon").addClass('hidden');
-            $("#updated-loading-icon").removeClass('hidden');
-            setTimeout(() => {
-                $("#updated-btn").prop('disabled', false);
-                $("#updated-loading-icon").addClass('hidden');
-                $("#updated-icon").removeClass('hidden');
-            }, 5000);
-        });
+            // 削除モーダルの処理
+            $("#deleted-modal-form").submit(function(e) {
+                $("#deleted-modal").hide();
+                $("#deleted-modal-btn").prop('disabled', true);
+                $("#deleted-modal-icon").addClass('hidden');
+                $("#deleted-loading-icon").removeClass('hidden');
+                setTimeout(() => {
+                    $("#deleted-modal-btn").prop('disabled', false);
+                    $("#deleted-modal-icon").removeClass('hidden');
+                    $("#deleted-loading-icon").addClass('hidden');
+                }, 5000);
+            });
 
-        // 削除モーダルの処理
-        $("#deleted-modal-form").submit(function(e) {
-            $("#deleted-modal").hide();
-            $("#deleted-modal-btn").prop('disabled', true);
-            $("#deleted-modal-icon").addClass('hidden');
-            $("#deleted-loading-icon").removeClass('hidden');
-            setTimeout(() => {
-                $("#deleted-modal-btn").prop('disabled', false);
-                $("#deleted-modal-icon").removeClass('hidden');
-                $("#deleted-loading-icon").addClass('hidden');
-            }, 5000);
-        });
+            $('#genre_id').change(function() {
+                let genreId = $(this).val();
+                const categorySelect = $('#category_id');
+                $("#category_id").prop('disabled', false)
+                const categories = {!! json_encode($categories) !!};
 
-        $('#genre_id').change(function() {
-            let genreId = $(this).val();
-            const categorySelect = $('#category_id');
-            $("#category_id").prop('disabled', false)
-            const categories = {!! json_encode($categories) !!};
+                categorySelect.empty().append('<option value="">--選択してください--</option>');
+                categories.forEach(function(category) {
+                    if (category.genre_id == genreId) {
+                        var option = $('<option></option>').prop('value', category.id).text(category.name);
+                        categorySelect.append(option);
+                    }
+                });
+            });
 
-            categorySelect.empty().append('<option value="">--選択してください--</option>');
-            categories.forEach(function(category) {
-                if (category.genre_id == genreId) {
-                    var option = $('<option></option>').attr('value', category.id).text(category.name);
-                    categorySelect.append(option);
+            // 資産タイプ選択時のJSの制御
+            $('#current-asset').click(function() {
+                let status = $(this).prop('checked');
+                if (status === true) {
+                    $('#fixed-asset').prop('checked', false);
+                } else {
+                    $('#fixed-asset').prop('checked', true);
                 }
             });
-        });
+            $('#fixed-asset').click(function() {
+                let status = $(this).prop('checked');
+                if (status === true) {
+                    $('#current-asset').prop('checked', false);
+                } else {
+                    $('#current-asset').prop('checked', true);
+                }
+            });
 
-        // 資産タイプ選択時のJSの制御
-        $('#current-asset').change(function() {
-            let status = $(this).prop('checked');
-            if (status === true) {
-                $('#fixed-asset').prop('checked', false);
-            } else {
-                $('#fixed-asset').prop('checked', true);
-            }
-        });
-        $('#fixed-asset').change(function() {
-            let status = $(this).prop('checked');
-            if (status === true) {
-                $('#current-asset').prop('checked', false);
-            } else {
-                $('#current-asset').prop('checked', true);
-            }
-        });
+            // 選択されている資産タイプにcheckedをつける
+            $(document).ready(function() {
+                let assetTypeFlgVal = $('#asset-type-flg').val();
+                if (assetTypeFlgVal === '0') {
+                    $('#current-asset').prop('checked', true);
+                } else {
+                    $('#fixed-asset').prop('checked', true);
+                }
+            });
 
-        // 選択内容によってボタンの背景色を変更
-        $('#changed_type_flg').change(function() {
-            if ($(this).prop('checked')) {
-                $('#updated-text').text('追加');
-                $('#updated-btn').removeClass(
-                    'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
-                );
-                $('#updated-btn').addClass(
-                    'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
-                );
-            } else {
-                $('#updated-text').text('更新');
-                $('#updated-btn').addClass(
-                    'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
-                );
-                $('#updated-btn').removeClass(
-                    'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
-                );
-            }
-        });
-    </script>
+            // 選択内容によってボタンの背景色を変更
+            $('#changed_type_flg').change(function() {
+                if ($(this).prop('checked')) {
+                    $('#updated-text').text('追加');
+                    $('#updated-btn').removeClass(
+                        'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
+                    );
+                    $('#updated-btn').addClass(
+                        'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
+                    );
+                } else {
+                    $('#updated-text').text('更新');
+                    $('#updated-btn').addClass(
+                        'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
+                    );
+                    $('#updated-btn').removeClass(
+                        'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
+                    );
+                }
+            });
+        </script>
+    @endpush
 </x-app-layout>

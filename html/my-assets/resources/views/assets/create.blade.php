@@ -44,7 +44,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('registration_date') }}</label>
                         <input type="date" name="registration_date" id="registration_date"
-                            value="{{ old('registration_date') }}"
+                            value="{{ $formatDate }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                         <x-input-error :messages="$errors->get('registration_date')" class="mt-2" />
@@ -132,50 +132,51 @@
             </form>
         </div>
     </section>
+    @push('scripts')
+        <script type="module" defer>
+            $("#created-form").submit(function(e) {
+                $("#created-btn").prop('disabled', true);
+                $("#check-icon").addClass('hidden');
+                $("#loading-icon").removeClass('hidden');
+                setTimeout(() => {
+                    $("#created-btn").prop('disabled', false);
+                    $("#loading-icon").addClass('hidden');
+                    $("#check-icon").removeClass('hidden');
+                }, 5000);
+            });
 
-    <script type="module" defer>
-        $("#created-form").submit(function(e) {
-            $("#created-btn").prop('disabled', true);
-            $("#check-icon").addClass('hidden');
-            $("#loading-icon").removeClass('hidden');
-            setTimeout(() => {
-                $("#created-btn").prop('disabled', false);
-                $("#loading-icon").addClass('hidden');
-                $("#check-icon").removeClass('hidden');
-            }, 5000);
-        });
+            $('#genre_id').change(function() {
+                let genreId = $(this).val();
+                const categorySelect = $('#category_id');
+                $("#category_id").prop('disabled', false)
+                const categories = {!! json_encode($categories) !!};
 
-        $('#genre_id').change(function() {
-            let genreId = $(this).val();
-            const categorySelect = $('#category_id');
-            $("#category_id").prop('disabled', false)
-            const categories = {!! json_encode($categories) !!};
-
-            categorySelect.empty().append('<option value="">--選択してください--</option>');
-            categories.forEach(function(category) {
-                if (category.genre_id == genreId) {
+                categorySelect.empty().append('<option value="">--選択してください--</option>');
+                categories.forEach(function(category) {
+                    if (category.genre_id == genreId) {
                     var option = $('<option></option>').attr('value', category.id).text(category.name);
-                    categorySelect.append(option);
+                        categorySelect.append(option);
+                    }
+                });
+            });
+
+            // 資産タイプ選択時のJSの制御
+            $('#current-asset').change(function() {
+                let status = $(this).prop('checked');
+                if (status === true) {
+                    $('#fixed-asset').prop('checked', false);
+                } else {
+                    $('#fixed-asset').prop('checked', true);
                 }
             });
-        });
-
-        // 資産タイプ選択時のJSの制御
-        $('#current-asset').change(function() {
-            let status = $(this).prop('checked');
-            if (status === true) {
-                $('#fixed-asset').prop('checked', false);
-            } else {
-                $('#fixed-asset').prop('checked', true);
-            }
-        });
-        $('#fixed-asset').change(function() {
-            let status = $(this).prop('checked');
-            if (status === true) {
-                $('#current-asset').prop('checked', false);
-            } else {
-                $('#current-asset').prop('checked', true);
-            }
-        });
-    </script>
+            $('#fixed-asset').change(function() {
+                let status = $(this).prop('checked');
+                if (status === true) {
+                    $('#current-asset').prop('checked', false);
+                } else {
+                    $('#current-asset').prop('checked', true);
+                }
+            });
+        </script>
+    @endpush
 </x-app-layout>

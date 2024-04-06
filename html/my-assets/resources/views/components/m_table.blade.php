@@ -227,6 +227,8 @@
         </div>
 </section>
 
+@push('scripts')
+
 <script type="module" defer>
     // 表示のデータが今月の場合「今月」ボタンを非表示
     // データがなければ「前月・今月」のボタンを非表示
@@ -329,3 +331,4 @@
         }
     });
 </script>
+@endpush
