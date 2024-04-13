@@ -221,96 +221,13 @@
             </div>
         </div>
     </div>
-    @push('scripts')
-        <script type="module" defer>
-            // ボタンクリック時の制御（二重送信防止）
-            $("#updated-form").submit(function(e) {
-                $("#updated-btn").prop('disabled', true);
-                $("#updated-icon").addClass('hidden');
-                $("#updated-loading-icon").removeClass('hidden');
-                setTimeout(() => {
-                    $("#updated-btn").prop('disabled', false);
-                    $("#updated-loading-icon").addClass('hidden');
-                    $("#updated-icon").removeClass('hidden');
-                }, 5000);
-            });
-
-            // 削除モーダルの処理
-            $("#deleted-modal-form").submit(function(e) {
-                $("#deleted-modal").hide();
-                $("#deleted-modal-btn").prop('disabled', true);
-                $("#deleted-modal-icon").addClass('hidden');
-                $("#deleted-loading-icon").removeClass('hidden');
-                setTimeout(() => {
-                    $("#deleted-modal-btn").prop('disabled', false);
-                    $("#deleted-modal-icon").removeClass('hidden');
-                    $("#deleted-loading-icon").addClass('hidden');
-                }, 5000);
-            });
-
-            $('#genre_id').change(function() {
-                let genreId = $(this).val();
-                const categorySelect = $('#category_id');
-                $("#category_id").prop('disabled', false)
-                const categories = {!! json_encode($categories) !!};
-
-                categorySelect.empty().append('<option value="">--選択してください--</option>');
-                categories.forEach(function(category) {
-                    if (category.genre_id == genreId) {
-                        var option = $('<option></option>').prop('value', category.id).text(category.name);
-                        categorySelect.append(option);
-                    }
-                });
-            });
-
-            // 資産タイプ選択時のJSの制御
-            $('#current-asset').click(function() {
-                let status = $(this).prop('checked');
-                if (status === true) {
-                    $('#fixed-asset').prop('checked', false);
-                } else {
-                    $('#fixed-asset').prop('checked', true);
-                }
-            });
-            $('#fixed-asset').click(function() {
-                let status = $(this).prop('checked');
-                if (status === true) {
-                    $('#current-asset').prop('checked', false);
-                } else {
-                    $('#current-asset').prop('checked', true);
-                }
-            });
-
-            // 選択されている資産タイプにcheckedをつける
-            $(document).ready(function() {
-                let assetTypeFlgVal = $('#asset-type-flg').val();
-                if (assetTypeFlgVal === '0') {
-                    $('#current-asset').prop('checked', true);
-                } else {
-                    $('#fixed-asset').prop('checked', true);
-                }
-            });
-
-            // 選択内容によってボタンの背景色を変更
-            $('#changed_type_flg').change(function() {
-                if ($(this).prop('checked')) {
-                    $('#updated-text').text('追加');
-                    $('#updated-btn').removeClass(
-                        'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
-                    );
-                    $('#updated-btn').addClass(
-                        'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
-                    );
-                } else {
-                    $('#updated-text').text('更新');
-                    $('#updated-btn').addClass(
-                        'bg-green-500 hover:bg-green-600 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700'
-                    );
-                    $('#updated-btn').removeClass(
-                        'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700'
-                    );
-                }
-            });
+    @section('scripts')
+        <script type="text/javascript">
+            const categories = {!! json_encode($categories) !!}
         </script>
+    @endsection
+    @push('script-files')
+        @vite('resources/js/asset-update.js')
+        @vite('resources/js/create-with-update.js')
     @endpush
 </x-app-layout>

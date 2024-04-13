@@ -135,7 +135,8 @@
                         </div>
 
                         @php
-                            $sortData = json_encode($sortData);
+                            $sessionSort = Session::get('sortData');
+                            $sort = json_encode($sessionSort);
                         @endphp
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -147,8 +148,8 @@
                                         <th scope="col" class="px-6 py-3">
                                             <div class="flex items-center">
                                                 {{ __('category_name') }}
-                                                <a href="{{ route('ajax.sort.index') }}" id="category-sort"
-                                                    data-sort="{{ $sortData }}"><svg class="w-3 h-3 ms-1.5"
+                                                <a href="{{ route('sort.get') }}" id="category-sort"
+                                                    data-sort="{{ $sort }}"><svg class="w-3 h-3 ms-1.5"
                                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                         fill="currentColor" viewBox="0 0 24 24">
                                                         <path
@@ -159,8 +160,8 @@
                                         <th scope="col" class="px-6 py-3">
                                             <div class="flex items-center">
                                                 {{ __('amount') }}
-                                                <a href="{{ route('ajax.sort.index') }}" id="amount-sort"
-                                                    data-sort="{{ $sortData }}"><svg class="w-3 h-3 ms-1.5"
+                                                <a href="{{ route('sort.get') }}" id="amount-sort"
+                                                    data-sort="{{ $sort }}"><svg class="w-3 h-3 ms-1.5"
                                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                         fill="currentColor" viewBox="0 0 24 24">
                                                         <path
@@ -171,8 +172,8 @@
                                         <th scope="col" class="px-6 py-3">
                                             <div class="flex items-center">
                                                 {{ __('registration_date') }}
-                                                <a href="{{ route('ajax.sort.index') }}" id="registration-date-sort"
-                                                    data-sort="{{ $sortData }}"><svg class="w-3 h-3 ms-1.5"
+                                                <a href="{{ route('sort.get') }}" id="registration-date-sort"
+                                                    data-sort="{{ $sort }}"><svg class="w-3 h-3 ms-1.5"
                                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                         fill="currentColor" viewBox="0 0 24 24">
                                                         <path
@@ -226,109 +227,3 @@
             @endif
         </div>
 </section>
-
-@push('scripts')
-
-<script type="module" defer>
-    // 表示のデータが今月の場合「今月」ボタンを非表示
-    // データがなければ「前月・今月」のボタンを非表示
-    function monthButtonChange() {
-        let formatDate = "{{ $formatDate }}";
-        let assetMinDate = "{{ $assetMinDate }}";
-        let nowMonth = $("#now-month").val();
-
-        if (formatDate === nowMonth) {
-            $("#now-month-btn").addClass('hidden');
-            $("#next-month-btn").addClass('hidden');
-        }
-        if (assetMinDate === nowMonth) {
-            $("#prev-month-btn").addClass('hidden');
-        }
-    }
-
-    $(document).ready(function() {
-
-        monthButtonChange();
-
-        $(".month-btn").click(function() {
-            let btnId = $(this).attr("id"); // クリックされたボタンのidを取得
-            $("#clicked-btn").val(btnId);
-        });
-
-        // 前月のボタンがクリックされたら
-        $("#month-form-data").submit(function(event) {
-            event.preventDefault(); // デフォルトのクリック動作を無効化
-
-            const tableId = $("#m-assets-table");
-            const url = "{{ route('ajax.pagination.index') }}";
-            let monthFormData = $(this).serialize();
-            let formData = new URLSearchParams(
-                monthFormData); //serialize()で取得した文字列をURLSearchParamsオブジェクトに変換
-            let formDataObject = Object.fromEntries(formData
-                .entries()); // URLSearchParamsオブジェクトからJavaScriptのオブジェクトに変換
-            $.ajax({
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                    },
-                    url: url,
-                    data: formDataObject,
-                    type: "POST",
-                })
-                .done(function(res) {
-                    tableId.html(res);
-                })
-                .fail(function(err) {
-                    console.log("エラーが発生しています。", err);
-                });
-        });
-    });
-
-    $(document).ready(function() {
-        const tableId = $("#m-assets-table");
-        const categoryNameSort = $("#category-sort");
-        const amountSort = $("#amount-sort");
-        const registrationDateSort = $("#registration-date-sort");
-
-        const url = "{{ route('ajax.sort.index') }}"
-
-        categoryNameSort.click(function(e) {
-            e.preventDefault();
-            let sortData = categoryNameSort.data('sort');
-            sortData.newOrder = 'category_id';
-            submitSortData(sortData);
-        });
-
-        amountSort.click(function(e) {
-            e.preventDefault();
-            let sortData = amountSort.data('sort');
-            sortData.newOrder = 'amount';
-            submitSortData(sortData);
-        });
-
-        registrationDateSort.click(function(e) {
-            e.preventDefault();
-            let sortData = registrationDateSort.data('sort');
-            sortData.newOrder = 'registration_date';
-            submitSortData(sortData);
-        });
-
-        function submitSortData(sortData) {
-            $.ajax({
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                    },
-                    url: url,
-                    data: sortData,
-                    type: "POST",
-                })
-                .done(function(res) {
-                    console.log('ajax成功');
-                    tableId.html(res);
-                })
-                .fail(function(err) {
-                    console.log('エラーが発生しています。', err);
-                });
-        }
-    });
-</script>
-@endpush

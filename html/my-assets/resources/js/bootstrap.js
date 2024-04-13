@@ -30,3 +30,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+// import $ from "jquery";
+import Alpine from "alpinejs";
+
+// window.jQuery = window.$ = $;
+window.Alpine = Alpine;
+Alpine.start();

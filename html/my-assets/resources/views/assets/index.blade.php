@@ -13,7 +13,7 @@
             </x-alert-message>
         </div>
     @endif
-    <div id="m-assets-table" class="block m-6 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow">
+    <div class="block m-6 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow">
         <x-slot name="header">
             <h2 class="font-semibold text-gray-800 leading-tight">
                 {{ __('all_assets') }}
@@ -42,34 +42,20 @@
                 </form>
             </div>
         </div>
-        <div>
+        <div id="m-assets-table">
             @include('components.m_table')
         </div>
     </div>
-
-    @push('scripts')
-        <script type="module" defer>
-            $(document).ready(function() {
-                $('#debut-status').click(function() {
-                    const url = $('#asset-switch-form').prop('action');
-                    const method = $('#asset-switch-form').prop('method');
-                    const formData = $('#asset-switch-form').serialize();
-                    $.ajax({
-                        headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                        },
-                        url: url,
-                        data: formData,
-                        type: method,
-                    })
-                    .done(function(res) {
-                        console.log('ajax成功', res);
-                    })
-                    .fail(function(err) {
-                        console.log('エラーが発生しています。', err);
-                    });
-                });
-            });
+    @section('scripts')
+        <script type="text/javascript">
+            const formatDate = "{{ $formatDate }}";
+            const assetMinDate = "{{ $assetMinDate }}";
+            const sortUrl = "{{ route('sort.get') }}";
+            const redirect = "{{ route('assets.index') }}"
         </script>
+    @endsection
+    @push('script-files')
+        @vite('resources/js/asset-month-change.js')
+        @vite('resources/js/reorder-asset.js')
     @endpush
 </x-app-layout>

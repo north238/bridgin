@@ -13,9 +13,10 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('scripts')
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script> --}}
+    @yield('scripts')
+    @stack('script-files')
 </head>
 
 <body class="font-sans antialiased">
@@ -38,18 +39,6 @@
             </div>
         </main>
     </div>
-
-    @push('scripts')
-        <script type="module" defer>
-            // ダークモード切替スクリプト
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
-                    '(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark')
-            }
-        </script>
-    @endpush
 </body>
 
 </html>

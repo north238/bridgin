@@ -132,51 +132,13 @@
             </form>
         </div>
     </section>
-    @push('scripts')
-        <script type="module" defer>
-            $("#created-form").submit(function(e) {
-                $("#created-btn").prop('disabled', true);
-                $("#check-icon").addClass('hidden');
-                $("#loading-icon").removeClass('hidden');
-                setTimeout(() => {
-                    $("#created-btn").prop('disabled', false);
-                    $("#loading-icon").addClass('hidden');
-                    $("#check-icon").removeClass('hidden');
-                }, 5000);
-            });
-
-            $('#genre_id').change(function() {
-                let genreId = $(this).val();
-                const categorySelect = $('#category_id');
-                $("#category_id").prop('disabled', false)
-                const categories = {!! json_encode($categories) !!};
-
-                categorySelect.empty().append('<option value="">--選択してください--</option>');
-                categories.forEach(function(category) {
-                    if (category.genre_id == genreId) {
-                    var option = $('<option></option>').attr('value', category.id).text(category.name);
-                        categorySelect.append(option);
-                    }
-                });
-            });
-
-            // 資産タイプ選択時のJSの制御
-            $('#current-asset').change(function() {
-                let status = $(this).prop('checked');
-                if (status === true) {
-                    $('#fixed-asset').prop('checked', false);
-                } else {
-                    $('#fixed-asset').prop('checked', true);
-                }
-            });
-            $('#fixed-asset').change(function() {
-                let status = $(this).prop('checked');
-                if (status === true) {
-                    $('#current-asset').prop('checked', false);
-                } else {
-                    $('#current-asset').prop('checked', true);
-                }
-            });
+    @section('scripts')
+        <script type="text/javascript">
+            const categories = {!! json_encode($categories) !!}
         </script>
+    @endsection
+    @push('script-files')
+        @vite('resources/js/asset-create.js')
+        @vite('resources/js/create-with-update.js')
     @endpush
 </x-app-layout>

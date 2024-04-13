@@ -31,13 +31,13 @@ class Asset extends Model
     /**
      * 資産全件出力
      * @param int $userId
-     * @param array $sortData
+     * @param array $sort
      * @return query $result
      */
-    public function getAssetsAllData($userId, $sortData)
+    public function getAssetsAllData($userId, $sort)
     {
-        $sortOrder = $sortData['order'];
-        $sortType = $sortData['type'];
+        $sortOrder = $sort['order'];
+        $sortType = $sort['type'];
         $result = Asset::query()
             ->where('user_id', $userId)
             ->with(['category:id,name'])
@@ -54,13 +54,13 @@ class Asset extends Model
      * 
      * @param int $userID
      * @param Carbon $betweenMonthArray
-     * @param array $sortData
+     * @param array $sort
      * @return query $result
      */
-    public function fetchUserAssets($userId, $betweenMonthArray, $sortData)
+    public function fetchUserAssets($userId, $betweenMonthArray, $sort)
     {
-        $sortOrder = $sortData['order'];
-        $sortType = $sortData['type'];
+        $sortOrder = $sort['order'];
+        $sortType = $sort['type'];
         $result = Asset::query()
             ->where('user_id', $userId)
             ->with(['category:id,name'])
