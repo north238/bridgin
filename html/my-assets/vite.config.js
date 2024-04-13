@@ -8,15 +8,15 @@ export default defineConfig({
             host: "localhost",
         },
         watch: {
-            usePolling: true,
+            // usePolling: true,
+            interval: 2000
         },
     },
     plugins: [
         laravel({
             input: [
                 "resources/css/app.css",
-                "resources/js/app.js",
-                "resources/js/flowbite.js",
+                "resources/js/app.js"
             ],
             refresh: true,
         }),

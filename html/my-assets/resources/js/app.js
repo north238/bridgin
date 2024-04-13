@@ -1,9 +1,6 @@
-import $ from "jquery";
-import Alpine from "alpinejs";
 import "./bootstrap";
 import "flowbite";
-
-window.jQuery = window.$ = $;
-window.Alpine = Alpine;
-
-Alpine.start();
+import "./switch-dark-with-light";
+// import "./asset-month-change";
+// import "./reorder-asset";
+// import "./asset-addition";

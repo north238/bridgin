@@ -9,13 +9,13 @@ class CsvFilesController extends Controller
 {
     // CSVのダウンロード機能
     // jsonで受け取ったデータを変換
-    
+
     public function csvExport(Request $request)
     {
         $requestData =
             json_decode($request->input('export-data'), true);
         $csvHeader = ['id', 'category_name', 'name', 'amount', 'registration_date', 'created_at'];
-        
+
         $fileName = $requestData[0]['registration_date'] . '.csv';
 
         $response = new StreamedResponse(function () use ($csvHeader, $requestData) {

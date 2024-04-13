@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Services\AssetService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AjaxController extends Controller
 {
@@ -31,15 +32,10 @@ class AjaxController extends Controller
     public function ajaxPaginationIndex(Request $request)
     {
         $userId = Auth::user()->id;
-        $requestData = $request->all();
-        $clickedBtn = $requestData['clicked-btn'];
-        $prevMonthData = Carbon::parse($requestData['prev-month'])->format('Y-m-d');
-        $nextMonthData = Carbon::parse($requestData['next-month'])->format('Y-m-d');
-        $formatDate = Carbon::now()->format('Y-m');
-        $sortData = ['order' => 'name', 'type' => 'ASC'];
-
-        $assetMinDate = $this->assets->minAsset($userId);
-        $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
+        $clickedBtn = $request['clicked-btn'];
+        $prevMonthData = Carbon::parse($request['prev-month'])->format('Y-m-d');
+        $nextMonthData = Carbon::parse($request['next-month'])->format('Y-m-d');
+        $sort = ['order' => 'name', 'type' => 'ASC'];
 
         if ($clickedBtn === 'prev-month-btn') {
             // 前月
@@ -63,14 +59,30 @@ class AjaxController extends Controller
 
         session()->put('month-data', $betweenMonthArray);
 
-        $assets = $this->assets->assetsQuery($userId, $betweenMonthArray, $sortData);
-        $totalAmount = $assets->sum('amount');
-
-        $assetsByMonth = $assets->groupBy(function ($asset) {
+        $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort);
+        $request['sort'] = $sort;
+        $request['totalAmount'] = $assets->sum('amount');
+        $request['assetsByMonth'] = $assets->groupBy(function ($asset) {
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
 
-        return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'requestData', 'formatDate', 'assetMinDate', 'sortData'))->render();
+        return $this->ajaxPaginationShow($request, $userId);
+    }
+
+    /**
+     * ページネーションを表示する
+     * 
+     */
+    public function ajaxPaginationShow(Request $request, $userId)
+    {
+        $assetsByMonth = $request['assetsByMonth'];
+        $totalAmount = $request['totalAmount'];
+        $formatDate = Carbon::now()->format('Y-m');
+        $assetMinDate = $this->assets->minAsset($userId);
+        $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
+        $sort = $request['sort'];
+
+        return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'formatDate', 'assetMinDate', 'sort'))->render();
     }
 
     /**
@@ -80,63 +92,27 @@ class AjaxController extends Controller
      * @return method $this->sortUpdate($request)
      */
 
-    public function sortIndex(Request $request)
+    public function getSortFetchData(Request $request)
     {
-        $sortOrder = $request->order;       // 何を（カラム名）
+
         $sortType = $request->type;         // 昇順or降順(ソート)
         $sortNewOrder = $request->newOrder; // クリックされたaタグの名前
 
-        if(isset($sortNewOrder) === true) {
-            $sortType = ($sortType === 'ASC') ? 'DESC' : 'ASC';
-            $sortData =
+        $sortType = ($sortType === 'ASC') ? 'DESC' : 'ASC';
+        $sort =
             ['order' => $sortNewOrder, 'type' => $sortType];
-        } else {
-            $sortData =
-                ['order' => $sortOrder, 'type' => $sortType];
-        }
 
-        session()->put('sort-data', $sortData); 
-
-        return $this->sortUpdate($request);
+        return $sort;
     }
 
     /**
-     * SortIndexから受け取った値でデータを書き換える
-     * ソートされたデータをajaxへ送信する
-     * 
-     * @param Request $request
-     * @return json
+     * ソートされたデータをAssetsControllerへ送信する
+     * @param object $sort
+     * @return redirect
      */
-    public function sortUpdate(Request $request) 
+    public function PostSortData($sort)
     {
-        $userId = Auth::user()->id;
-        $requestData = $request->all();
-        $formatDate = Carbon::now()->format('Y-m');
-
-        if (session()->has('sort-data') === true) {
-            $sortData = session()->get('sort-data');
-            session()->forget('sort-data');
-        } else {
-            $sortData = ['order' => 'name', 'type' => 'ASC'];
-        }
-
-        if (session()->has('month-data') === true) {
-            $betweenMonthArray = session()->get('month-data');
-        } else {
-            $startDate = Carbon::now()->startOfMonth();
-            $endDate = Carbon::now()->endOfMonth();
-            $betweenMonthArray = [$startDate, $endDate];
-        }
-        
-        $assetMinDate = $this->assets->minAsset($userId);
-        $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
-
-        $assets = $this->assets->assetsQuery($userId, $betweenMonthArray, $sortData);
-        $totalAmount = $assets->sum('amount');
-        $assetsByMonth = $assets->groupBy(function ($asset) {
-            return Carbon::parse($asset->registration_date)->format('Y-m');
-        });
-
-        return view('assets.ajax_index', compact('assetsByMonth', 'totalAmount', 'requestData', 'formatDate', 'assetMinDate', 'sortData'))->render();
+        $sort = $this->getSortFetchData($sort);
+        return redirect()->route('assets.index')->with($sort);
     }
 }

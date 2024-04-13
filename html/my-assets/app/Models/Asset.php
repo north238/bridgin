@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Kyslik\ColumnSortable\Sortable;
 
 class Asset extends Model
 {
     use HasFactory;
-    use Sortable;
     use SoftDeletes;
 
     protected $guarded = [
@@ -33,13 +31,13 @@ class Asset extends Model
     /**
      * 資産全件出力
      * @param int $userId
-     * @param array $sortData
+     * @param array $sort
      * @return query $result
      */
-    public function assetsAllData($userId, $sortData)
+    public function getAssetsAllData($userId, $sort)
     {
-        $sortOrder = $sortData['order'];
-        $sortType = $sortData['type'];
+        $sortOrder = $sort['order'];
+        $sortType = $sort['type'];
         $result = Asset::query()
             ->where('user_id', $userId)
             ->with(['category:id,name'])
@@ -56,13 +54,13 @@ class Asset extends Model
      * 
      * @param int $userID
      * @param Carbon $betweenMonthArray
-     * @param array $sortData
+     * @param array $sort
      * @return query $result
      */
-    public function assetsQuery($userId, $betweenMonthArray, $sortData)
+    public function fetchUserAssets($userId, $betweenMonthArray, $sort)
     {
-        $sortOrder = $sortData['order'];
-        $sortType = $sortData['type'];
+        $sortOrder = $sort['order'];
+        $sortType = $sort['type'];
         $result = Asset::query()
             ->where('user_id', $userId)
             ->with(['category:id,name'])
@@ -75,7 +73,6 @@ class Asset extends Model
 
     /**
      * データの最小値を取得
-     * 
      * @param int $userId
      * @return string $result
      */
@@ -86,6 +83,26 @@ class Asset extends Model
             ->min('registration_date');
 
         return $result;
+    }
+
+    /**
+     * 指定した資産を編集するときに使用する
+     * @param  integer $id
+     * @param  integer $userId
+     * @return query   $query
+     */
+    public function getAssetData($id, $userId)
+    {
+        $selectedColumns = ['assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id'];
+        $query = Asset::query()
+            ->join('categories as c', 'assets.category_id', '=', 'c.id')
+            ->join('genres as g', 'c.genre_id', '=', 'g.id')
+            ->select($selectedColumns)
+            ->where('assets.user_id', $userId)
+            ->where('assets.id', $id)
+            ->first();
+
+        return $query;
     }
 
     public function user(): BelongsTo

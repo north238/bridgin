@@ -4,7 +4,9 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Asset\AssetsController;
 use App\Http\Controllers\Asset\YearlyAssetsController;
+use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFilesController;
+use App\Models\AssetSwitchStatus;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,11 +41,12 @@ Route::middleware('auth')->group(function() {
 // 資産全般の処理、資産表示、CSVダウンロード機能
 Route::middleware('auth')->group(function() {
     Route::resource('assets', AssetsController::class);
+    Route::post('/assets/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
     Route::post('/assets/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
-    Route::get('/assets/ajax/index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
-    Route::post('/assets/ajax/index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
-    Route::post('/assets/sort', [AjaxController::class, 'sortIndex'])->name('ajax.sort.index');
-    Route::get('/assets/sort', [AjaxController::class, 'sortUpdate'])->name('ajax.sort.update');
+    Route::post('/assets/pagination-index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
+    Route::get('/assets/pagination-show', [AjaxController::class, 'ajaxPaginationShow'])->name('ajax.pagination.show');
+    Route::post('/assets/sort/get', [AjaxController::class, 'getSortFetchData'])->name('sort.get');
+    Route::get('/assets/sort/post', [AjaxController::class, 'PostSortData'])->name('sort.post');
 });
 
 require __DIR__.'/auth.php';

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\AssetService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AssetsController extends Controller
 {
@@ -34,34 +35,40 @@ class AssetsController extends Controller
     /**
      * 資産表示画面（ログイン済かつ作成したユーザーのみ）
      * 登録内容をテーブルで表示させる
+     * @return View 資産データを表示させる
      */
-    public function index()
+    public function index(Request $request)
     {
         $userId = Auth::user()->id;
         $formatDate = Carbon::now()->format('Y-m');
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
         $betweenMonthArray = [$startDate, $endDate];
-        $sortData = ['order' => 'name', 'type' => 'ASC'];
+        if (isset($request->sort) === true) {
+            $sort = $request->sort;
+        } else {
+            $sort = ['order' => 'name', 'type' => 'ASC'];
+        }
 
         $assetMinDate = $this->assets->minAsset($userId);
         $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
 
-        $assetsAllData = $this->assets->assetsAllData($userId, $sortData);
+        $assetsAllData = $this->assets->getAssetsAllData($userId, $sort);
         if ($assetsAllData->count() === 0) {
             return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
         }
 
-        $assets = $this->assets->assetsQuery($userId, $betweenMonthArray, $sortData);
+        $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort);
         $assetsByMonth = $assets->groupBy(function ($asset) {
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
 
         $totalAmount = $assets->sum('amount');
 
-        session()->put('month-data', $betweenMonthArray);
+        Session::put('monthData', $betweenMonthArray);
+        Session::put('sortData', $sort);
 
-        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate', 'sortData'));
+        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate', 'sort'));
     }
 
     /**
@@ -69,14 +76,15 @@ class AssetsController extends Controller
      */
     public function create()
     {
+        $formatDate = Carbon::now()->format('Y-m-d');
         $genres = Genre::query()->get();
         $categories = Category::query()->with(['genre:id,name'])->get();
-        return view('assets.create', compact('genres', 'categories'));
+        return view('assets.create', compact('genres', 'categories', 'formatDate'));
     }
 
     /**
      * 資産をデータベースに保存
-     * todo:: 文字を入力してもvalidationが消えない
+     * TODO: 文字を入力してもvalidationが消えない
      * フォームバリデーションを導入する
      */
     public function store(AssetCreateRequest $request)
@@ -108,16 +116,7 @@ class AssetsController extends Controller
     public function show(string $id)
     {
         $userId = Auth::user()->id;
-        $query = ['assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id'];
-
-        $assetData = Asset::query()
-            ->join('categories as c', 'assets.category_id', '=', 'c.id')
-            ->join('genres as g', 'c.genre_id', '=', 'g.id')
-            ->select($query)
-            ->where('assets.user_id', $userId)
-            ->where('assets.id', $id)
-            ->first();
-
+        $assetData = $this->assets->getAssetData($id, $userId);
         $genres = Genre::query()->get();
         $categories = Category::query()
             ->with(['genre:id,name'])
@@ -154,7 +153,7 @@ class AssetsController extends Controller
                 DB::rollBack();
                 return back()->withInput()->with('error-message', '資産の追加に失敗しました。' . $e->getMessage());
             }
-        // 更新の場合の処理
+            // 更新の場合の処理
         } else {
             try {
                 DB::beginTransaction();
