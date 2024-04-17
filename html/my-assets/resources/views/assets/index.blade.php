@@ -55,7 +55,6 @@
         </script>
     @endsection
     @push('script-files')
-        @vite('resources/js/asset-month-change.js')
-        @vite('resources/js/reorder-asset.js')
+        @vite(['resources/js/asset-month-change.js', 'resources/js/reorder-asset.js'])
     @endpush
 </x-app-layout>
