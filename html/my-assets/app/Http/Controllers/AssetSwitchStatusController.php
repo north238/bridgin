@@ -31,7 +31,7 @@ class AssetSwitchStatusController extends Controller
             DB::commit();
 
             session()->flash('success-message', '表示変更に成功しました。');
-            return response()->json();
+            return response()->json($debutStatus);
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error-message', '表示変更に失敗しました。' . $e->getMessage());

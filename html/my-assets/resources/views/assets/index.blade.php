@@ -42,7 +42,7 @@
                 </form>
             </div>
         </div>
-        <div id="m-assets-table">
+        <div>
             @include('components.m_table')
         </div>
     </div>
@@ -55,6 +55,6 @@
         </script>
     @endsection
     @push('script-files')
-        @vite(['resources/js/asset-month-change.js', 'resources/js/reorder-asset.js'])
+        @vite(['resources/js/asset-month-change.js', 'resources/js/reorder-asset.js', 'resources/js/debut-display-switching.js'])
     @endpush
 </x-app-layout>
