@@ -11,9 +11,11 @@ export default {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./node_modules/flowbite/**/*.js",
+        "./resources/**/*.js",
     ],
     theme: {
         colors: {
+            red: colors.red,
             gray: colors.gray,
             sky: colors.sky,
             rose: colors.rose,
@@ -34,6 +36,7 @@ export default {
         },
         extend: {
             colors: {
+                red: colors.red,
                 primary: {
                     50: "#eff6ff",
                     100: "#dbeafe",

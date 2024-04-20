@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\AssetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route as FacadesRoute;
 
 class AssetsController extends Controller
 {
@@ -47,7 +48,16 @@ class AssetsController extends Controller
         if (isset($request->sort) === true) {
             $sort = $request->sort;
         } else {
-            $sort = ['order' => 'name', 'type' => 'ASC'];
+            $sort = ['order' => 'category_id', 'type' => 'DESC'];
+        }
+
+        $debutStatus = $request->input('debutStatus');
+        if (isset($debutStatus) === true && $debutStatus === 1) {
+            //　負債を非表示にする処理（ジャンルが負債のものを除外）
+            $debutFlg = true;
+            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg);
+        } else {
+            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort);
         }
 
         $assetMinDate = $this->assets->minAsset($userId);
@@ -58,7 +68,6 @@ class AssetsController extends Controller
             return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
         }
 
-        $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort);
         $assetsByMonth = $assets->groupBy(function ($asset) {
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
@@ -68,7 +77,7 @@ class AssetsController extends Controller
         Session::put('monthData', $betweenMonthArray);
         Session::put('sortData', $sort);
 
-        return view('assets.index', compact('assets', 'assetsByMonth', 'totalAmount', 'userId', 'formatDate', 'assetMinDate', 'sort'));
+        return view('assets.index', ['assets' => $assets, 'assetsByMonth' => $assetsByMonth, 'totalAmount' => $totalAmount, 'userId' => $userId, 'formatDate' => $formatDate, 'assetMinDate' => $assetMinDate, 'sort' => $sort, 'debutStatus' => $debutStatus]);
     }
 
     /**

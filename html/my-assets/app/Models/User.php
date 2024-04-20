@@ -65,4 +65,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(AssetSwitchStatus::class);
     }
+
+    /**
+     * ユーザーのステータスを取得する
+     * @param  int   $userId
+     * @return query $result
+     */
+    public function confirmUserStatus($userId)
+    {
+        $result = User::query()
+            ->with('assetSwitchStatuses')
+            ->where('id', $userId)
+            ->first();
+
+        return $result;
+    }
 }

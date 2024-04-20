@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function() {
 });
 
 // 資産全般の処理、資産表示、CSVダウンロード機能
-Route::middleware('auth')->group(function() {
+Route::middleware('auth', 'user.status')->group(function() {
     Route::resource('assets', AssetsController::class);
     Route::post('/assets/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
     Route::post('/assets/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');

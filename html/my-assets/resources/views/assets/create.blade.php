@@ -138,7 +138,6 @@
         </script>
     @endsection
     @push('script-files')
-        @vite('resources/js/asset-create.js')
-        @vite('resources/js/create-with-update.js')
+        @vite(['resources/js/asset-create.js', 'resources/js/create-with-update.js'])
     @endpush
 </x-app-layout>

@@ -102,7 +102,7 @@ class AjaxController extends Controller
         $sort =
             ['order' => $sortNewOrder, 'type' => $sortType];
 
-        return $sort;
+        return $this->PostSortData($sort);
     }
 
     /**
@@ -112,7 +112,19 @@ class AjaxController extends Controller
      */
     public function PostSortData($sort)
     {
-        $sort = $this->getSortFetchData($sort);
-        return redirect()->route('assets.index')->with($sort);
+        $userId = Auth::user()->id;
+        $formatDate = Carbon::now()->format('Y-m');
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+        $betweenMonthArray = [$startDate, $endDate];
+
+        $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort);
+
+        Session::put('monthData', $betweenMonthArray);
+        Session::put('sortData', $sort);
+        return view(
+            'components.m_table_fetch_data',
+            compact('assets', 'sort')
+        );
     }
 }

@@ -20,6 +20,8 @@ function assetUpdate() {
     function handleTypeChange() {
         const updatedText = document.getElementById("updated-text");
         const updatedBtn = document.getElementById("updated-btn");
+        const updatedIcon = document.getElementById("updated-icon");
+        const plusIcon = document.getElementById("plus-icon");
         const greenClass = [
             "bg-green-500",
             "hover:bg-green-600",
@@ -42,10 +44,14 @@ function assetUpdate() {
             updatedText.textContent = "追加";
             updatedBtn.classList.remove(...greenClass);
             updatedBtn.classList.add(...blueClass);
+            updatedIcon.classList.add('hidden');
+            plusIcon.classList.remove('hidden');
         } else {
             updatedText.textContent = "更新";
             updatedBtn.classList.remove(...blueClass);
             updatedBtn.classList.add(...greenClass);
+            updatedIcon.classList.remove("hidden");
+            plusIcon.classList.add("hidden");
         }
     }
 
