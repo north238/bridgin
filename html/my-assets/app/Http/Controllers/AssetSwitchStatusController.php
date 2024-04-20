@@ -19,7 +19,9 @@ class AssetSwitchStatusController extends Controller
     public function userDisplayMethodChange(Request $request)
     {
         $userId = Auth::user()->id;
-        $debutStatus = $request->input('debut-status') ?? '1';
+        $debutStatus = $request->input('debut-status');
+        // ステータスがなければ'0'を代入し、それ以外は数値を反転させる
+        $debutStatus = isset($debutStatus) ? ($debutStatus === '1' ? '0' : '1') : '0';
 
         try {
             DB::beginTransaction();
@@ -31,11 +33,11 @@ class AssetSwitchStatusController extends Controller
             DB::commit();
 
             session()->flash('success-message', '表示変更に成功しました。');
-            return response()->json($debutStatus);
+            return response()->json(['success-message' => '表示変更に成功しました。']);
         } catch (\Exception $e) {
             DB::rollBack();
             session()->flash('error-message', '表示変更に失敗しました。' . $e->getMessage());
-            return response();
+            return response()->json(['error-message' => '表示変更に失敗しました。' . $e->getMessage()]);
         }
     }
 }

@@ -51,21 +51,30 @@ class Asset extends Model
     /**
      * カテゴリテーブルとJoinしたものを全件取得
      * 日時の指定（いつから、いつまで）
-     * 
-     * @param int $userID
-     * @param Carbon $betweenMonthArray
-     * @param array $sort
-     * @return query $result
+     * @param  int    $userID
+     * @param  Carbon $betweenMonthArray
+     * @param  array  $sort
+     * @param  bool   $debutFlg
+     * @return query  $result
      */
-    public function fetchUserAssets($userId, $betweenMonthArray, $sort)
+    public function fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg = false)
     {
         $sortOrder = $sort['order'];
         $sortType = $sort['type'];
+
         $result = Asset::query()
+            ->join('categories as c', 'assets.category_id', '=', 'c.id')
+            ->join('genres as g', 'c.genre_id', '=', 'g.id')
+            ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank'])
             ->where('user_id', $userId)
-            ->with(['category:id,name'])
-            ->whereBetween('registration_date', $betweenMonthArray)
-            ->orderBy($sortOrder, $sortType)
+            ->whereBetween('registration_date', $betweenMonthArray);
+
+        // 負債を非表示にする（ジャンルが「負債」のもの）
+        if ($debutFlg === true) {
+            $result->whereNotIn('g.id', [8]);
+        }
+
+        $result = $result->orderBy($sortOrder, $sortType)
             ->get();
 
         return $result;
@@ -87,8 +96,8 @@ class Asset extends Model
 
     /**
      * 指定した資産を編集するときに使用する
-     * @param  integer $id
-     * @param  integer $userId
+     * @param  int $id
+     * @param  int $userId
      * @return query   $query
      */
     public function getAssetData($id, $userId)
