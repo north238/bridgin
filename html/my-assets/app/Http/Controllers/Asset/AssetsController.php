@@ -197,7 +197,7 @@ class AssetsController extends Controller
             $asset->delete();
             DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', '資産の削除に成功しました。');
+            return redirect()->route('assets.index')->with('success-message', '資産を削除しました。削除されたデータは保存されます。');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withInput()->with('error-message', '資産の削除に失敗しました。' . $e->getMessage());

@@ -18,15 +18,4 @@
             @include('components.restore-table')
         </div>
     </div>
-    {{-- @section('scripts') --}}
-        {{-- <script type="text/javascript">
-            const formatDate = "{{ $formatDate }}";
-            const assetMinDate = "{{ $assetMinDate }}";
-            const sortUrl = "{{ route('sort.get') }}";
-            const redirectIndex = "{{ route('assets.index') }}"
-        </script> --}}
-    {{-- @endsection --}}
-    {{-- @push('script-files') --}}
-        {{-- @vite(['resources/js/asset-month-change.js', 'resources/js/reorder-asset.js', 'resources/js/debut-display-switching.js']) --}}
-    {{-- @endpush --}}
 </x-app-layout>
