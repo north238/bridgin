@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\Asset\AssetRestoreController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Asset\AssetsController;
 use App\Http\Controllers\Asset\YearlyAssetsController;
 use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFilesController;
-use App\Models\AssetSwitchStatus;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,14 +39,20 @@ Route::middleware('auth')->group(function() {
 });
 
 // 資産全般の処理、資産表示、CSVダウンロード機能
-Route::middleware('auth', 'user.status')->group(function() {
+Route::middleware('auth')->group(function() {
     Route::resource('assets', AssetsController::class);
-    Route::post('/assets/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
-    Route::post('/assets/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
-    Route::post('/assets/pagination-index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
-    Route::get('/assets/pagination-show', [AjaxController::class, 'ajaxPaginationShow'])->name('ajax.pagination.show');
-    Route::post('/assets/sort/get', [AjaxController::class, 'getSortFetchData'])->name('sort.get');
-    Route::get('/assets/sort/post', [AjaxController::class, 'PostSortData'])->name('sort.post');
+    Route::post('/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
+    Route::post('/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
+    Route::post('/pagination-index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
+    Route::get('/pagination-show', [AjaxController::class, 'ajaxPaginationShow'])->name('ajax.pagination.show');
+    Route::post('/sort/get', [AjaxController::class, 'getSortFetchData'])->name('sort.get');
+    Route::get('/sort/post', [AjaxController::class, 'PostSortData'])->name('sort.post');
+});
+
+Route::middleware('auth')->group(function() {
+    Route::get('/restore/show', [AssetRestoreController::class, 'showDeletedAssets'])->name('assets.showDeletedAssets');
+    Route::get('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
+    Route::post('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
 });
 
 require __DIR__.'/auth.php';

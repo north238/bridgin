@@ -114,6 +114,18 @@ class Asset extends Model
         return $query;
     }
 
+    /**
+     * 削除された資産データの取得
+     */
+    public function getRestoreAssets($userId)
+    {
+        $query = Asset::onlyTrashed()
+            ->where('user_id', $userId)
+            ->get();
+
+        return $query;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

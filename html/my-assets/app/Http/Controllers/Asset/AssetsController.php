@@ -203,24 +203,4 @@ class AssetsController extends Controller
             return back()->withInput()->with('error-message', '資産の削除に失敗しました。' . $e->getMessage());
         }
     }
-
-    // 理論削除されたデータの復元
-    // todo:どの画面に実装するのか検討
-    // →検索して表示する画面
-    // →どこから検索を走らせるのか？
-    public function restore(string $id)
-    {
-        $asset = Asset::withTrashed()->findOrFail($id);
-
-        try {
-            DB::beginTransaction();
-            $asset->restore();
-            DB::commit();
-
-            return redirect()->back()->with('success-message', '復元に成功しました。');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error-message', '復元に失敗しました。' . $e->getMessage());
-        }
-    }
 }

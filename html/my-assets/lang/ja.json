@@ -842,7 +842,8 @@
   "all_assets": "資産一覧",
   "assets_data": "資産データ",
   "asset_name": "資産名",
-  "asset_create": "資産登録",
+  "asset_create": "資産の登録",
+  "assets_restore": "資産の復元",
   "amount": "資産額",
   "category_name": "カテゴリ名",
   "create": "登録する",
@@ -860,6 +861,8 @@
   "next_month": "翌月",
   "now_month": "今月",
   "create_asset": "資産の追加",
-  "edit_asset": "資産の編集"
+  "edit_asset": "資産の編集",
+  "deleted_at": "削除日",
+  "restore": "復元"
 
 }
