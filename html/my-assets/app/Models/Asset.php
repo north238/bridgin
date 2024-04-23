@@ -30,8 +30,8 @@ class Asset extends Model
 
     /**
      * 資産全件出力
-     * @param int $userId
-     * @param array $sort
+     * @param  int   $userId
+     * @param  array $sort
      * @return query $result
      */
     public function getAssetsAllData($userId, $sort)
@@ -51,6 +51,7 @@ class Asset extends Model
     /**
      * カテゴリテーブルとJoinしたものを全件取得
      * 日時の指定（いつから、いつまで）
+     * 負債の表示・非表示の切り替えに対応
      * @param  int    $userID
      * @param  Carbon $betweenMonthArray
      * @param  array  $sort
@@ -82,7 +83,7 @@ class Asset extends Model
 
     /**
      * データの最小値を取得
-     * @param int $userId
+     * @param  int    $userId
      * @return string $result
      */
     public function minAsset($userId)
@@ -96,9 +97,9 @@ class Asset extends Model
 
     /**
      * 指定した資産を編集するときに使用する
-     * @param  int $id
-     * @param  int $userId
-     * @return query   $query
+     * @param  int   $id
+     * @param  int   $userId
+     * @return query $query
      */
     public function getAssetData($id, $userId)
     {
@@ -116,6 +117,8 @@ class Asset extends Model
 
     /**
      * 削除された資産データの取得
+     * @param  int   $userId
+     * @return Query $query
      */
     public function getRestoreAssets($userId)
     {
@@ -124,6 +127,22 @@ class Asset extends Model
             ->get();
 
         return $query;
+    }
+
+    /**
+     * 資産推移を表示するデータの取得
+     * 年間表示の場合
+     * 必要なデータ:（年月、資産名、資産額、ユーザー）
+     * グラフ: 積みあげ棒グラフ（各資産データが積みあがっている）
+     * → 固定資産、流動資産が分かれている（比率が見たい）
+     * → 資産目標額の表示
+     * → 資産合計額（折れ線グラフ）
+     * 資産入力がない月はどうする（固定資産だけ表示？ 0と表示？）
+     * 
+     */
+    public function fetchAssetTrendData()
+    {
+        return;
     }
 
     public function user(): BelongsTo

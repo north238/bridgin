@@ -863,6 +863,7 @@
   "create_asset": "資産の追加",
   "edit_asset": "資産の編集",
   "deleted_at": "削除日",
-  "restore": "復元"
+  "restore": "復元",
+  "asset_trend": "資産の推移"
 
 }
