@@ -21,6 +21,6 @@
         </div>
     </div>
     <div>
-        @include('components.m_table')
+        @include('pages.m-table')
     </div>
 </div>

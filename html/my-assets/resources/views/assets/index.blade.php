@@ -13,33 +13,10 @@
             </x-alert-message>
         </div>
     @endif
-    <div class="block m-6 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow">
-        <x-slot name="header">
-            <h2 class="font-semibold text-gray-800 leading-tight">
-                {{ __('all_assets') }}
-            </h2>
-        </x-slot>
-        <div class="flex justify-between items-center gap-4 mx-12 my-5">
-            <div
-                class="flex flex-row items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-gray-200 rounded-lg">
-                <h2 class="text-2xl font-medium title-font text-gray-900 dark:text-white">
-                    {{ __('total_amount') }}</h2>
-                <p class="text-base dark:text-white">
-                <p class="text-xl">{{ number_format($totalAmount) }}<span>円</span></p>
-                </p>
-            </div>
-            <div class="p-3 bg-white dark:bg-gray-800 border border-gray-200 rounded-lg align-middle">
-                <form id="asset-switch-form" action="{{ route('assets.userDisplayMethodChange') }}" method="post">
-                    @csrf
-                    <input type="hidden" id="debut-status" name="debut-status" value={{ $debutStatus }}>
-                    <button type="submit">表示切替</button>
-                </form>
-            </div>
-        </div>
-        <div>
-            @include('components.m_table')
-        </div>
+    <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
+        @include('pages.m-table')
     </div>
+
     @section('scripts')
         <script type="text/javascript">
             const formatDate = "{{ $formatDate }}";
@@ -48,7 +25,9 @@
             const redirectIndex = "{{ route('assets.index') }}"
         </script>
     @endsection
+
     @push('script-files')
-        @vite(['resources/js/asset-month-change.js', 'resources/js/reorder-asset.js', 'resources/js/debut-display-switching.js'])
+        @vite(['resources/js/debut-display-switching.js'])
     @endpush
+
 </x-app-layout>

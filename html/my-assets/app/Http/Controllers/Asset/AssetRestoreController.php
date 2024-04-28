@@ -29,7 +29,7 @@ class AssetRestoreController extends Controller
     {
         $userId = Auth::user()->id;
         $restoreAssetsData = $this->assets->getRestoreAssets($userId);
-        // ddd($restoreAssetsData);
+
         if (count($restoreAssetsData) === 0) {
             return back()->with('error-message', "削除されたデータは見つかりませんでした。");
         }

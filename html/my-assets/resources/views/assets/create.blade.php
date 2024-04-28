@@ -1,7 +1,7 @@
 <x-app-layout>
     <section
-        class="max-w-screen-md my-10 mx-auto block bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900">
-        <div class="py-8 mx-auto sm:max-w-lg sm:py-16">
+        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 sm:rounded-lg sm:shadow dark:bg-gray-900">
+        <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div>
                 @if (session('new-create-message'))
                     <x-alert-message name="new-create" color="blue">
@@ -21,7 +21,7 @@
             <form id="created-form" class="validated-form mb-2" method="post" action="{{ route('assets.store') }}"
                 novalidate>
                 @csrf
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div class="grid gap-3 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             <i class="fa-regular fa-circle-check text-red-500"></i>
@@ -53,7 +53,7 @@
                         <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
-                            class="cursor-pointerbg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="">--選択してください--</option>
                             @foreach ($genres as $genre)
@@ -75,7 +75,7 @@
                     <div class="sm:col-span-2">
                         <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-red-500 me-0.5"></i>資産タイプ選択</p>
-                        <ul class="grid gap-6 md:grid-cols-2">
+                        <ul class="grid gap-3 sm:gap-6 md:grid-cols-2">
                             <li>
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
                                     class="hidden peer" checked>
@@ -134,7 +134,7 @@
     </section>
     @section('scripts')
         <script type="text/javascript">
-            const categories = {!! json_encode($categories) !!}
+            const categories = {!! json_encode($categories) !!};
         </script>
     @endsection
     @push('script-files')

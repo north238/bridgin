@@ -34,15 +34,14 @@ class Asset extends Model
      * @param  array $sort
      * @return query $result
      */
-    public function getAssetsAllData($userId, $sort)
+    public function getAssetsAllData($userId)
     {
-        $sortOrder = $sort['order'];
-        $sortType = $sort['type'];
         $result = Asset::query()
+            ->join('categories as c', 'assets.category_id', '=', 'c.id')
+            ->join('genres as g', 'c.genre_id', '=', 'g.id')
+            ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank'])
             ->where('user_id', $userId)
-            ->with(['category:id,name'])
-            ->orderBy($sortOrder, $sortType)
-            ->orderBy('name', 'ASC')
+            ->orderBy('registration_date', 'DESC')
             ->get();
 
         return $result;
@@ -75,10 +74,7 @@ class Asset extends Model
             $result->whereNotIn('g.id', [8]);
         }
 
-        $result = $result->orderBy($sortOrder, $sortType)
-            ->get();
-
-        return $result;
+        return $result->orderBy($sortOrder, $sortType);
     }
 
     /**
@@ -118,7 +114,7 @@ class Asset extends Model
     /**
      * 削除された資産データの取得
      * @param  int   $userId
-     * @return Query $query
+     * @return array $query
      */
     public function getRestoreAssets($userId)
     {

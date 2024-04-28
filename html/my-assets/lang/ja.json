@@ -856,14 +856,14 @@
   "register": "ユーザー登録",
   "registration_date": "登録日",
   "my_assets": "My資産",
-  "csv_download": "CSVダウンロード",
+  "download": "ダウンロード",
   "prev_month": "前月",
   "next_month": "翌月",
   "now_month": "今月",
-  "create_asset": "資産の追加",
+  "create_asset": "資産の登録",
   "edit_asset": "資産の編集",
   "deleted_at": "削除日",
   "restore": "復元",
-  "asset_trend": "資産の推移"
-
+  "asset_trend": "資産の推移",
+  "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。"
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <section
-        class="max-w-screen-md my-10 mx-auto block bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900">
-        <div class="py-5 mx-auto max-w-lg lg:py-16">
+        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 sm:rounded-lg sm:shadow dark:bg-gray-900">
+        <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div class="alert-message">
                 @if (session('error-message'))
                     <x-alert-message name="error" color="red">
@@ -16,12 +16,12 @@
                 action="{{ route('assets.update', [$assetData->id]) }}" novalidate>
                 @csrf
                 @method('PATCH')
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div class="grid gap-3 sm:grid-cols-2 sm:gap-6">
                     <div class="action-checkbox flex sm:col-span-2">
                         <input type="hidden" name="changed_type_flg" value="0">
                         <p class="me-4 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-red-500 me-0.5"></i>
-                            同じ資産を追加する場合は、こちらをチェックしてください</p>
+                            同じ資産名のものを追加する場合はチェックしてください</p>
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="changed_type_flg" name="changed_type_flg" value="1"
                                 class="sr-only peer">
@@ -90,7 +90,7 @@
                     <div class="sm:col-span-2">
                         <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-red-500 me-0.5"></i>資産タイプ選択</p>
-                        <ul class="grid gap-6 md:grid-cols-2">
+                        <ul class="grid gap-3 sm:gap-6 md:grid-cols-2">
                             <li>
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
                                     class="hidden peer">

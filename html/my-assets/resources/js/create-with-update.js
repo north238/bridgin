@@ -43,15 +43,15 @@ function createWithUpdate() {
     const fixedAsset = document.getElementById("fixed-asset");
     const currentAsset = document.getElementById("current-asset");
 
-    currentAsset.addEventListener("click", function () {
+    currentAsset.addEventListener("change", () => {
         handleAssetClick(currentAsset, fixedAsset);
     });
 
-    fixedAsset.addEventListener("click", function () {
+    fixedAsset.addEventListener("change", () => {
         handleAssetClick(fixedAsset, currentAsset);
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     createWithUpdate();
 });
