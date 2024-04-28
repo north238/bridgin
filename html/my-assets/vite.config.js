@@ -9,28 +9,19 @@ export default defineConfig({
         },
         watch: {
             // usePolling: true,
-            interval: 2000
+            interval: 2000,
         },
     },
     plugins: [
         laravel({
             input: [
                 "resources/css/app.css",
-                "resources/js/app.js"
+                "resources/scss/app.scss",
+                "resources/js/app.js",
             ],
             refresh: true,
         }),
     ],
-    build: {
-        rollupOptions: {
-            external: ["jquery"],
-            output: {
-                globals: {
-                    jquery: "$",
-                },
-            },
-        },
-    },
     resolve: {
         alias: {
             "@": "/resources/js",

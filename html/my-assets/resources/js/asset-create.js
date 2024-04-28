@@ -12,7 +12,7 @@ function assetCreate() {
         loadingIcon.classList.remove("hidden");
 
         // 5秒後にボタンを有効化し、アイコンの表示を切り替える
-        setTimeout(function () {
+        setTimeout(() => {
             createdBtn.disabled = false;
             loadingIcon.classList.add("hidden");
             checkIcon.classList.remove("hidden");
@@ -25,6 +25,4 @@ function assetCreate() {
 
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    assetCreate();
-});
+assetCreate();

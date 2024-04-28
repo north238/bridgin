@@ -8,19 +8,13 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Styles -->
+    @vite(['resources/scss/app.scss','resources/css/app.css'])
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script> --}}
-    @yield('scripts')
-    @stack('script-files')
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-sky-50">
+<body class="font-sans antialiased bg-slate-50">
+    <div class="min-h-screen">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -33,12 +27,15 @@
         @endif
 
         <!-- Page Content -->
-        <main>
-            <div class="container mx-auto px-5">
-                {{ $slot }}
-            </div>
+        <main id="page-content" class="flex max-w-full flex-auto flex-col">
+            {{ $slot }}
         </main>
     </div>
+
+    <!-- Scripts -->
+    @vite('resources/js/app.js')
+    @yield('scripts')
+    @stack('script-files')
 </body>
 
 </html>

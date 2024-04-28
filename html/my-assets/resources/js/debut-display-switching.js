@@ -45,22 +45,11 @@ function debutAssetColor() {
     genreNameTds.forEach((genreNameTd) => {
         const parentElement = genreNameTd.parentElement;
         const genreId = genreNameTd.dataset.genre_id;
-        const addRedColor = [
-            "bg-red-100",
-            "dark:bg-gray-600",
-            "hover:bg-red-300",
-            "dark:hover:bg-gray-500",
-        ];
-        const removeWhiteColor = [
-            "bg-white",
-            "dark:bg-gray-800",
-            "hover:bg-gray-50",
-            "dark:hover:bg-gray-600",
-        ];
+        const amountElement = parentElement.querySelector(".amount-cell");
 
         if (genreId === "8") {
-            parentElement.classList.add(...addRedColor);
-            parentElement.classList.remove(...removeWhiteColor);
+            amountElement.classList.add("text-red-500");
+            amountElement.classList.remove("text-green-500");
         }
     });
 }

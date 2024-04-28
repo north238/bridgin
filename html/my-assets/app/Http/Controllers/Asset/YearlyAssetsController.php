@@ -4,61 +4,60 @@ namespace App\Http\Controllers\Asset;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Genre;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Asset;
 use App\Services\AssetService;
-use Illuminate\Support\Facades\DB;
 
 class YearlyAssetsController extends Controller
 {
-    private $users;
     private $assets;
     private $assetService;
 
     public function __construct(
         Asset $assets,
-        User $users,
         AssetService $assetService
     ) {
         $this->assets = $assets;
-        $this->users = $users;
         $this->assetService = $assetService;
     }
 
     /**
      * 資産年間表示
-     * 
-     * @return View 
+     * @return \Illuminate\View\View 表示されるビュー
      */
     public function yearlyAssetsIndex()
     {
         $userId = Auth::user()->id;
-        $sort = ['order' => 'registration_date', 'type' => 'DESC'];
 
-        $assetsAllData = $this->assets->getAssetsAllData($userId, $sort);
+        $assetsAllData = $this->assets->getAssetsAllData($userId);
         if ($assetsAllData->count() === 0) {
-            return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
+            return redirect()->route('assets.yearly.index')->with('new-create-message', __('isEmpty_asset_error_message'));
         }
 
-        $assetsByMonth = $assetsAllData->groupBy(function ($asset) {
-            return Carbon::parse($asset->registration_date)->format('Y-m');
-        })->map(function ($group) {
-            $totalAmount = $group->sum('amount'); // 合計金額を計算
-            $assetCount = $group->count(); // 資産数をカウント
+        $assetsByMonth = $this->assetService->groupByMonthOfRegistration($assetsAllData);
+        $processedAssetGroups = $this->assetService->processAssetGroups($assetsByMonth);
+        $totalAmounts = $processedAssetGroups->pluck('totalAmount')->first();
+        $debutAssetTotalAmount = $this->assetService->debutAmountDisplay($userId);
+        $latestMonthIncreaseDecreaseAmount = $this->assetService->getLatestMonthIncreaseDecreaseAmount($processedAssetGroups);
 
-            return [
-                'totalAmount' => $totalAmount,
-                'assetCount' => $assetCount,
-                'data' => $group // その他のデータ
-            ];
-        });
+        $assetsData = [
+            'assetsAllData' => $assetsAllData,
+            'processedAssetGroups' => $processedAssetGroups,
+            'totalAmounts' => $totalAmounts,
+            'debutAssetTotalAmount' => $debutAssetTotalAmount,
+            'latestMonthIncreaseDecreaseAmount' => $latestMonthIncreaseDecreaseAmount,
+        ];
 
-        $totalAmounts = $assetsByMonth->pluck('totalAmount');
+        return $this->yearlyAssetsShow($assetsData);
+    }
 
-        return view('assets.yearly_index', compact('assetsAllData', 'assetsByMonth', 'userId', 'totalAmounts'));
+    /**
+     * 資産を表示する
+     * @param array $assetsData 年次の資産データ
+     * @return \Illuminate\View\View 表示されるビュー
+     */
+    public function yearlyAssetsShow($assetsData)
+    {
+        return view('assets.yearly-index', $assetsData);
     }
 }

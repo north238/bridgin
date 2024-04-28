@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use App\Services\AssetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Route as FacadesRoute;
 
 class AssetsController extends Controller
 {
@@ -41,10 +40,8 @@ class AssetsController extends Controller
     public function index(Request $request)
     {
         $userId = Auth::user()->id;
-        $formatDate = Carbon::now()->format('Y-m');
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
-        $betweenMonthArray = [$startDate, $endDate];
+        $formatDate = $this->assetService->getFormatDate();
+        $betweenMonthArray = $this->assetService->getCurrentMonth();
         if (isset($request->sort) === true) {
             $sort = $request->sort;
         } else {
@@ -55,29 +52,22 @@ class AssetsController extends Controller
         if (isset($debutStatus) === true && $debutStatus === 1) {
             //　負債を非表示にする処理（ジャンルが負債のものを除外）
             $debutFlg = true;
-            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg);
+            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg)->get();
         } else {
-            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort);
+            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort)->get();
         }
 
         $assetMinDate = $this->assets->minAsset($userId);
         $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
 
-        $assetsAllData = $this->assets->getAssetsAllData($userId, $sort);
-        if ($assetsAllData->count() === 0) {
-            return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
-        }
-
-        $assetsByMonth = $assets->groupBy(function ($asset) {
-            return Carbon::parse($asset->registration_date)->format('Y-m');
-        });
+        $assetsByMonth = $this->assetService->groupByMonthOfRegistration($assets);
 
         $totalAmount = $assets->sum('amount');
 
         Session::put('monthData', $betweenMonthArray);
         Session::put('sortData', $sort);
 
-        return view('assets.index', ['assets' => $assets, 'assetsByMonth' => $assetsByMonth, 'totalAmount' => $totalAmount, 'userId' => $userId, 'formatDate' => $formatDate, 'assetMinDate' => $assetMinDate, 'sort' => $sort, 'debutStatus' => $debutStatus]);
+        return view('assets.index', ['assets' => $assets, 'assetsByMonth' => $assetsByMonth, 'totalAmount' => $totalAmount, 'formatDate' => $formatDate, 'assetMinDate' => $assetMinDate, 'sort' => $sort, 'debutStatus' => $debutStatus]);
     }
 
     /**
@@ -99,7 +89,7 @@ class AssetsController extends Controller
     public function store(AssetCreateRequest $request)
     {
         $userId = Auth::user()->id;
-        $asset = new Asset();
+        $asset = $this->assets;
         $validated = $request->validated();
         $asset->name = $validated['name'];
         $asset->amount = $validated['amount'];
