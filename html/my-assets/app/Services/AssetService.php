@@ -79,18 +79,15 @@ class AssetService
      */
     public function debutAmountDisplay($userId)
     {
-        $sort =
-            ['order' => 'registration_date', 'type' => 'DESC'];
         $betweenMonthArray = $this->getCurrentMonth();
-        $assetData = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort);
-        $debutAssetData = $assetData->whereIn('g.id', [8])->get();
+        $debutAssetData = $this->assets->getDebutAssetsData($userId, $betweenMonthArray);
         $result = $debutAssetData->sum('amount');
 
         return $result;
     }
 
     /**
-     * 今月の日付を取得する
+     * 今月の日付を取得する（データ取得時のwhereBetweenで使用）
      * @return Carbon $betweenMonthArray
      */
     public function getCurrentMonth()
@@ -102,7 +99,7 @@ class AssetService
     }
 
     /**
-     * フォーマットした日付を取得する
+     * フォーマットした今月の日付を取得する
      * @return Carbon $formatDate
      */
     public function getFormatDate()

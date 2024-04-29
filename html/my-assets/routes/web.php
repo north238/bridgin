@@ -1,22 +1,19 @@
 <?php
 
 use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\Asset\AssetRestoreController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Asset\AssetsController;
 use App\Http\Controllers\Asset\YearlyAssetsController;
-use App\Http\Controllers\AssetSwitchStatusController;
+use App\Http\Controllers\Asset\AssetsController;
+use App\Http\Controllers\Asset\DebutAssetController;
+use App\Http\Controllers\Asset\AssetRestoreController;
 use App\Http\Controllers\Asset\AssetTrendController;
+use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/sample', function () {
     return view('sample2');
 });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,8 +22,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function() {
-    Route::get('/', [YearlyAssetsController::class, 'yearlyAssetsIndex'])->name('assets.yearly.index');
+    Route::get('/dashboard', [YearlyAssetsController::class, 'yearlyAssetsIndex'])->name('assets.yearly.index');
     Route::resource('assets', AssetsController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/debut', [DebutAssetController::class, 'debutAssetsIndex'])->name('assets.debut.index');
 });
 
 // 資産全般の処理、資産表示、CSVダウンロード機能

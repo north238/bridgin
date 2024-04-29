@@ -1,4 +1,4 @@
-<a href="{{route('assets.index')}}"
+<a href="{{route('assets.debut.index')}}"
     class="flex flex-col rounded-lg border border-slate-200 bg-white hover:bg-rose-50 hover:border-slate-300 active:border-rose-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>

@@ -41,8 +41,7 @@ class Asset extends Model
             ->join('genres as g', 'c.genre_id', '=', 'g.id')
             ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank'])
             ->where('user_id', $userId)
-            ->orderBy('registration_date', 'DESC')
-            ->get();
+            ->orderBy('registration_date', 'DESC');
 
         return $result;
     }
@@ -109,6 +108,22 @@ class Asset extends Model
             ->first();
 
         return $query;
+    }
+
+    /**
+     * 負債額データの取得
+     * @param  int        $userId
+     * @param  Carbon     $betweenMonthArray
+     * @return Collection $result ユーザーの負債額データのコレクション
+     */
+    public function getDebutAssetsData($userId, $betweenMonthArray)
+    {
+        $sort =
+            ['order' => 'registration_date', 'type' => 'DESC'];
+        $assetData = $this->fetchUserAssets($userId, $betweenMonthArray, $sort);
+        $result = $assetData->whereIn('g.id', [8]);
+
+        return $result;
     }
 
     /**
