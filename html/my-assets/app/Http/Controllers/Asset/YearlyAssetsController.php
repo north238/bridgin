@@ -23,13 +23,13 @@ class YearlyAssetsController extends Controller
 
     /**
      * 資産年間表示
-     * @return \Illuminate\View\View 表示されるビュー
+     * @return $this->yearlyAssetsShow() 表示メソッドへ
      */
     public function yearlyAssetsIndex()
     {
         $userId = Auth::user()->id;
 
-        $assetsAllData = $this->assets->getAssetsAllData($userId);
+        $assetsAllData = $this->assets->getAssetsAllData($userId)->get();
         if ($assetsAllData->count() === 0) {
             return redirect()->route('assets.yearly.index')->with('new-create-message', __('isEmpty_asset_error_message'));
         }

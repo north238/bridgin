@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Asset;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssetCreateRequest;
 use App\Models\Asset;
-use App\Models\User;
 use App\Models\Category;
 use App\Models\Genre;
 use Carbon\Carbon;
@@ -17,19 +16,15 @@ use Illuminate\Support\Facades\Session;
 
 class AssetsController extends Controller
 {
-    private $users;
     private $assets;
     private $assetService;
 
     public function __construct(
         Asset $assets,
-        User $users,
         AssetService $assetService
     ) {
         $this->assets = $assets;
-        $this->users = $users;
         $this->assetService = $assetService;
-        // $this->authorizeResource(Asset::class, 'assets');
     }
 
     /**
@@ -45,7 +40,7 @@ class AssetsController extends Controller
         if (isset($request->sort) === true) {
             $sort = $request->sort;
         } else {
-            $sort = ['order' => 'category_id', 'type' => 'DESC'];
+            $sort = ['order' => 'registration_date', 'type' => 'DESC'];
         }
 
         $debutStatus = $request->input('debutStatus');
@@ -66,8 +61,16 @@ class AssetsController extends Controller
 
         Session::put('monthData', $betweenMonthArray);
         Session::put('sortData', $sort);
+        $assetData = [
+            'assets' => $assets,
+            'assetsByMonth' => $assetsByMonth,
+            'totalAmount' => $totalAmount, 'formatDate' => $formatDate,
+            'assetMinDate' => $assetMinDate,
+            'sort' => $sort,
+            'debutStatus' => $debutStatus
+        ];
 
-        return view('assets.index', ['assets' => $assets, 'assetsByMonth' => $assetsByMonth, 'totalAmount' => $totalAmount, 'formatDate' => $formatDate, 'assetMinDate' => $assetMinDate, 'sort' => $sort, 'debutStatus' => $debutStatus]);
+        return view('assets.index', $assetData);
     }
 
     /**
