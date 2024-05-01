@@ -18,6 +18,15 @@ class Genre extends Model
         'risk_rank'
     ];
 
+    /**
+     * ジャンルデータの取得
+     */
+    public function getGenreData()
+    {
+        $result = Genre::query();
+        return $result;
+    }
+
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);

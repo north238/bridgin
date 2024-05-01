@@ -17,13 +17,19 @@ use Illuminate\Support\Facades\Session;
 class AssetsController extends Controller
 {
     private $assets;
+    private $genres;
+    private $categories;
     private $assetService;
 
     public function __construct(
         Asset $assets,
+        Genre $genres,
+        Category $categories,
         AssetService $assetService
     ) {
         $this->assets = $assets;
+        $this->genres = $genres;
+        $this->categories = $categories;
         $this->assetService = $assetService;
     }
 
@@ -47,26 +53,19 @@ class AssetsController extends Controller
         if (isset($debutStatus) === true && $debutStatus === 1) {
             //　負債を非表示にする処理（ジャンルが負債のものを除外）
             $debutFlg = true;
-            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg)->get();
+            $assetData = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg)->get();
         } else {
-            $assets = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort)->get();
+            $assetData = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort)->get();
         }
 
-        $assetMinDate = $this->assets->minAsset($userId);
-        $assetMinDate = Carbon::parse($assetMinDate)->format('Y-m');
+        $assetsByMonth = $this->assetService->groupByMonthOfRegistration($assetData);
+        $totalAmount = $assetData->sum('amount');
 
-        $assetsByMonth = $this->assetService->groupByMonthOfRegistration($assets);
-
-        $totalAmount = $assets->sum('amount');
-
-        Session::put('monthData', $betweenMonthArray);
-        Session::put('sortData', $sort);
         $assetData = [
-            'assets' => $assets,
+            'assetData' => $assetData,
             'assetsByMonth' => $assetsByMonth,
-            'totalAmount' => $totalAmount, 'formatDate' => $formatDate,
-            'assetMinDate' => $assetMinDate,
-            'sort' => $sort,
+            'totalAmount' => $totalAmount,
+            'formatDate' => $formatDate,
             'debutStatus' => $debutStatus
         ];
 
@@ -78,8 +77,8 @@ class AssetsController extends Controller
      */
     public function create()
     {
-        $formatDate = Carbon::now()->format('Y-m-d');
-        $genres = Genre::query()->get();
+        $formatDate = $this->assetService->getFormatDate();
+        $genres = $this->genres->getGenreData()->get();
         $categories = Category::query()->with(['genre:id,name'])->get();
         return view('assets.create', compact('genres', 'categories', 'formatDate'));
     }
@@ -92,14 +91,7 @@ class AssetsController extends Controller
     public function store(AssetCreateRequest $request)
     {
         $userId = Auth::user()->id;
-        $asset = $this->assets;
-        $validated = $request->validated();
-        $asset->name = $validated['name'];
-        $asset->amount = $validated['amount'];
-        $asset->registration_date = $validated['registration_date'];
-        $asset->category_id = $validated['category_id'];
-        $asset->asset_type_flg = $validated['asset_type_flg'];
-        $asset->user_id = $userId;
+        $asset = $this->assetService->assetDataValidated($request, $userId);
         try {
             DB::beginTransaction();
             $asset->save();
@@ -119,10 +111,8 @@ class AssetsController extends Controller
     {
         $userId = Auth::user()->id;
         $assetData = $this->assets->getAssetData($id, $userId);
-        $genres = Genre::query()->get();
-        $categories = Category::query()
-            ->with(['genre:id,name'])
-            ->get();
+        $genres = $this->genres->getGenreData()->get();
+        $categories = $this->categories->getCategoriesData()->get();
 
         return view('assets.show', compact('assetData', 'categories', 'genres'));
     }
@@ -140,13 +130,7 @@ class AssetsController extends Controller
         if ($changedTypeFlg == 1) {
             try {
                 DB::beginTransaction();
-                $asset = new Asset();
-                $asset->name = $validated['name'];
-                $asset->amount = $validated['amount'];
-                $asset->registration_date = $validated['registration_date'];
-                $asset->category_id = $validated['category_id'];
-                $asset->asset_type_flg = $validated['asset_type_flg'];
-                $asset->user_id = $userId;
+                $asset = $this->assetService->assetDataValidated($request, $userId);
                 $asset->save();
                 DB::commit();
 

@@ -29,6 +29,11 @@ class DebutAssetController extends Controller
         $userId = Auth::user()->id;
         $betweenMonthArray = $this->assetService->getCurrentMonth();
         $debutAssetData = $this->assets->getDebutAssetsData($userId, $betweenMonthArray)->get();
+        $debutTotalAmount = $debutAssetData->sum('amount');
+        $debutAssetData = [
+            'debutAssetData' => $debutAssetData,
+            'debutTotalAmount' => $debutTotalAmount
+        ];
 
         return $this->debutAssetsShow($debutAssetData);
     }
@@ -38,6 +43,6 @@ class DebutAssetController extends Controller
      */
     public function debutAssetsShow($debutAssetData)
     {
-        return view('assets.debut-index', ['debutAssetData' => $debutAssetData]);
+        return view('assets.debut-index', $debutAssetData);
     }
 }

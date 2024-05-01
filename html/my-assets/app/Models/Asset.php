@@ -31,7 +31,6 @@ class Asset extends Model
     /**
      * 資産全件出力
      * @param  int   $userId
-     * @param  array $sort
      * @return query $result
      */
     public function getAssetsAllData($userId)

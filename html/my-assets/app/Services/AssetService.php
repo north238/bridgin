@@ -20,7 +20,7 @@ class AssetService
     /**
      * 資産を年月でグループ化する
      * @param \Illuminate\Support\Collection $data 資産のコレクション
-     * @return array 年月でグループ化された結果の配列
+     * @return \Illuminate\Support\Collection 年月でグループ化された結果
      */
     public function groupByMonthOfRegistration($data)
     {
@@ -92,8 +92,8 @@ class AssetService
      */
     public function getCurrentMonth()
     {
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
+        $startDate = '2024-04-01'; //Carbon::now()->startOfMonth();
+        $endDate = '2024-04-30';//Carbon::now()->startOfMonth();
         $betweenMonthArray = [$startDate, $endDate];
         return $betweenMonthArray;
     }
@@ -104,6 +104,23 @@ class AssetService
      */
     public function getFormatDate()
     {
-        return Carbon::now()->format('Y-m');
+        return Carbon::now()->format('Y-m-d');
+    }
+
+    /**
+     * 登録前のバリデーション処理
+     */
+    public function assetDataValidated($request, $userId)
+    {
+        $asset = $this->assets;
+        $validated = $request->validated();
+        $asset->name = $validated['name'];
+        $asset->amount = $validated['amount'];
+        $asset->registration_date = $validated['registration_date'];
+        $asset->category_id = $validated['category_id'];
+        $asset->asset_type_flg = $validated['asset_type_flg'];
+        $asset->user_id = $userId;
+
+        return $asset;
     }
 }
