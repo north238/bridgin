@@ -109,6 +109,8 @@ class AssetService
 
     /**
      * 登録前のバリデーション処理
+     * @param $request
+     * @param $userId
      */
     public function assetDataValidated($request, $userId)
     {

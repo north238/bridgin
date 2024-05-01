@@ -20,7 +20,6 @@
     @section('scripts')
         <script type="text/javascript">
             const formatDate = "{{ $formatDate }}";
-            const sortUrl = "{{ route('sort.get') }}";
             const redirectIndex = "{{ route('assets.index') }}"
         </script>
     @endsection

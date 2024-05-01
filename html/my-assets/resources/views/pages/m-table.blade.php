@@ -23,7 +23,7 @@
                         @csrf
                         <input type="hidden" id="debut-status" name="debut-status" value={{ $debutStatus }}>
                         <button type="submit"
-                            class="inline-flex items-center justify-center gap-1 rounded-lg border border-green-400 bg-green-400 p-2 text-md font-semibold text-white hover:border-green-300 hover:bg-green-300 hover:text-white focus:ring focus:ring-green-400/50 active:border-green-400 active:bg-green-400">表示切替</button>
+                            class="block gap-1 py-2 px-3 text-md text-white rounded-lg border bg-green-500 border-green-500 hover:bg-green-400 focus:ring-2 focus:outline-none focus:ring-green-400">表示切替</button>
                     </form>
                     @include('components.csv-export')
                 </div>
@@ -67,17 +67,12 @@
                         </thead>
                         <tbody>
                             @foreach ($assetsByMonth as $month => $assets)
-                                @php
-                                    $firstDayOfMonth = date('Y-m-01', strtotime($month));
-                                    $lastDayOfMonth = date('Y-m-t', strtotime($month));
-                                    $monthSelectorVal = $firstDayOfMonth . '~' . $lastDayOfMonth;
-                                @endphp
                                 @foreach ($assets as $item)
                                 <tr
                                     class="border-b border-slate-100 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-3 py-3 text-start text-slate-600 dark:text-white">
+                                    <td class="p-3 text-start text-slate-600 dark:text-white">
                                         {{ $item['registration_date'] }}</td>
-                                    <td class="text-slate-800 dark:text-white px-3 py-3 font-medium text-start">
+                                    <td class="text-slate-800 dark:text-white p-3 font-medium text-start">
                                         @if ($item['asset_type_flg'] === 0)
                                             <i class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>
                                         @else
@@ -85,14 +80,14 @@
                                         @endif
                                         {{ $item['name'] }}
                                     </td>
-                                    <td class="px-3 py-3 text-start text-slate-600 dark:text-white"
+                                    <td class="p-3 text-start text-slate-600 dark:text-white"
                                         data-genre_id="{{ $item['genre_id'] }}">
                                         {{ $item['genre_name'] }}
                                     </td>
-                                    <td class="px-3 py-3 text-start text-slate-600 dark:text-white">
+                                    <td class="p-3 text-start text-slate-600 dark:text-white">
                                         {{ $item['category_name'] }}
                                     </td>
-                                    <td class="amount-cell px-3 py-3 text-start font-medium text-green-500">
+                                    <td class="amount-cell p-3 text-start font-medium text-green-500">
                                         {{ number_format($item['amount']) }}円</td>
                                     <td class="ps-3 py-3 text-start">
                                         <a href="{{ route('assets.show', [$item->asset_id]) }}" id="asset-edit"
