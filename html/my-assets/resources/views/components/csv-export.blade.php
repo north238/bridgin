@@ -1,9 +1,9 @@
 <form class="mb-2 sm:mb-0" action="{{ route('assets.csvExport') }}" method="post">
     @csrf
-    <input type="hidden" id="export-data" name="export-data" value="{{ $assets }}">
+    <input type="hidden" id="export-data" name="export-data" value="{{ $assetsData }}">
     <button type="submit" id="export-btn"
-        class="flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
-        <i class="fa-solid fa-file-csv mr-2"></i>
+        class="flex items-center text-md py-2 px-3 rounded-lg text-white bg-green-500 border-green-500 hover:bg-green-400 focus:ring-2 focus:outline-none focus:ring-green-400">
+        <i class="fa-solid fa-file-csv mr-2 text-white"></i>
         {{ __('download') }}
     </button>
 </form>

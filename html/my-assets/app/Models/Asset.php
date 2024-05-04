@@ -31,7 +31,6 @@ class Asset extends Model
     /**
      * 資産全件出力
      * @param  int   $userId
-     * @param  array $sort
      * @return query $result
      */
     public function getAssetsAllData($userId)
@@ -51,12 +50,11 @@ class Asset extends Model
      * 日時の指定（いつから、いつまで）
      * 負債の表示・非表示の切り替えに対応
      * @param  int    $userID
-     * @param  Carbon $betweenMonthArray
      * @param  array  $sort
      * @param  bool   $debutFlg
      * @return query  $result
      */
-    public function fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg = false)
+    public function fetchUserAssets($userId, $sort, $betweenMonthArray = null, $debutFlg = false)
     {
         $sortOrder = $sort['order'];
         $sortType = $sort['type'];
@@ -65,15 +63,25 @@ class Asset extends Model
             ->join('categories as c', 'assets.category_id', '=', 'c.id')
             ->join('genres as g', 'c.genre_id', '=', 'g.id')
             ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank'])
-            ->where('user_id', $userId)
-            ->whereBetween('registration_date', $betweenMonthArray);
+            ->where('user_id', $userId);
 
+        if(isset($betweenMonthArray) === true) {
+            $result->whereBetween('registration_date', $betweenMonthArray);
+        }
         // 負債を非表示にする（ジャンルが「負債」のもの）
         if ($debutFlg === true) {
             $result->whereNotIn('g.id', [8]);
         }
 
         return $result->orderBy($sortOrder, $sortType);
+    }
+
+    /**
+     * 資産を指定した期間で絞る
+     */
+    public function filterAssetsByDateRange($data, $betweenMonthArray)
+    {
+        return $data->whereBetween('registration_date', $betweenMonthArray);
     }
 
     /**
@@ -120,7 +128,7 @@ class Asset extends Model
     {
         $sort =
             ['order' => 'registration_date', 'type' => 'DESC'];
-        $assetData = $this->fetchUserAssets($userId, $betweenMonthArray, $sort);
+        $assetData = $this->fetchUserAssets($userId, $sort, $betweenMonthArray);
         $result = $assetData->whereIn('g.id', [8]);
 
         return $result;

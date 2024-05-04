@@ -23,7 +23,7 @@ class YearlyAssetsController extends Controller
 
     /**
      * 資産年間表示
-     * @return $this->yearlyAssetsShow() 表示メソッドへ
+     * @return \Illuminate\View\View 表示されるビュー
      */
     public function yearlyAssetsIndex()
     {

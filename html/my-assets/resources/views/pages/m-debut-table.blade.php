@@ -2,10 +2,10 @@
     <div
         class="flex flex-col items-center justify-between gap-4 border-b border-slate-100 p-5 text-center sm:flex-row sm:text-start dark:bg-gray-700">
         <div>
-            <h2 class="mb-0.5 font-semibold dark:text-white">負債データの一覧</h2>
-            <h3 class="text-sm font-medium text-slate-600 dark:text-white">
-                直近の負債データを表示しています
-            </h3>
+            <h1 class="mb-1 text-xl font-bold dark:text-white">{{ __('total_amount') }}</h1>
+            <h2 class="pl-1 text-md text-red-500 dark:text-white">
+                {{ number_format($debutTotalAmount) }}<span>&nbsp;円</span>
+            </h2>
         </div>
     </div>
 

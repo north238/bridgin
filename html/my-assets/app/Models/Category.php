@@ -18,10 +18,22 @@ class Category extends Model
         'name',
         'genre_id'
     ];
+
+    /**
+     * カテゴリデータを取得する
+     */
+    public function getCategoriesData()
+    {
+        $result = Category::query()
+            ->with(['genre:id,name']);
+        return $result;
+    }
+
     public function assets(): HasMany
     {
         return $this->hasMany(Asset::class);
     }
+
     public function genre(): BelongsTo
     {
         return $this->belongsTo(Genre::class);
