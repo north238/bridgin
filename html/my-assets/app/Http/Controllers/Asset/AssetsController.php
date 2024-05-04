@@ -7,7 +7,6 @@ use App\Http\Requests\AssetCreateRequest;
 use App\Models\Asset;
 use App\Models\Category;
 use App\Models\Genre;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\AssetService;
@@ -42,7 +41,6 @@ class AssetsController extends Controller
     {
         $userId = Auth::user()->id;
         $formatDate = $this->assetService->getFormatDate();
-        $betweenMonthArray = $this->assetService->getCurrentMonth();
         if (isset($request->sort) === true) {
             $sort = $request->sort;
         } else {
@@ -50,26 +48,23 @@ class AssetsController extends Controller
         }
 
         $debutStatus = $request->input('debutStatus');
-        if (isset($debutStatus) === true && $debutStatus === 1) {
-            //　負債を非表示にする処理（ジャンルが負債のものを除外）
-            $debutFlg = true;
-            $assetData = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg)->get();
-        } else {
-            $assetData = $this->assets->fetchUserAssets($userId, $betweenMonthArray, $sort)->get();
-        }
+        // 負債データの表示/非表示を切り替える
+        $assetAllData = $this->assetService->switchDebutVisibility($debutStatus, $userId, $sort);
 
-        $assetsByMonth = $this->assetService->groupByMonthOfRegistration($assetData);
-        $totalAmount = $assetData->sum('amount');
+        // 資産データの最新の年月を取得
+        $latestMonthDate = $assetAllData->pluck('registration_date')->first();
+        $betweenMonthArray = $this->assetService->createSearchTargetMonth($latestMonthDate);
+        $assetsData = $this->assets->filterAssetsByDateRange($assetAllData, $betweenMonthArray)->get();
+        $totalAmount = $assetsData->sum('amount');
 
-        $assetData = [
-            'assetData' => $assetData,
-            'assetsByMonth' => $assetsByMonth,
+        $data = [
+            'assetsData' => $assetsData,
             'totalAmount' => $totalAmount,
             'formatDate' => $formatDate,
             'debutStatus' => $debutStatus
         ];
 
-        return view('assets.index', $assetData);
+        return view('assets.index', $data);
     }
 
     /**

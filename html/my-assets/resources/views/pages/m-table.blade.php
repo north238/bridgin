@@ -1,22 +1,21 @@
 <section id="m-assets-table-section">
     <div class="bg-white dark:bg-gray-800 rounded-lg border overflow-hidden">
-        @if ($assetsByMonth->isEmpty())
-            <div class="border border-slate-100 bg-white dark:bg-gray-800 shadow-md sm:rounded-lg overflow-hidden">
+        @if ($assetsData->isEmpty())
+            <div class="bg-white dark:bg-gray-800 sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col justify-center items-center w-full p-6">
-                    <div class="">
-                        今月のデータはありません。
+                    <div class="text-slate-700 dark:text-white">
+                        登録されているデータはありません
                     </div>
                 </div>
             </div>
         @else
             <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6 border-b border-slate-100">
                 <div>
-                    <h1 class="mb-1 text-2xl font-bold dark:text-white">{{ __('total_amount') }}</h1>
-                    <h2 class="text-lg font-medium text-slate-500 dark:text-white">
-                        {{ number_format($totalAmount) }}<span>&nbsp;円</span>
+                    <h1 class="mb-1 text-xl text-slate-700 dark:text-white">月間資産データ</h1>
+                    <h2 class="text-md text-slate-700 dark:text-white">
+                        資産件数:&nbsp;{{$totalCount}}<span>件</span>
                     </h2>
                 </div>
-                @include('components.search-month')
                 <div
                     class="flex flex-none items-center justify-center gap-2 rounded px-2 sm:justify-end sm:bg-transparent sm:px-0">
                     <form id="asset-switch-form" action="{{ route('assets.userDisplayMethodChange') }}" method="post">
@@ -66,8 +65,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($assetsByMonth as $month => $assets)
-                                @foreach ($assets as $item)
+                            @foreach ($assetsData as $item)
                                 <tr
                                     class="border-b border-slate-100 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="p-3 text-start text-slate-600 dark:text-white">
@@ -96,7 +94,6 @@
                                             {{ __('edit') }}</a>
                                     </td>
                                 </tr>
-                                @endforeach
                             @endforeach
                         </tbody>
                     </table>

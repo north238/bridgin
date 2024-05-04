@@ -1,11 +1,11 @@
 @php
     $firstOfMonth = date('Y-m', strtotime($formatDate));
 @endphp
-<form id="month-form-data" class="flex flex-col sm:flex-row justify-around items-center" method="POST" action="{{route('search.index')}}">
+<form id="month-form-data" class="flex items-center" method="POST" action="{{route('search.index')}}">
     @csrf
     <div class="calender-input-icon">
-        <input type="month" name="start" id="start" value="{{ $firstOfMonth }}"
-            class="bg-white tesxt-md font-medium border rounded-s-lg border-gray-300 text-slate-700 dark:text-white focus:ring-blue-400 focus:border-blue-400 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-400 dark:focus:border-blue-400"
+        <input type="month" name="form-date" id="form-date" value="{{ $firstOfMonth }}"
+            class="bg-white tesxt-md font-medium border rounded-s-lg border-gray-300 text-slate-600 dark:text-white focus:ring-blue-400 focus:border-blue-400 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-400 dark:focus:border-blue-400"
             required>
     </div>
     <button type="submit"

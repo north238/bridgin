@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
 // 検索機能
 Route::middleware('auth')->group(function () {
     Route::post('/asset-search', [AssetSearchController::class, 'receiveSearchRequest'])->name('search.index');
+    Route::get('/asset-search', [AssetSearchController::class, 'displaySearchResults'])->name('search.show');
 });
 
 // 表示切替、CSVダウンロード機能

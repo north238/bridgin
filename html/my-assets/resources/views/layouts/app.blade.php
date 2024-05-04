@@ -13,7 +13,7 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script> --}}
 </head>
 
-<body class="font-sans antialiased bg-slate-50 dark:bg-gray-700">
+<body class="font-sans antialiased bg-slate-50 dark:bg-gray-700 text-slate-800 dark:text-white">
     <div class="min-h-screen">
         @include('layouts.navigation')
 
