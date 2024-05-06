@@ -5,14 +5,14 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('assets.yearly.index') }}">
+                    <a href="{{ route('assets.dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('assets.yearly.index')" :active="request()->routeIs('assets.yearly.index')">
+                    <x-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
                         {{ __('assets_data') }}
                     </x-nav-link>
                 </div>
@@ -129,7 +129,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden border-b border-slate-200">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('assets.yearly.index')" :active="request()->routeIs('assets.yearly.index')">
+            <x-responsive-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
                 <i class="fa-solid fa-hand-holding-dollar pr-2"></i>{{ __('assets_data') }}
             </x-responsive-nav-link>
         </div>

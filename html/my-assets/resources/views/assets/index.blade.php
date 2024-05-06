@@ -14,9 +14,11 @@
         </div>
     @endif
     @php
-        $firstDayOfMonth = date('Y-m-01', strtotime($formatDate));
-        $lastDayOfMonth = date('Y-m-t', strtotime($formatDate));
+        $firstDayOfMonth = date('Y-m-01', strtotime($latestMonthDate));
+        $lastDayOfMonth = date('Y-m-t', strtotime($latestMonthDate));
         $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
+        // 資産データの有無をチェック、あればtrueが返却される
+        $isAssetsDataEmpty = $assetsData->isNotEmpty();
     @endphp
     <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
         <div class="flex flex-col px-2 gap-4 text-center sm:flex-row sm:items-center sm:justify-between sm:text-start">
@@ -35,13 +37,13 @@
 
     @section('scripts')
         <script type="text/javascript">
-            const formatDate = "{{ $formatDate }}";
+            const latestMonthDate = "{{ $latestMonthDate }}";
             const redirectIndex = "{{ route('assets.index') }}"
         </script>
     @endsection
 
-    @push('script-files')
+    @pushIf($isAssetsDataEmpty, 'script-files')
         @vite(['resources/js/debut-display-switching.js'])
-    @endpush
+    @endPushIf
 
 </x-app-layout>

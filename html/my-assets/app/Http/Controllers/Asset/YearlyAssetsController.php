@@ -28,22 +28,27 @@ class YearlyAssetsController extends Controller
     public function yearlyAssetsIndex()
     {
         $userId = Auth::user()->id;
+        $sort = ['order' => 'registration_date', 'type' => 'DESC'];
 
-        $assetsAllData = $this->assets->getAssetsAllData($userId)->get();
-        if ($assetsAllData->count() === 0) {
-            return redirect()->route('assets.yearly.index')->with('new-create-message', __('isEmpty_asset_error_message'));
-        }
+        $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
 
-        $assetsByMonth = $this->assetService->groupByMonthOfRegistration($assetsAllData);
-        $processedAssetGroups = $this->assetService->processAssetGroups($assetsByMonth);
-        $totalAmounts = $processedAssetGroups->pluck('totalAmount')->first();
-        $debutAssetTotalAmount = $this->assetService->debutAmountDisplay($userId);
-        $latestMonthIncreaseDecreaseAmount = $this->assetService->getLatestMonthIncreaseDecreaseAmount($processedAssetGroups);
+        // すべてのデータを取得
+        $displayAllData = $assetsAllData->get();
+        $totalCount = $this->assets->calculateTotalCount($assetsAllData);
+        $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsAllData);
+
+        // 最新月のデータを取得
+        $monthlyAssetsData = $this->getAssetsMonthlyData($userId, $sort);
+        $monthlyTotalAmount = $this->assets->calculateTotalAmount($monthlyAssetsData);
+        $latestMonthIncreaseDecreaseAmount = $this->assetService->getLatestMonthIncreaseDecreaseAmount($assetsAllData, $latestMonthDate, $monthlyTotalAmount);
+
+        // 負債額の合計を取得(条件を絞るため資産データを再取得する)
+        $debutAssetTotalAmount = $this->assetService->debutAmountDisplay($userId, $sort, $latestMonthDate);
 
         $assetsData = [
-            'assetsAllData' => $assetsAllData,
-            'processedAssetGroups' => $processedAssetGroups,
-            'totalAmounts' => $totalAmounts,
+            'displayAllData' => $displayAllData,
+            'totalCount' => $totalCount,
+            'monthlyTotalAmount' => $monthlyTotalAmount,
             'debutAssetTotalAmount' => $debutAssetTotalAmount,
             'latestMonthIncreaseDecreaseAmount' => $latestMonthIncreaseDecreaseAmount,
         ];
@@ -59,5 +64,20 @@ class YearlyAssetsController extends Controller
     public function yearlyAssetsShow($assetsData)
     {
         return view('assets.yearly-index', $assetsData);
+    }
+
+    /**
+     * 月間の資産データを取得
+     * @param int $userId 資産を取得するユーザーのID
+     * @param array $sort 資産を取得する際の並び替え基準
+     */
+    public function getAssetsMonthlyData($userId, $sort)
+    {
+        $assetsData = $this->assets->fetchUserAssets($userId, $sort);
+        $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsData);
+        $betweenMonthArray = $this->assetService->createSearchTargetMonth($latestMonthDate);
+        $assetsMonthlyData = $this->assets->filterAssetsByDateRange($assetsData, $betweenMonthArray)->get();
+
+        return $assetsMonthlyData;
     }
 }

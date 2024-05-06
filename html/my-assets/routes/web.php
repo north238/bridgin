@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
 
 // 資産一覧表示（ダッシュボード）
 Route::middleware('auth')->group(function() {
-    Route::get('/dashboard', [YearlyAssetsController::class, 'yearlyAssetsIndex'])->name('assets.yearly.index');
+    Route::get('/dashboard', [YearlyAssetsController::class, 'yearlyAssetsIndex'])->name('assets.dashboard');
 });
 
 // 各詳細画面表示

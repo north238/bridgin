@@ -48,7 +48,7 @@ function debutAssetColor() {
         const amountElement = parentElement.querySelector(".amount-cell");
 
         if (genreId === "8") {
-            amountElement.classList.add("text-red-500");
+            amountElement.classList.add("text-rose-500");
             amountElement.classList.remove("text-green-500");
         }
     });

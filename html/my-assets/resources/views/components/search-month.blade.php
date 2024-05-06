@@ -1,5 +1,5 @@
 @php
-    $firstOfMonth = date('Y-m', strtotime($formatDate));
+    $firstOfMonth = date('Y-m', strtotime($latestMonthDate));
 @endphp
 <form id="month-form-data" class="flex items-center" method="POST" action="{{route('search.index')}}">
     @csrf

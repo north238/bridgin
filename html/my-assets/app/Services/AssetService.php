@@ -19,12 +19,13 @@ class AssetService
 
     /**
      * 資産を年月でグループ化する
-     * @param \Illuminate\Support\Collection $data 資産のコレクション
+     * @param $data 資産のコレクション
      * @return \Illuminate\Support\Collection 年月でグループ化された結果
      */
     public function groupByMonthOfRegistration($data)
     {
-        $result = $data->groupBy(function ($asset) {
+        $assetData = $data->get();
+        $result = $assetData->groupBy(function ($asset) {
             return Carbon::parse($asset->registration_date)->format('Y-m');
         });
 
@@ -54,33 +55,45 @@ class AssetService
 
     /**
      * 最新月の増減額を取得する
-     * @param  \Illuminate\Support\Collection $data 合計金額と資産数を含む新しい構造のコレクション
+     * @param  \Illuminate\Support\Collection $assetsAllData 資産データのコレクション
+     * @param  string $latestMonthDate 最新の年月
+     * @param  int $monthlyTotalAmount 月間の合計金額
      * @return int $increaseDecreaseAmount 計算された資産増減額
      */
-    public function getLatestMonthIncreaseDecreaseAmount($data)
+    public function getLatestMonthIncreaseDecreaseAmount($assetsAllData, $latestMonthDate, $monthlyTotalAmount)
     {
-        $latestMonthData = $data->first();
-        if (!isset($latestMonthData) === true) {
+        // 資産データがなければ0を返却
+        if (empty($assetsAllData) === true) {
             return 0;
         }
-        $latestMonthAmount = $latestMonthData['totalAmount'];
-        $previousMonthData = $data->slice(1, 1)->first(); // 最後から2番目の月が前月のデータ
-        $previousMonthAmount = $previousMonthData ? $previousMonthData['totalAmount'] : 0;
+        // ひと月前の日時を取得
+        $previousMonthDate = $this->getPreviousMonthDate($latestMonthDate);
+        // ひと月前のデータを取得
+        $betweenMonthArray = $this->createSearchTargetMonth($previousMonthDate);
+        $previousMonthData = $this->assets->filterAssetsByDateRange($assetsAllData, $betweenMonthArray);
+        // ひと月前のデータがない場合の条件分岐
+        if (!empty($previousMonthData) === true) {
+            $previousMonthAmount = $this->assets->calculateTotalAmount($previousMonthData);
+        } else {
+            $previousMonthAmount = 0;
+        }
         $increaseDecreaseAmount =
-            $latestMonthAmount - $previousMonthAmount;
+            $monthlyTotalAmount - $previousMonthAmount;
+
         return $increaseDecreaseAmount;
     }
 
     /**
      * 負債合計額を取得する
-     * @param  int  $userId
-     * @param  bool $debutFlg
+     * @param  int  $userId    資産を取得するユーザーのID
+     * @param  bool $debutFlg  負債を判断するためのフラグ
      * @return \Illuminate\Support\Collection 今月の負債額の合計
      */
-    public function debutAmountDisplay($userId)
+    public function debutAmountDisplay($userId, $sort, $latestMonthDate)
     {
-        $betweenMonthArray = $this->getCurrentMonth();
-        $debutAssetData = $this->assets->getDebutAssetsData($userId, $betweenMonthArray);
+        $assetData = $this->assets->fetchUserAssets($userId, $sort);
+        $betweenMonthArray = $this->createSearchTargetMonth($latestMonthDate);
+        $debutAssetData = $this->assets->getDebutAssetsData($assetData, $betweenMonthArray);
         $result = $debutAssetData->sum('amount');
 
         return $result;
@@ -98,9 +111,9 @@ class AssetService
         if (isset($debutStatus) === true && $debutStatus === 1) {
             //　負債を非表示にする処理（ジャンルが負債のものを除外）
             $debutFlg = true;
-            $assetAllData = $this->assets->fetchUserAssets($userId, $sort, $debutFlg);
+            $assetAllData = $this->assets->fetchUserAssets($userId, $sort, null, $debutFlg);
         } else {
-            $assetAllData = $this->assets->fetchUserAssets($userId, $sort);
+            $assetAllData = $this->assets->fetchUserAssets($userId, $sort, null);
         }
 
         return $assetAllData;
@@ -108,7 +121,7 @@ class AssetService
 
     /**
      * 現在の年月を取得する（データ取得時のwhereBetweenで使用）
-     * @return Carbon $betweenMonthArray
+     * @return array [Carbon] 現在の年月の範囲
      */
     public function getCurrentMonth()
     {
@@ -121,7 +134,7 @@ class AssetService
     /**
      * 取得した日時から検索対象の年月を作成
      * @param  string $date
-     * @return Carbon $betweenMonthArray
+     * @@return array [Carbon] 現在の年月の範囲
      */
     public function createSearchTargetMonth($date)
     {
@@ -132,8 +145,9 @@ class AssetService
     }
 
     /**
-     * フォーマットした現在の日付を取得する
-     * @return Carbon $formatDate
+     * 現在の日付を指定されたフォーマットで取得
+     *
+     * @return string フォーマットされた現在の日付
      */
     public function getFormatDate()
     {
@@ -153,14 +167,26 @@ class AssetService
     }
 
     /**
-     * 登録前のバリデーション処理
-     * @param $request
-     * @param $userId
+     * ひと月前の日付に変換する
      */
-    public function assetDataValidated($request, $userId)
+    public function getPreviousMonthDate($date)
     {
-        $asset = $this->assets;
-        $validated = $request->validated();
+        $carbonDate = Carbon::parse($date);
+        $previousMonthDate =
+            $carbonDate->subMonth()->format('Y-m-01');
+        return $previousMonthDate;
+    }
+
+    /**
+     * 資産データのバリデーションを行います。
+     *
+     * @param Illuminate\Http\Request $request リクエストオブジェクト
+     * @param int $userId 資産を登録するユーザーのID
+     * @return App\Models\Asset バリデーション済みの資産データ
+     */
+    public function assetDataValidated($asset, $validated, $userId)
+    {
+
         $asset->name = $validated['name'];
         $asset->amount = $validated['amount'];
         $asset->registration_date = $validated['registration_date'];
