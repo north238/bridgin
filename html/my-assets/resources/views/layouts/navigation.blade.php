@@ -5,14 +5,14 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('assets.index') }}">
+                    <a href="{{ route('assets.dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
+                    <x-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
                         {{ __('assets_data') }}
                     </x-nav-link>
                 </div>
@@ -22,8 +22,8 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('asset-trend.index')" :active="request()->routeIs('asset-trend.index')">
+                        {{ __('asset_trend') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -127,25 +127,25 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden border-b border-slate-200">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('assets.index')" :active="request()->routeIs('assets.index')">
-                {{ __('assets_data') }}
+            <x-responsive-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
+                <i class="fa-solid fa-hand-holding-dollar pr-2"></i>{{ __('assets_data') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('assets.create')" :active="request()->routeIs('assets.create')">
-                {{ __('create_asset') }}
+                <i class="fa-regular fa-square-plus pr-2"></i>{{ __('create_asset') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('asset-trend.index')" :active="request()->routeIs('asset-trend.index')">
+                <i class="fa-solid fa-chart-bar pr-2"></i>{{ __('asset_trend') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('assets.showDeletedAssets')" :active="request()->routeIs('assets.showDeletedAssets')">
-                {{ __('assets_restore') }}
+                <i class="fa-solid fa-trash-arrow-up pr-2"></i>{{ __('assets_restore') }}
             </x-responsive-nav-link>
         </div>
 
@@ -158,7 +158,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    <i class="fa-regular fa-user pr-2"></i>{{ __('Profile') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -168,7 +168,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        <i class="fa-solid fa-arrow-right-from-bracket pr-2"></i>{{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

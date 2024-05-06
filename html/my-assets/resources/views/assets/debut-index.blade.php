@@ -17,33 +17,21 @@
         $firstDayOfMonth = date('Y-m-01', strtotime($latestMonthDate));
         $lastDayOfMonth = date('Y-m-t', strtotime($latestMonthDate));
         $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
-        // 資産データの有無をチェック、あればtrueが返却される
-        $isAssetsDataEmpty = $assetsData->isNotEmpty();
+        $isDebutAssetsDataEmpty = $debutAssetData->isEmpty();
     @endphp
-    <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
+    <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl dark:bg-gray-700">
         <div class="flex flex-col px-2 gap-4 text-center sm:flex-row sm:items-center sm:justify-between sm:text-start">
             <div class="grow">
                 <h1 class="mb-1 text-2xl text-slate-800 dark:text-white">
-                    {{ __('total_amount') }}&nbsp;{{ number_format($totalAmount) }}<span>&nbsp;円</span></h1>
-                <h2 class="text-slate-800 dark:text-white">期間:&nbsp;{{$monthSelectorVal}}</h2>
+                    負債総額<span class="text-rose-500">&nbsp;{{ number_format($debutTotalAmount) }}&nbsp;円</span></h1>
+                <h2 class="text-slate-800 dark:text-white">期間:&nbsp;{{ $monthSelectorVal }}</h2>
             </div>
             <div class="flex items-center justify-center">
-                @include('components.search-month')
+                {{-- @include('components.search-month') --}}
             </div>
         </div>
         <hr class="h-px my-6 bg-gray-200 border-1 dark:bg-gray-700">
-        @include('pages.m-table')
+        @include('pages.m-debut-table')
     </div>
-
-    @section('scripts')
-        <script type="text/javascript">
-            const latestMonthDate = "{{ $latestMonthDate }}";
-            const redirectIndex = "{{ route('assets.index') }}"
-        </script>
-    @endsection
-
-    @pushIf($isAssetsDataEmpty, 'script-files')
-        @vite(['resources/js/debut-display-switching.js'])
-    @endPushIf
 
 </x-app-layout>

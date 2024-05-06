@@ -1,4 +1,3 @@
-import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
@@ -51,47 +50,12 @@ export default {
                     950: "#172554",
                 },
             },
-            // spacing: {
-            //     128: "32rem",
-            //     144: "36rem",
-            // },
-            // borderRadius: {
-            //     "4xl": "2rem",
-            // },
             fontFamily: {
-                body: [
-                    "Inter",
-                    "ui-sans-serif",
-                    "system-ui",
-                    "-apple-system",
-                    "system-ui",
-                    "Segoe UI",
-                    "Roboto",
-                    "Helvetica Neue",
-                    "Arial",
-                    "Noto Sans",
-                    "sans-serif",
-                    "Apple Color Emoji",
-                    "Segoe UI Emoji",
-                    "Segoe UI Symbol",
-                    "Noto Color Emoji",
-                ],
                 sans: [
-                    "Inter",
-                    "ui-sans-serif",
-                    "system-ui",
-                    "-apple-system",
-                    "system-ui",
-                    "Segoe UI",
+                    "Noto Sans JP",
+                    "Noto Sans CJK JP",
                     "Roboto",
-                    "Helvetica Neue",
-                    "Arial",
-                    "Noto Sans",
                     "sans-serif",
-                    "Apple Color Emoji",
-                    "Segoe UI Emoji",
-                    "Segoe UI Symbol",
-                    "Noto Color Emoji",
                 ],
             },
         },

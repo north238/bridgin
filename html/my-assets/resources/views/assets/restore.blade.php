@@ -13,20 +13,9 @@
             </x-alert-message>
         </div>
     @endif
-    <div class="block my-20 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow">
-        <div>
-            @include('components.restore-table')
+    <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
+        <div class="pt-4">
+            @include('pages.restore-table')
         </div>
     </div>
-    {{-- @section('scripts') --}}
-        {{-- <script type="text/javascript">
-            const formatDate = "{{ $formatDate }}";
-            const assetMinDate = "{{ $assetMinDate }}";
-            const sortUrl = "{{ route('sort.get') }}";
-            const redirectIndex = "{{ route('assets.index') }}"
-        </script> --}}
-    {{-- @endsection --}}
-    {{-- @push('script-files') --}}
-        {{-- @vite(['resources/js/asset-month-change.js', 'resources/js/reorder-asset.js', 'resources/js/debut-display-switching.js']) --}}
-    {{-- @endpush --}}
 </x-app-layout>

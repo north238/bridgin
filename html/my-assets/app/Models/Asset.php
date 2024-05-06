@@ -29,35 +29,36 @@ class Asset extends Model
     ];
 
     /**
-     * 資産全件出力
-     * @param int $userId
-     * @param array $sort
-     * @return query $result
+     * 指定されたユーザーIDに関連する全ての資産データを取得する
+     * カテゴリテーブルとの結合を含む
+     * 資産データは登録日付の降順でソートされる
+     * @param int $userId 資産を取得するユーザーのID
+     * @return \Illuminate\Database\Query\Builder 資産データを含むクエリ結果
      */
-    public function getAssetsAllData($userId, $sort)
+    public function getAssetsAllData($userId)
     {
-        $sortOrder = $sort['order'];
-        $sortType = $sort['type'];
         $result = Asset::query()
+            ->join('categories as c', 'assets.category_id', '=', 'c.id')
+            ->join('genres as g', 'c.genre_id', '=', 'g.id')
+            ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank'])
             ->where('user_id', $userId)
-            ->with(['category:id,name'])
-            ->orderBy($sortOrder, $sortType)
-            ->orderBy('name', 'ASC')
-            ->get();
+            ->orderBy('registration_date', 'DESC');
 
         return $result;
     }
 
     /**
-     * カテゴリテーブルとJoinしたものを全件取得
-     * 日時の指定（いつから、いつまで）
-     * @param  int    $userID
-     * @param  Carbon $betweenMonthArray
-     * @param  array  $sort
-     * @param  bool   $debutFlg
-     * @return query  $result
+     * 指定されたユーザーIDに対応する資産データを取得する
+     * カテゴリテーブルとの結合を含む
+     * 日時の範囲指定がある場合、その範囲内のデータのみを取得する
+     * 負債の表示/非表示の切り替えに対応
+     * @param int        $userId 資産を取得するユーザーのID
+     * @param array      $sort ソート条件（['order' => 'registration_date', 'type' => 'DESC']）
+     * @param array|null $betweenMonthArray 日時の範囲指定（開始日と終了日の配列）。省略可能。
+     * @param bool       $debutFlg 負債の表示/非表示フラグ。省略可能。
+     * @return \Illuminate\Database\Query\Builder 資産データを含むクエリ結果
      */
-    public function fetchUserAssets($userId, $betweenMonthArray, $sort, $debutFlg = false)
+    public function fetchUserAssets($userId, $sort, $betweenMonthArray = null, $debutFlg = false)
     {
         $sortOrder = $sort['order'];
         $sortType = $sort['type'];
@@ -66,24 +67,44 @@ class Asset extends Model
             ->join('categories as c', 'assets.category_id', '=', 'c.id')
             ->join('genres as g', 'c.genre_id', '=', 'g.id')
             ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank'])
-            ->where('user_id', $userId)
-            ->whereBetween('registration_date', $betweenMonthArray);
+            ->where('user_id', $userId);
 
+        if (isset($betweenMonthArray) === true) {
+            $result->whereBetween('registration_date', $betweenMonthArray);
+        }
         // 負債を非表示にする（ジャンルが「負債」のもの）
         if ($debutFlg === true) {
             $result->whereNotIn('g.id', [8]);
         }
 
-        $result = $result->orderBy($sortOrder, $sortType)
-            ->get();
+        return $result->orderBy($sortOrder, $sortType);
+    }
 
-        return $result;
+    /**
+     * 資産データを指定した期間で絞り込む
+     * @param Collection $data 資産データのコレクション
+     * @param array $betweenMonthArray 取得したい年月の期間
+     * @return Collection 絞り込まれた資産データのコレクション
+     */
+    public function filterAssetsByDateRange($data, $betweenMonthArray)
+    {
+        return $data->whereBetween('registration_date', $betweenMonthArray);
+    }
+
+    /**
+     * 資産データから最新の登録日を取得する
+     * @param  Collection $assetData 資産データのコレクション
+     * @return string|null           最新の登録日（文字列形式）。データが空の場合はnullを返す。
+     */
+    public function getLatestRegistrationDate($assetData)
+    {
+        return $assetData->pluck('registration_date')->first();
     }
 
     /**
      * データの最小値を取得
-     * @param int $userId
-     * @return string $result
+     * @param  int    $userId 資産を取得するユーザーのID
+     * @return string $result 登録された最小の日時
      */
     public function minAsset($userId)
     {
@@ -95,10 +116,30 @@ class Asset extends Model
     }
 
     /**
+     * 資産データの合計金額を計算する
+     * @param  Collection $assetData 資産データのコレクション
+     * @return float                 合計金額
+     */
+    public function calculateTotalAmount($assetData)
+    {
+        return $assetData->sum('amount');
+    }
+
+    /**
+     * 資産データの総数を計算する
+     * @param  Collection $assetData 資産データのコレクション
+     * @return int                   資産の総数
+     */
+    public function calculateTotalCount($assetData)
+    {
+        return $assetData->count();
+    }
+
+    /**
      * 指定した資産を編集するときに使用する
-     * @param  int $id
-     * @param  int $userId
-     * @return query   $query
+     * @param int $id 資産ID
+     * @param int $userId 資産を取得する際の並び替え基準
+     * @return \App\Models\Asset|null 取得した資産データ、見つからない場合はnull
      */
     public function getAssetData($id, $userId)
     {
@@ -115,7 +156,21 @@ class Asset extends Model
     }
 
     /**
+     * 負債額データの取得
+     * @param  Collection $assetData
+     * @param  array      [Carbon] $betweenMonthArray
+     * @return Collection $result ユーザーの負債額データのコレクション
+     */
+    public function getDebutAssetsData($assetData, $betweenMonthArray)
+    {
+        return $assetData->whereIn('g.id', [8])
+            ->whereBetween('registration_date', $betweenMonthArray);
+    }
+
+    /**
      * 削除された資産データの取得
+     * @param int $userId 資産を取得する際の並び替え基準
+     * @return \App\Models\Asset|null 取得した資産データ、見つからない場合はnull
      */
     public function getRestoreAssets($userId)
     {
@@ -124,6 +179,22 @@ class Asset extends Model
             ->get();
 
         return $query;
+    }
+
+    /**
+     * 資産推移を表示するデータの取得
+     * 年間表示の場合
+     * 必要なデータ:（年月、資産名、資産額、ユーザー）
+     * グラフ: 積みあげ棒グラフ（各資産データが積みあがっている）
+     * → 固定資産、流動資産が分かれている（比率が見たい）
+     * → 資産目標額の表示
+     * → 資産合計額（折れ線グラフ）
+     * 資産入力がない月はどうする（固定資産だけ表示？ 0と表示？）
+     * 
+     */
+    public function fetchAssetTrendData()
+    {
+        return;
     }
 
     public function user(): BelongsTo

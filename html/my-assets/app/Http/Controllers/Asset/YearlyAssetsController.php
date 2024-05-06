@@ -4,61 +4,80 @@ namespace App\Http\Controllers\Asset;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Asset;
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Genre;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Asset;
 use App\Services\AssetService;
-use Illuminate\Support\Facades\DB;
 
 class YearlyAssetsController extends Controller
 {
-    private $users;
     private $assets;
     private $assetService;
 
     public function __construct(
         Asset $assets,
-        User $users,
         AssetService $assetService
     ) {
         $this->assets = $assets;
-        $this->users = $users;
         $this->assetService = $assetService;
     }
 
     /**
      * 資産年間表示
-     * 
-     * @return View 
+     * @return \Illuminate\View\View 表示されるビュー
      */
     public function yearlyAssetsIndex()
     {
         $userId = Auth::user()->id;
         $sort = ['order' => 'registration_date', 'type' => 'DESC'];
 
-        $assetsAllData = $this->assets->getAssetsAllData($userId, $sort);
-        if ($assetsAllData->count() === 0) {
-            return redirect()->route('assets.create')->with('new-create-message', 'あなたの新しい資産を追加しましょう');
-        }
+        $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
 
-        $assetsByMonth = $assetsAllData->groupBy(function ($asset) {
-            return Carbon::parse($asset->registration_date)->format('Y-m');
-        })->map(function ($group) {
-            $totalAmount = $group->sum('amount'); // 合計金額を計算
-            $assetCount = $group->count(); // 資産数をカウント
+        // すべてのデータを取得
+        $displayAllData = $assetsAllData->get();
+        $totalCount = $this->assets->calculateTotalCount($assetsAllData);
+        $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsAllData);
 
-            return [
-                'totalAmount' => $totalAmount,
-                'assetCount' => $assetCount,
-                'data' => $group // その他のデータ
-            ];
-        });
+        // 最新月のデータを取得
+        $monthlyAssetsData = $this->getAssetsMonthlyData($userId, $sort);
+        $monthlyTotalAmount = $this->assets->calculateTotalAmount($monthlyAssetsData);
+        $latestMonthIncreaseDecreaseAmount = $this->assetService->getLatestMonthIncreaseDecreaseAmount($assetsAllData, $latestMonthDate, $monthlyTotalAmount);
 
-        $totalAmounts = $assetsByMonth->pluck('totalAmount');
+        // 負債額の合計を取得(条件を絞るため資産データを再取得する)
+        $debutAssetTotalAmount = $this->assetService->debutAmountDisplay($userId, $sort, $latestMonthDate);
 
-        return view('assets.yearly_index', compact('assetsAllData', 'assetsByMonth', 'userId', 'totalAmounts'));
+        $assetsData = [
+            'displayAllData' => $displayAllData,
+            'totalCount' => $totalCount,
+            'monthlyTotalAmount' => $monthlyTotalAmount,
+            'debutAssetTotalAmount' => $debutAssetTotalAmount,
+            'latestMonthIncreaseDecreaseAmount' => $latestMonthIncreaseDecreaseAmount,
+        ];
+
+        return $this->yearlyAssetsShow($assetsData);
+    }
+
+    /**
+     * 資産を表示する
+     * @param array $assetsData 年次の資産データ
+     * @return \Illuminate\View\View 表示されるビュー
+     */
+    public function yearlyAssetsShow($assetsData)
+    {
+        return view('assets.yearly-index', $assetsData);
+    }
+
+    /**
+     * 月間の資産データを取得
+     * @param int $userId 資産を取得するユーザーのID
+     * @param array $sort 資産を取得する際の並び替え基準
+     */
+    public function getAssetsMonthlyData($userId, $sort)
+    {
+        $assetsData = $this->assets->fetchUserAssets($userId, $sort);
+        $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsData);
+        $betweenMonthArray = $this->assetService->createSearchTargetMonth($latestMonthDate);
+        $assetsMonthlyData = $this->assets->filterAssetsByDateRange($assetsData, $betweenMonthArray)->get();
+
+        return $assetsMonthlyData;
     }
 }

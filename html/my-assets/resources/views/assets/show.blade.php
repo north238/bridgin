@@ -1,7 +1,7 @@
 <x-app-layout>
     <section
-        class="max-w-screen-md my-10 mx-auto block bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-900">
-        <div class="py-5 mx-auto max-w-lg lg:py-16">
+        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 sm:rounded-lg sm:shadow dark:bg-gray-900">
+        <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div class="alert-message">
                 @if (session('error-message'))
                     <x-alert-message name="error" color="red">
@@ -16,12 +16,12 @@
                 action="{{ route('assets.update', [$assetData->id]) }}" novalidate>
                 @csrf
                 @method('PATCH')
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div class="grid gap-3 sm:grid-cols-2 sm:gap-6">
                     <div class="action-checkbox flex sm:col-span-2">
                         <input type="hidden" name="changed_type_flg" value="0">
                         <p class="me-4 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>
-                            同じ資産を追加する場合は、こちらをチェックしてください</p>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>
+                            同じ名称の資産を追加する場合はチェックしてください</p>
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="changed_type_flg" name="changed_type_flg" value="1"
                                 class="sr-only peer">
@@ -34,7 +34,7 @@
                     <hr class="h-px mb-6 bg-gray-200 border-1 dark:bg-gray-700 sm:col-span-2">
                     <div class="name-input sm:col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('asset_name') }}</label>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('asset_name') }}</label>
                         <input type="text" name="name" id="name" value="{{ $assetData->name }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="amount-input w-full">
                         <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('amount') }}</label>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('amount') }}</label>
                         <input type="number" name="amount" id="amount" value="{{ $assetData->amount }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required>
@@ -53,16 +53,19 @@
                     <div class="registration_date-input w-full">
                         <label for="registration_date"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('registration_date') }}</label>
-                        <input type="date" name="registration_date" id="registration_date"
-                            value="{{ $assetData->registration_date }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            required>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('registration_date') }}</label>
+                        <div class="calender-input-icon">
+                            <input type="date" name="registration_date" id="registration_date"
+                                value="{{ $assetData->registration_date }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                                required>
+                            <i class="fa-regular fa-calendar text-gray-500 dark:text-gray-400"></i>
+                        </div>
                         <x-input-error :messages="$errors->get('registration_date')" class="mt-2" />
                     </div>
                     <div class="genre-select-box">
                         <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('genre_name') }}</label>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required>
@@ -77,7 +80,7 @@
                     </div>
                     <div class="catagory-select-box">
                         <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('category_name') }}</label>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('category_name') }}</label>
                         <select id="category_id" name="category_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
@@ -89,8 +92,8 @@
                     </div>
                     <div class="sm:col-span-2">
                         <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>資産タイプ選択</p>
-                        <ul class="grid gap-6 md:grid-cols-2">
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>資産タイプ選択</p>
+                        <ul class="grid gap-3 sm:gap-6 md:grid-cols-2">
                             <li>
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
                                     class="hidden peer">
@@ -185,7 +188,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div class="p-4 md:p-5 text-center">
-                        <svg class="mx-auto mb-4 text-red-500 w-12 h-12" aria-hidden="true"
+                        <svg class="mx-auto mb-4 text-rose-500 w-12 h-12" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

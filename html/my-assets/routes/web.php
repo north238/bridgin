@@ -1,32 +1,20 @@
 <?php
 
 use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\Asset\AssetRestoreController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Asset\AssetsController;
 use App\Http\Controllers\Asset\YearlyAssetsController;
+use App\Http\Controllers\Asset\AssetsController;
+use App\Http\Controllers\Asset\DebutAssetController;
+use App\Http\Controllers\Asset\AssetRestoreController;
+use App\Http\Controllers\Asset\AssetSearchController;
+use App\Http\Controllers\Asset\AssetTrendController;
 use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/sample', function () {
+    return view('sample2');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,25 +22,44 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// 資産一覧表示（ダッシュボード）
 Route::middleware('auth')->group(function() {
-    Route::get('/assets/yearly', [YearlyAssetsController::class, 'yearlyAssetsIndex'])->name('assets.yearly.index');
+    Route::get('/dashboard', [YearlyAssetsController::class, 'yearlyAssetsIndex'])->name('assets.dashboard');
 });
 
-// 資産全般の処理、資産表示、CSVダウンロード機能
-Route::middleware('auth')->group(function() {
+// 各詳細画面表示
+Route::middleware('auth')->group(function () {
     Route::resource('assets', AssetsController::class);
+    Route::get('/debut', [DebutAssetController::class, 'debutAssetsIndex'])->name('assets.debut.index');
+});
+
+// 検索機能
+Route::middleware('auth')->group(function () {
+    Route::post('/asset-search', [AssetSearchController::class, 'receiveSearchRequest'])->name('search.index');
+    Route::get('/asset-search', [AssetSearchController::class, 'displaySearchResults'])->name('search.show');
+});
+
+// 表示切替、CSVダウンロード機能
+Route::middleware('auth')->group(function() {
     Route::post('/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
     Route::post('/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
-    Route::post('/pagination-index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
-    Route::get('/pagination-show', [AjaxController::class, 'ajaxPaginationShow'])->name('ajax.pagination.show');
-    Route::post('/sort/get', [AjaxController::class, 'getSortFetchData'])->name('sort.get');
-    Route::get('/sort/post', [AjaxController::class, 'PostSortData'])->name('sort.post');
+    // Route::post('/pagination/index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
+    // Route::get('/pagination/show', [AjaxController::class, 'ajaxPaginationShow'])->name('ajax.pagination.show');
+    // Route::post('/sort/get', [AjaxController::class, 'getSortFetchData'])->name('sort.get');
+    // Route::get('/sort/post', [AjaxController::class, 'PostSortData'])->name('sort.post');
 });
 
+// 削除した資産の復元
 Route::middleware('auth')->group(function() {
     Route::get('/restore/show', [AssetRestoreController::class, 'showDeletedAssets'])->name('assets.showDeletedAssets');
     Route::get('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
     Route::post('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
+});
+
+// 資産推移グラフ
+Route::middleware('auth')->group(function() {
+    Route::get('/asset-trend', [AssetTrendController::class, 'showAssetTrend'])->name('asset-trend.index');
+    
 });
 
 require __DIR__.'/auth.php';

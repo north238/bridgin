@@ -1,0 +1,27 @@
+.calender-input-icon {
+    position: relative;
+    input[type="month"] {
+        position: relative;
+    }
+
+    input[type="month"]::-webkit-calendar-picker-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        height: auto;
+        color: transparent;
+        background: transparent;
+        z-index: 100;
+        cursor: pointer;
+    }
+    .fa-calendar {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        margin-right: 10px;
+    }
+}
