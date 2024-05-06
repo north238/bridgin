@@ -2,9 +2,9 @@
     <div
         class="flex flex-col items-center justify-between gap-4 border-b border-slate-100 p-5 text-center sm:flex-row sm:text-start dark:bg-gray-700">
         <div>
-            <h1 class="mb-1 text-xl font-bold dark:text-white">{{ __('total_amount') }}</h1>
-            <h2 class="pl-1 text-md text-red-500 dark:text-white">
-                {{ number_format($debutTotalAmount) }}<span>&nbsp;円</span>
+            <h1 class="mb-1 text-xl text-slate-700 dark:text-white">負債データ</h1>
+            <h2 class="text-md text-slate-700 dark:text-white">
+                資産件数:&nbsp;{{ $totalCount }}<span>件</span>
             </h2>
         </div>
     </div>
@@ -67,7 +67,7 @@
                             <td class="px-3 py-3 text-start text-slate-600 dark:text-white">
                                 {{ $asset['category_name'] }}
                             </td>
-                            <td class="amount-cell px-3 py-3 text-start font-medium text-red-500">
+                            <td class="amount-cell px-3 py-3 text-start font-medium text-rose-500">
                                 {{ number_format($asset['amount']) }}円</td>
                             <td class="ps-3 py-3 text-start">
                                 <a href="{{ route('assets.show', [$asset->asset_id]) }}" id="asset-edit"

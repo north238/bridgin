@@ -69,7 +69,7 @@ class AssetSearchController extends Controller
             'assetsData' => $assetsData,
             'totalAmount' => $totalAmount,
             'totalCount' => $totalCount,
-            'formatDate' => $requestFormDate,
+            'latestMonthDate' => $requestFormDate,
             'debutStatus' => $debutStatus
         ];
 

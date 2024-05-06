@@ -24,7 +24,7 @@
                 <div class="grid gap-3 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            <i class="fa-regular fa-circle-check text-red-500"></i>
+                            <i class="fa-regular fa-circle-check text-rose-500"></i>
                             {{ __('asset_name') }}</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
@@ -33,7 +33,7 @@
                     </div>
                     <div class="w-full">
                         <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('amount') }}</label>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('amount') }}</label>
                         <input type="number" name="amount" id="amount" value="{{ old('amount') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             placeholder="資産額を入力してください" required>
@@ -42,19 +42,19 @@
                     <div class="w-full">
                         <label for="registration_date"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('registration_date') }}</label>
-                                <div class="calender-input-icon">
-                                    <input type="date" name="registration_date" id="registration_date"
-                                    value="{{ $formatDate }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
-                                    required>
-                                    <i class="fa-regular fa-calendar text-gray-500 dark:text-gray-400"></i>
-                                </div>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('registration_date') }}</label>
+                        <div class="calender-input-icon">
+                            <input type="date" name="registration_date" id="registration_date"
+                                value="{{ $formatDate }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                                required>
+                            <i class="fa-regular fa-calendar text-gray-500 dark:text-gray-400"></i>
+                        </div>
                         <x-input-error :messages="$errors->get('registration_date')" class="mt-2" />
                     </div>
                     <div>
                         <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('genre_name') }}</label>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
                             class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="catagory-select-box">
                         <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>{{ __('category_name') }}</label>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('category_name') }}</label>
                         <select id="category_id" name="category_id"
                             class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required disabled>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-red-500 me-0.5"></i>資産タイプ選択</p>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>資産タイプ選択</p>
                         <ul class="grid gap-3 sm:gap-6 md:grid-cols-2">
                             <li>
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"

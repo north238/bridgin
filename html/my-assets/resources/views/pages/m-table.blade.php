@@ -1,6 +1,6 @@
 <section id="m-assets-table-section">
     <div class="bg-white dark:bg-gray-800 rounded-lg border overflow-hidden">
-        @if ($assetsData->isEmpty())
+        @if ($isAssetsDataEmpty === false)
             <div class="bg-white dark:bg-gray-800 sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col justify-center items-center w-full p-6">
                     <div class="text-slate-700 dark:text-white">

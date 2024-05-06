@@ -33,34 +33,33 @@ class AssetsController extends Controller
     }
 
     /**
-     * 資産表示画面（ログイン済かつ作成したユーザーのみ）
-     * 登録内容をテーブルで表示させる
-     * @return View 資産データを表示させる
+     * 資産表示画面
+     * ユーザーがログインしており、自身が作成したユーザーの場合にのみアクセス可能
+     * @param  Request $request HTTPリクエスト
+     * @return View             資産データを表示するビュー
      */
     public function index(Request $request)
     {
         $userId = Auth::user()->id;
         $formatDate = $this->assetService->getFormatDate();
-        if (isset($request->sort) === true) {
-            $sort = $request->sort;
-        } else {
-            $sort = ['order' => 'registration_date', 'type' => 'DESC'];
-        }
+        $sort = ['order' => 'registration_date', 'type' => 'DESC'];
 
         $debutStatus = $request->input('debutStatus');
         // 負債データの表示/非表示を切り替える
         $assetAllData = $this->assetService->switchDebutVisibility($debutStatus, $userId, $sort);
 
         // 資産データの最新の年月を取得
-        $latestMonthDate = $assetAllData->pluck('registration_date')->first();
+        $latestMonthDate = $this->assets->getLatestRegistrationDate($assetAllData);
         $betweenMonthArray = $this->assetService->createSearchTargetMonth($latestMonthDate);
         $assetsData = $this->assets->filterAssetsByDateRange($assetAllData, $betweenMonthArray)->get();
-        $totalAmount = $assetsData->sum('amount');
+        $totalAmount = $this->assets->calculateTotalAmount($assetsData);
+        $totalCount = $this->assets->calculateTotalCount($assetsData);
 
         $data = [
             'assetsData' => $assetsData,
             'totalAmount' => $totalAmount,
-            'formatDate' => $formatDate,
+            'totalCount' => $totalCount,
+            'latestMonthDate' => $latestMonthDate,
             'debutStatus' => $debutStatus
         ];
 
@@ -74,19 +73,22 @@ class AssetsController extends Controller
     {
         $formatDate = $this->assetService->getFormatDate();
         $genres = $this->genres->getGenreData()->get();
-        $categories = Category::query()->with(['genre:id,name'])->get();
+        $categories = $this->categories->getCategoriesData()->get();
+
         return view('assets.create', compact('genres', 'categories', 'formatDate'));
     }
 
     /**
      * 資産をデータベースに保存
-     * TODO: 文字を入力してもvalidationが消えない
      * フォームバリデーションを導入する
      */
     public function store(AssetCreateRequest $request)
     {
         $userId = Auth::user()->id;
-        $asset = $this->assetService->assetDataValidated($request, $userId);
+        $asset = $this->assets;
+        $validated = $request->validated();
+        $asset = $this->assetService->assetDataValidated($asset, $validated, $userId);
+
         try {
             DB::beginTransaction();
             $asset->save();
@@ -118,14 +120,16 @@ class AssetsController extends Controller
     public function update(AssetCreateRequest $request, string $id)
     {
         $userId = Auth::user()->id;
-        $changedTypeFlg = $request->input('changed_type_flg');
         $validated = $request->validated();
+        $changedTypeFlg = $request->input('changed_type_flg');
 
         // 追加の場合の処理
         if ($changedTypeFlg == 1) {
             try {
+                $asset = $this->assets;
+                $asset = $this->assetService->assetDataValidated($asset, $validated, $userId);
+
                 DB::beginTransaction();
-                $asset = $this->assetService->assetDataValidated($request, $userId);
                 $asset->save();
                 DB::commit();
 
@@ -137,14 +141,10 @@ class AssetsController extends Controller
             // 更新の場合の処理
         } else {
             try {
-                DB::beginTransaction();
                 $asset = Asset::find($id);
-                $asset->name = $validated['name'];
-                $asset->amount = $validated['amount'];
-                $asset->registration_date = $validated['registration_date'];
-                $asset->category_id = $validated['category_id'];
-                $asset->asset_type_flg = $validated['asset_type_flg'];
-                $asset->user_id = $userId;
+                $asset = $this->assetService->assetDataValidated($asset, $validated, $userId);
+
+                DB::beginTransaction();
                 $asset->save();
                 DB::commit();
 

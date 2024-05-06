@@ -27,12 +27,21 @@ class DebutAssetController extends Controller
     public function debutAssetsIndex()
     {
         $userId = Auth::user()->id;
-        $betweenMonthArray = $this->assetService->getCurrentMonth();
-        $debutAssetData = $this->assets->getDebutAssetsData($userId, $betweenMonthArray)->get();
-        $debutTotalAmount = $debutAssetData->sum('amount');
+        $sort =
+            ['order' => 'registration_date', 'type' => 'DESC'];
+
+        $assetData = $this->assets->fetchUserAssets($userId, $sort);
+        $latestMonthDate = $this->assets->getLatestRegistrationDate($assetData);
+        $betweenMonthArray = $this->assetService->createSearchTargetMonth($latestMonthDate);
+        $debutAssetData = $this->assets->getDebutAssetsData($assetData, $betweenMonthArray)->get();
+        $totalCount = $this->assets->calculateTotalCount($debutAssetData);
+        $debutTotalAmount = $this->assets->calculateTotalAmount($debutAssetData);
+
         $debutAssetData = [
+            'latestMonthDate' => $latestMonthDate,
             'debutAssetData' => $debutAssetData,
-            'debutTotalAmount' => $debutTotalAmount
+            'debutTotalAmount' => $debutTotalAmount,
+            'totalCount' => $totalCount
         ];
 
         return $this->debutAssetsShow($debutAssetData);
