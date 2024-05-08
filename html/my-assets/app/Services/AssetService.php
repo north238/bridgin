@@ -157,23 +157,27 @@ class AssetService
     /**
      * 取得した年月を変換する
      * @param  string $date
-     * @return string $formatDate 型変換された日付
+     * @return string $formatDate フォーマットされた年月
      */
     public function getFormatMonthDate($date)
     {
         $carbonDate = Carbon::createFromFormat('Y-m', $date);
         $formatDate = $carbonDate->format('Y-m-01');
+
         return $formatDate;
     }
 
     /**
      * ひと月前の日付に変換する
+     * @param  string $date 年月日を取得
+     * @return string $formatDate フォーマットされた年月
      */
     public function getPreviousMonthDate($date)
     {
         $carbonDate = Carbon::parse($date);
         $previousMonthDate =
             $carbonDate->subMonth()->format('Y-m-01');
+
         return $previousMonthDate;
     }
 
@@ -186,7 +190,6 @@ class AssetService
      */
     public function assetDataValidated($asset, $validated, $userId)
     {
-
         $asset->name = $validated['name'];
         $asset->amount = $validated['amount'];
         $asset->registration_date = $validated['registration_date'];
