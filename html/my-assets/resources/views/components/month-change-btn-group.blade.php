@@ -10,7 +10,7 @@
     @csrf
     <div>
         <button id="prev-month-btn"
-            class="month-btn flex items-center px-4 h-10 me-2 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            class="month-btn flex items-center px-4 h-10 me-2 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-700 dark:bg-gray-800 dark:border-dark_border dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
             <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -29,13 +29,13 @@
                 </svg>
             </div>
             <input type="text"
-                class="block items-center ps-8 h-10 text-gray-500 bg-white border border-gray-300 text-sm font-medium rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                class="block items-center ps-8 h-10 text-gray-500 bg-white border border-gray-300 text-sm font-medium rounded-lg dark:bg-gray-800 dark:border-dark_border dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 name="month-selecter" id="month-selecter" value="{{ $monthSelectorVal }}" disabled>
         </div>
     </div>
     <div>
         <button id="next-month-btn"
-            class="month-btn flex items-center px-4 h-10 me-2 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            class="month-btn flex items-center px-4 h-10 me-2 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-700 dark:bg-gray-800 dark:border-dark_border dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
             {{ __('next_month') }}
             <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 14 10">
@@ -46,7 +46,7 @@
     </div>
     <div>
         <button id="now-month-btn"
-            class="month-btn flex items-center px-4 h-10 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            class="month-btn flex items-center px-4 h-10 mb-2 sm:mb-0 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-slate-700 dark:bg-gray-800 dark:border-dark_border dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
             {{ __('now_month') }}
             <svg class="w-4 h-4 ms-2 text-gray-800 dark:text-white" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

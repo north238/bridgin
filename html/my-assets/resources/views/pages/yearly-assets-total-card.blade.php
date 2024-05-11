@@ -1,12 +1,12 @@
 <a href="{{route('assets.index')}}"
-    class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 bg-white hover:bg-cyan-50 hover:border-slate-300 active:border-cyan-300">
+    class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-cyan-50 hover:border-slate-300 active:border-cyan-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
             <dt class="text-2xl font-bold">{{ number_format($monthlyTotalAmount) }}<span>&nbsp;円</span></dt>
-            <dd class="text-sm font-medium text-slate-500 mt-2">総資産額</dd>
+            <dd class="text-sm font-medium text-slate-500 dark:text-white mt-2">総資産額</dd>
         </dl>
         <div
-            class="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-100 bg-cyan-50 text-cyan-500">
+            class="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-100 dark:border-dark_border bg-cyan-50 dark:bg-dark_cyan text-cyan-500 dark:text-cyan-300">
             <svg class="hi-outline hi-currency-dollar inline-block h-6 w-6" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -14,7 +14,7 @@
             </svg>
         </div>
     </div>
-    <div class="border-t border-slate-100 px-5 py-3 text-xs font-medium text-slate-500">
+    <div class="border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
         <p>最新の資産合計額</p>
     </div>
 </a>

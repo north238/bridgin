@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 dark:bg-dark_bg dark:border-dark_border">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,27 +6,27 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('assets.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
                     <x-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
                         {{ __('assets_data') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
                     <x-nav-link :href="route('assets.create')" :active="request()->routeIs('assets.create')">
                         {{ __('create_asset') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
                     <x-nav-link :href="route('asset-trend.index')" :active="request()->routeIs('asset-trend.index')">
                         {{ __('asset_trend') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
                     <x-nav-link :href="route('assets.showDeletedAssets')" :active="request()->routeIs('assets.showDeletedAssets')">
                         {{ __('assets_restore') }}
                     </x-nav-link>
@@ -38,7 +38,7 @@
                 <div class="switch-dark-with-light">
                     <button id="theme-toggle" data-tooltip-target="tooltip-toggle" data-tooltip-placement="bottom"
                         type="button"
-                        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-full p-2 me-2 text-sm">
+                        class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-full p-2 me-2 text-sm">
                         <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon w-5 h-5 pt-1.5"></i>
                         <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -48,15 +48,15 @@
                         </svg>
                     </button>
                     <div id="tooltip-toggle" role="tooltip"
-                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        Toggle change
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark_table">
+                        変更
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center me-1 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center me-1 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-white bg-white dark:bg-dark_bg hover:text-gray-700 dark:hover:text-dark_sub_text focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -94,7 +94,7 @@
                 <div class="switch-dark-with-light-sp flex items-center">
                     <button id="theme-toggle-sp" data-tooltip-target="tooltip-toggle-sp" data-tooltip-placement="bottom"
                         type="button"
-                        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2 m-2 text-sm">
+                        class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2 m-2 text-sm">
                         <i id="theme-toggle-dark-icon-sp" class="hidden w-5 h-5 pt-0.5 fa-solid fa-moon"></i>
                         <svg id="theme-toggle-light-icon-sp" class="hidden w-5 h-5" fill="currentColor"
                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -104,14 +104,14 @@
                         </svg>
                     </button>
                     <div id="tooltip-toggle-sp" role="tooltip"
-                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        Toggle change
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark_bg">
+                            変更
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
                 <div class="-me-2 flex items-center">
                     <button @click="open = ! open"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-dark_table focus:outline-none focus:bg-gray-100 dark:focus:bg-dark_table focus:text-gray-500 transition duration-150 ease-in-out">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
