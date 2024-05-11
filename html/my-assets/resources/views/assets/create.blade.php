@@ -1,6 +1,6 @@
 <x-app-layout>
     <section
-        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 sm:rounded-lg sm:shadow dark:bg-gray-900">
+        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 dark:border-dark_border sm:rounded-lg sm:shadow dark:bg-dark_table">
         <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div>
                 @if (session('new-create-message'))
@@ -17,7 +17,7 @@
             <div>
                 <h2 class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ __('create_asset') }}</h2>
             </div>
-            <hr class="h-px my-6 bg-gray-200 border-1 dark:bg-gray-700">
+            <hr class="h-px my-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table">
             <form id="created-form" class="validated-form mb-2" method="post" action="{{ route('assets.store') }}"
                 novalidate>
                 @csrf
@@ -27,7 +27,7 @@
                             <i class="fa-regular fa-circle-check text-rose-500"></i>
                             {{ __('asset_name') }}</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             placeholder="資産名を入力してください" required>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
@@ -35,7 +35,7 @@
                         <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('amount') }}</label>
                         <input type="number" name="amount" id="amount" value="{{ old('amount') }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             placeholder="資産額を入力してください" required>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                     </div>
@@ -46,9 +46,9 @@
                         <div class="calender-input-icon">
                             <input type="date" name="registration_date" id="registration_date"
                                 value="{{ $formatDate }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                                 required>
-                            <i class="fa-regular fa-calendar text-gray-500 dark:text-gray-400"></i>
+                            <i class="fa-regular fa-calendar text-gray-500 dark:text-white"></i>
                         </div>
                         <x-input-error :messages="$errors->get('registration_date')" class="mt-2" />
                     </div>
@@ -56,7 +56,7 @@
                         <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
-                            class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="">--選択してください--</option>
                             @foreach ($genres as $genre)
@@ -69,7 +69,7 @@
                         <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('category_name') }}</label>
                         <select id="category_id" name="category_id"
-                            class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required disabled>
                             <option value="">--選択してください--</option>
                         </select>
@@ -83,7 +83,7 @@
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
                                     class="hidden peer" checked>
                                 <label for="current-asset"
-                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-500 hover:text-gray-600 dark:peer-checked:text-gray-500 peer-checked:text-gray-800 hover:bg-green-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-table peer-checked:border-green-500 hover:text-gray-600 dark:peer-checked:text-white peer-checked:text-gray-800 hover:bg-green-50 dark:text-dark_sub_text dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border">
                                     <div class="block">
                                         <div class="w-full font-semibold mb-2"><i
                                                 class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>流動資産
@@ -99,7 +99,7 @@
                                 <input type="checkbox" id="fixed-asset" name="asset_type_flg" value="1"
                                     class="hidden peer">
                                 <label for="fixed-asset"
-                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-800 hover:bg-blue-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-table peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-white peer-checked:text-gray-800 hover:bg-blue-50 dark:text-dark_sub_text dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border">
                                     <div class="block">
                                         <div class="w-full font-semibold mb-2"><i
                                                 class="fa-solid fa-vault text-blue-600 me-1"></i>固定資産</div>

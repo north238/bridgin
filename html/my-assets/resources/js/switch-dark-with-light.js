@@ -84,4 +84,6 @@ function switchDarkWithLight() {
     });
 }
 
-switchDarkWithLight();
+document.addEventListener("DOMContentLoaded", function () {
+    switchDarkWithLight();
+});

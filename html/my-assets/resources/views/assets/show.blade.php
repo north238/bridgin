@@ -1,6 +1,6 @@
 <x-app-layout>
     <section
-        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 sm:rounded-lg sm:shadow dark:bg-gray-900">
+        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 dark:border-dark_border sm:rounded-lg sm:shadow dark:bg-dark_table">
         <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div class="alert-message">
                 @if (session('error-message'))
@@ -26,17 +26,17 @@
                             <input type="checkbox" id="changed_type_flg" name="changed_type_flg" value="1"
                                 class="sr-only peer">
                             <div
-                                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-3 peer-focus:ring-blue-600 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-3 peer-focus:ring-blue-600 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border peer-checked:bg-blue-600">
                             </div>
                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
                         </label>
                     </div>
-                    <hr class="h-px mb-6 bg-gray-200 border-1 dark:bg-gray-700 sm:col-span-2">
+                    <hr class="h-px mb-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table sm:col-span-2">
                     <div class="name-input sm:col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('asset_name') }}</label>
                         <input type="text" name="name" id="name" value="{{ $assetData->name }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
@@ -44,7 +44,7 @@
                         <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('amount') }}</label>
                         <input type="number" name="amount" id="amount" value="{{ $assetData->amount }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                         <input type="hidden" name="format-amount" id="format-amount"
                             value="{{ number_format($assetData->amount) }}" required>
@@ -57,9 +57,9 @@
                         <div class="calender-input-icon">
                             <input type="date" name="registration_date" id="registration_date"
                                 value="{{ $assetData->registration_date }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                                 required>
-                            <i class="fa-regular fa-calendar text-gray-500 dark:text-gray-400"></i>
+                            {{-- <i class="fa-regular fa-calendar text-gray-500 dark:text-gray-400"></i> --}}
                         </div>
                         <x-input-error :messages="$errors->get('registration_date')" class="mt-2" />
                     </div>
@@ -67,7 +67,7 @@
                         <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="{{ $assetData->genre_id }}">{{ $assetData->genre_name }}</option>
                             @foreach ($genres as $genre)
@@ -82,7 +82,7 @@
                         <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('category_name') }}</label>
                         <select id="category_id" name="category_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="{{ $assetData->category_id }}">{{ $assetData->category_name }}</option>
                         </select>
@@ -98,7 +98,7 @@
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
                                     class="hidden peer">
                                 <label for="current-asset"
-                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-500 hover:text-gray-600 dark:peer-checked:text-gray-500 peer-checked:text-gray-800 hover:bg-green-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-table peer-checked:border-green-500 hover:text-gray-600 dark:peer-checked:text-white peer-checked:text-gray-800 hover:bg-green-50 dark:text-dark_sub_text dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border">
                                     <div class="block">
                                         <div class="w-full font-semibold mb-2"><i
                                                 class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>流動資産
@@ -114,7 +114,7 @@
                                 <input type="checkbox" id="fixed-asset" name="asset_type_flg" value="1"
                                     class="hidden peer">
                                 <label for="fixed-asset"
-                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-800 hover:bg-blue-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-table peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-white peer-checked:text-gray-800 hover:bg-blue-50 dark:text-dark_sub_text dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border">
                                     <div class="block">
                                         <div class="w-full font-semibold mb-2"><i
                                                 class="fa-solid fa-vault text-blue-600 me-1"></i>固定資産</div>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="edit-btn-group mt-6">
                     <button id="updated-btn"
-                        class="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-700 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"><svg
+                        class="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-700 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700"><svg
                             id="updated-icon" class="w-5 h-5 me-2 text-white dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -176,7 +176,7 @@
         <div id="deleted-modal" tabindex="-1"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700  border-2 border-red-500">
+                <div class="relative bg-white rounded-lg shadow dark:bg-dark_table  border-2 border-red-500">
                     <button type="button"
                         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-full text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                         data-modal-hide="deleted-modal">
@@ -223,7 +223,7 @@
                                 </button>
                             </form>
                             <button data-modal-hide="deleted-modal" type="button"
-                                class="py-2.5 px-5 text-sm font-medium rounded-full text-gray-900 focus:outline-none bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                class="py-2.5 px-5 text-sm font-medium rounded-full text-gray-900 focus:outline-none bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white dark:bg-dark_table dark:hover:bg-gray-700">
                                 キャンセル</button>
                         </div>
                     </div>

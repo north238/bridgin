@@ -31,7 +31,7 @@
                 @include('components.search-month')
             </div>
         </div>
-        <hr class="h-px my-6 bg-gray-200 border-1 dark:bg-gray-700">
+        <hr class="h-px my-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
         @include('pages.m-table')
     </div>
 

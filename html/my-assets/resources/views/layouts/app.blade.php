@@ -12,7 +12,7 @@
     @vite(['resources/scss/app.scss', 'resources/css/app.css'])
 </head>
 
-<body class="font-sans antialiased bg-slate-50 dark:bg-gray-700 text-slate-800 dark:text-white">
+<body class="font-sans antialiased bg-slate-50 dark:bg-dark_bg text-slate-800 dark:text-white">
     @include('components.loading-animation')
     <div class="min-h-screen">
         @include('layouts.navigation')
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Scripts -->
-    @vite('resources/js/app.js')
+    @vite(['resources/js/app.js', 'resources/js/switch-dark-with-light.js', 'resources/js/display-loading-animation.js'])
     @yield('scripts')
     @stack('script-files')
 

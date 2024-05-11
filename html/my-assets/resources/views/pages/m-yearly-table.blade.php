@@ -1,10 +1,10 @@
-<div class="flex flex-col rounded-lg border bg-white md:col-span-3">
+<div class="flex flex-col rounded-lg border dark:border-dark_border bg-white dark:bg-dark_table md:col-span-3">
     <div
-        class="flex flex-col items-center justify-between gap-4 border-b border-slate-100 p-5 text-center sm:flex-row sm:text-start">
+        class="flex flex-col items-center justify-between gap-4 border-b border-slate-100 dark:border-dark_border p-5 text-center sm:flex-row sm:text-start">
         <div>
-            <h2 class="mb-0.5 font-semibold">登録済みの資産</h2>
-            <h3 class="text-sm font-medium text-slate-600">
-                直近の資産データ<strong>{{ $totalCount }}件</strong>を表示しています
+            <h2 class="mb-0.5 font-semibold dark:text-white">登録済みの資産</h2>
+            <h3 class="text-sm font-medium text-slate-600 dark:text-dark_sub_text">
+                直近の資産データ<strong class="dark:text-white">{{ $totalCount }}件</strong>を表示しています
             </h3>
         </div>
         @if ($totalCount > 100)
@@ -19,10 +19,10 @@
     {{-- 資産データがない場合の処理を追加 --}}
     @if ($displayAllData->isEmpty() !== true)
         <div class="p-5">
-            <div class="overflow-x-auto min-w-full rounded">
+            <div class="scrollbar-custom overflow-x-auto min-w-full rounded">
                 <table class="text-sm  align-middle min-w-full">
-                    <thead class="dark:bg-gray-700">
-                        <tr class="border-b-2 border-slate-100">
+                    <thead class="dark:bg-dark_table">
+                        <tr class="border-b-2 border-slate-100 dark:border-dark_border">
                             <th scope="col"
                                 class="min-w-[150px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
                                 <div class="flex items-center">
@@ -58,7 +58,7 @@
                     <tbody>
                         @foreach ($displayAllData as $asset)
                             <tr
-                                class="border-b border-slate-100 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                class="border-b border-slate-100  dark:bg-dark_table dark:border-dark_border hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-3 py-3 text-start text-slate-600 dark:text-white">
                                     {{ $asset['registration_date'] }}</td>
                                 <td class="text-slate-800 dark:text-white px-3 py-3 font-medium text-start">

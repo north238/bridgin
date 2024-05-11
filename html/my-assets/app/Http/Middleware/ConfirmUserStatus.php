@@ -20,6 +20,9 @@ class ConfirmUserStatus
         $userId = Auth::id();
         $user = new User();
         $userStatusData = $user->confirmUserStatus($userId);
+        if(empty($userStatusData) === true) {
+            return $next($request);
+        }
         $status = $userStatusData->assetSwitchStatuses->first();
 
         // データベースに値がなければ初期値に0を代入
