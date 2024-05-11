@@ -1,7 +1,7 @@
 <section id="m-assets-table-section">
-    <div class="bg-white dark:bg-gray-800 rounded-lg border overflow-hidden">
+    <div class="bg-white dark:bg-dark_table rounded-lg border dark:border-dark_border overflow-hidden">
         @if ($isAssetsDataEmpty === false)
-            <div class="bg-white dark:bg-gray-800 sm:rounded-lg overflow-hidden">
+            <div class="bg-white dark:bg-dark_table sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col justify-center items-center w-full p-6">
                     <div class="text-slate-700 dark:text-white">
                         登録されているデータはありません
@@ -9,11 +9,11 @@
                 </div>
             </div>
         @else
-            <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6 border-b border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6 border-b border-slate-100 dark:border-dark_border">
                 <div>
                     <h1 class="mb-1 text-xl text-slate-700 dark:text-white">月間資産データ</h1>
                     <h2 class="text-md text-slate-700 dark:text-white">
-                        資産件数:&nbsp;{{$totalCount}}<span>件</span>
+                        資産件数:&nbsp;{{ $totalCount }}<span>件</span>
                     </h2>
                 </div>
                 <div
@@ -28,10 +28,10 @@
                 </div>
             </div>
             <div class="p-5">
-                <div id="m-assets-table" class="overflow-x-auto min-w-full rounded">
+                <div id="m-assets-table" class="scrollbar-custom overflow-x-auto min-w-full rounded">
                     <table class="text-sm  align-middle min-w-full">
-                        <thead class="dark:bg-gray-700">
-                            <tr class="border-b-2 border-slate-100">
+                        <thead class="dark:bg-dark_table">
+                            <tr class="border-b-2 border-slate-100 dark:border-dark_border">
                                 <th scope="col"
                                     class="min-w-[150px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
                                     <div class="flex items-center">
@@ -67,7 +67,7 @@
                         <tbody>
                             @foreach ($assetsData as $item)
                                 <tr
-                                    class="border-b border-slate-100 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    class="border-b border-slate-100 dark:bg-dark_table dark:border-dark_border hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="p-3 text-start text-slate-600 dark:text-white">
                                         {{ $item['registration_date'] }}</td>
                                     <td class="text-slate-800 dark:text-white p-3 font-medium text-start">

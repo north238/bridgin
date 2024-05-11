@@ -12,8 +12,8 @@ use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/sample', function () {
-    return view('sample2');
+Route::get('/', function () {
+    return view('welcome');
 });
 
 Route::middleware('auth')->group(function () {

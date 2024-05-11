@@ -25,13 +25,13 @@
             <div class="grow">
                 <h1 class="mb-1 text-2xl text-slate-800 dark:text-white">
                     {{ __('total_amount') }}&nbsp;{{ number_format($totalAmount) }}<span>&nbsp;円</span></h1>
-                <h2 class="text-slate-800 dark:text-white">期間:&nbsp;{{$monthSelectorVal}}</h2>
+                <h2 class="text-slate-800 dark:text-white">期間:&nbsp;{{ $monthSelectorVal }}</h2>
             </div>
             <div class="flex items-center justify-center">
                 @include('components.search-month')
             </div>
         </div>
-        <hr class="h-px my-6 bg-gray-200 border-1 dark:bg-gray-700">
+        <hr class="h-px my-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
         @include('pages.m-table')
     </div>
 
@@ -43,7 +43,7 @@
     @endsection
 
     @pushIf($isAssetsDataEmpty, 'script-files')
-        @vite(['resources/js/debut-display-switching.js'])
+    @vite(['resources/js/debut-display-switching.js'])
     @endPushIf
 
 </x-app-layout>
