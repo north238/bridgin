@@ -15,6 +15,6 @@
         </div>
     </div>
     <div class="border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
-        <p>最新の資産合計額</p>
+        <p>資産合計額&nbsp;{{$formatDate}}</p>
     </div>
 </a>
