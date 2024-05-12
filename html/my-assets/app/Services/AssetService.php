@@ -145,6 +145,16 @@ class AssetService
     }
 
     /**
+     * 受け取った年月日をフォーマット
+     * @param  string $date 年月日
+     * @return string 変換された年月
+     */
+    public function getFormatYearMonth($date)
+    {
+        return date('Y年m月', strtotime($date));
+    }
+
+    /**
      * 現在の日付を指定されたフォーマットで取得
      *
      * @return string フォーマットされた現在の日付
