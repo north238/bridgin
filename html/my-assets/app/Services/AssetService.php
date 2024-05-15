@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use App\Models\Asset;
 
@@ -54,6 +55,52 @@ class AssetService
     }
 
     /**
+     * 前月比率を計算して返却する
+     */
+    public function calcMonthOverMonthRatios($data)
+    {
+        $months = $data->keys()->sort();
+        $monthOverMonthRatios = new Collection();
+        $previousMonthTotalAmount = 0;
+
+        foreach($months as $month) {
+            $currentMonthData = $data->get($month);
+            $currentMonthTotalAmount = $currentMonthData['totalAmount'];
+            $assetCount = $currentMonthData['assetCount'];
+            $increaseAndDecreaseAmount = $currentMonthTotalAmount - $previousMonthTotalAmount;
+
+            if ($previousMonthTotalAmount !== 0) {
+                // 前月比率を計算
+                $monthOverMonthRatio = round($increaseAndDecreaseAmount / $previousMonthTotalAmount * 100, 2);
+                // 計算結果によってクラスを付与（フロント側で色を分けたいため）
+                $ratioClass = $monthOverMonthRatio >= 0 ? 'positive' : 'negative';
+                $monthOverMonthRatios->put($month, [
+                    'month' => $month,
+                    'totalAmount' => $currentMonthTotalAmount,
+                    'assetCount' => $assetCount,
+                    'increaseAndDecreaseAmount' => $increaseAndDecreaseAmount,
+                    'monthOverMonthRatio' => $monthOverMonthRatio,
+                    'ratioClass' => $ratioClass
+                ]);
+            } else {
+                // 最初の月は前月比率を計算しない
+                $monthOverMonthRatios->put($month, [
+                    'month' => $month,
+                    'totalAmount' => $currentMonthTotalAmount,
+                    'assetCount' => $assetCount,
+                    'increaseAndDecreaseAmount' => $increaseAndDecreaseAmount,
+                    'monthOverMonthRatio' => 0,
+                    'ratioClass' => 'even'
+                ]);
+            }
+            // 最新月の合計金額を次の月の前月合計金額として設定
+            $previousMonthTotalAmount = $currentMonthTotalAmount;
+        }
+
+        return $monthOverMonthRatios;
+    }
+
+    /**
      * 最新月の増減額を取得する
      * @param  \Illuminate\Support\Collection $assetsAllData 資産データのコレクション
      * @param  string $latestMonthDate 最新の年月
@@ -66,7 +113,7 @@ class AssetService
         if (empty($assetsAllData) === true) {
             return 0;
         }
-        // ひと月前の日時を取得
+        // ひと月前の年月を取得
         $previousMonthDate = $this->getPreviousMonthDate($latestMonthDate);
         // ひと月前のデータを取得
         $betweenMonthArray = $this->createSearchTargetMonth($previousMonthDate);
@@ -142,6 +189,16 @@ class AssetService
         $endDate = Carbon::parse($date)->endOfMonth();
         $betweenMonthArray = [$startDate, $endDate];
         return $betweenMonthArray;
+    }
+
+    /**
+     * 受け取った年月日をフォーマット
+     * @param  string $date 年月日
+     * @return string 変換された年月
+     */
+    public function getFormatYearMonth($date)
+    {
+        return date('Y年m月', strtotime($date));
     }
 
     /**

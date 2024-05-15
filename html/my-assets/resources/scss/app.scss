@@ -110,3 +110,15 @@ html,
         border-radius: 20px;
     }
 }
+
+.positive {
+    @apply text-green-600;
+}
+
+.negative {
+    @apply text-red-600;
+}
+
+.even {
+    @apply text-green-600;
+}

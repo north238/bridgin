@@ -1,4 +1,4 @@
-<a href="#"
+<a href="{{route('assets.currentMonth.index')}}"
     class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-green-50 hover:border-slate-300 active:border-green-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
@@ -16,6 +16,6 @@
         </div>
     </div>
     <div class="border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
-        <p>最新の増減額</p>
+        <p>増減額&nbsp;{{$formatDate}}</p>
     </div>
 </a>
