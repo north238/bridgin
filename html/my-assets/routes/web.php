@@ -8,6 +8,7 @@ use App\Http\Controllers\Asset\DebutAssetController;
 use App\Http\Controllers\Asset\AssetRestoreController;
 use App\Http\Controllers\Asset\AssetSearchController;
 use App\Http\Controllers\Asset\AssetTrendController;
+use App\Http\Controllers\Asset\CurrentMonthAssetController;
 use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,8 @@ Route::middleware('auth')->group(function() {
 // 各詳細画面表示
 Route::middleware('auth')->group(function () {
     Route::resource('assets', AssetsController::class);
-    Route::get('/debut', [DebutAssetController::class, 'debutAssetsIndex'])->name('assets.debut.index');
+    Route::get('/dashboard/debut', [DebutAssetController::class, 'debutAssetsIndex'])->name('assets.debut.index');
+    Route::get('/dashboard/current-month', [CurrentMonthAssetController::class, 'currentMonthAssetsIndex'])->name('assets.currentMonth.index');
 });
 
 // 検索機能
