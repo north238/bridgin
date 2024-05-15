@@ -111,14 +111,10 @@ html,
     }
 }
 
-.positive {
+.positive, .even {
     @apply text-green-600;
 }
 
 .negative {
     @apply text-red-600;
-}
-
-.even {
-    @apply text-green-600;
 }

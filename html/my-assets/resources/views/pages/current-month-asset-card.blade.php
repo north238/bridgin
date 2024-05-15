@@ -15,7 +15,8 @@
             </svg>
         </div>
     </div>
-    <div class="border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
+    <div class="flex justify-between border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
         <p>増減額&nbsp;{{$formatDate}}</p>
+        <p class="text-blue-600 dark:text-blue-500 hover:underline">詳細を見る<i class="fa-solid fa-angle-right ml-2"></i></p>
     </div>
 </a>
