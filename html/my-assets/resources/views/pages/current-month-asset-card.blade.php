@@ -1,4 +1,4 @@
-<a href="#"
+<a href="{{route('assets.currentMonth.index')}}"
     class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-green-50 hover:border-slate-300 active:border-green-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
