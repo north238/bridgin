@@ -1,21 +1,16 @@
 <x-app-layout>
+    <div class="alert-message">
+        @if (session('error-message'))
+            <x-alert-message name="error" color="red">
+                {{ session('error-message') }}
+            </x-alert-message>
+        @endif
+    </div>
     <section
-        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 dark:border-dark_border sm:rounded-lg sm:shadow dark:bg-dark_table">
+        class="max-w-screen-md sm:my-10 mx-auto block bg-white border border-slate-100 dark:border-dark_border sm:rounded-lg sm:shadow dark:bg-dark_table">
         <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div>
-                @if (session('new-create-message'))
-                    <x-alert-message name="new-create" color="blue">
-                        {{ session('new-create-message') }}
-                    </x-alert-message>
-                @endif
-                @if (session('error-message'))
-                    <x-alert-message name="error" color="red">
-                        {{ session('error-message') }}
-                    </x-alert-message>
-                @endif
-            </div>
-            <div>
-                <h2 class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{{ __('create_asset') }}</h2>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('create_asset') }}</h2>
             </div>
             <hr class="h-px my-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table">
             <form id="created-form" class="validated-form mb-2" method="post" action="{{ route('assets.store') }}"
@@ -114,7 +109,7 @@
                     </div>
                 </div>
                 <button type="submit" id="created-btn"
-                    class="inline-flex items-center px-5 py-2.5 mt-3 sm:mt-6 text-sm font-medium text-center text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 rounded-full dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    class="inline-flex items-center px-3 py-2.5 mt-3 sm:mt-6 font-medium text-center text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 rounded-lg dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     <svg id="check-icon" class="w-6 h-6 me-1 text-white dark:text-white" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

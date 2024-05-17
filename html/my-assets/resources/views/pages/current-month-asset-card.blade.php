@@ -4,7 +4,7 @@
         <dl>
             <dt class="text-2xl font-bold">{{ number_format($latestMonthIncreaseDecreaseAmount) }}<span>&nbsp;円</span>
             </dt>
-            <dd class="text-sm font-medium text-slate-500 dark:text-white mt-2">増減額</dd>
+            <dd class="text-md font-medium text-slate-500 dark:text-white mt-2">増減額</dd>
         </dl>
         <div
             class="flex h-12 w-12 items-center justify-center rounded-xl border border-green-100 dark:border-dark_border bg-green-50 dark:bg-green-600 text-green-500 dark:text-green-400">
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="flex justify-between border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
-        <p>増減額&nbsp;{{$formatDate}}</p>
+        <p>{{$formatDate}}</p>
         <p class="text-blue-600 dark:text-blue-500 hover:underline">詳細を見る<i class="fa-solid fa-angle-right ml-2"></i></p>
     </div>
 </a>
