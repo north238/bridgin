@@ -41,13 +41,13 @@ function assetUpdate() {
         ];
 
         if (this.checked) {
-            updatedText.textContent = "追加";
+            updatedText.textContent = "追加する";
             updatedBtn.classList.remove(...greenClass);
             updatedBtn.classList.add(...blueClass);
             updatedIcon.classList.add('hidden');
             plusIcon.classList.remove('hidden');
         } else {
-            updatedText.textContent = "更新";
+            updatedText.textContent = "更新する";
             updatedBtn.classList.remove(...blueClass);
             updatedBtn.classList.add(...greenClass);
             updatedIcon.classList.remove("hidden");

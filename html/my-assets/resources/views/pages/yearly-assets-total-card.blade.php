@@ -3,7 +3,7 @@
     <div class="flex grow items-center justify-between p-5">
         <dl>
             <dt class="text-2xl font-bold">{{ number_format($monthlyTotalAmount) }}<span>&nbsp;円</span></dt>
-            <dd class="text-sm font-medium text-slate-500 dark:text-white mt-2">総資産額</dd>
+            <dd class="text-md font-medium text-slate-500 dark:text-white mt-2">資産合計額</dd>
         </dl>
         <div
             class="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-100 dark:border-dark_border bg-cyan-50 dark:bg-dark_cyan text-cyan-500 dark:text-cyan-300">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="flex justify-between border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
-        <p>資産合計額&nbsp;{{$formatDate}}</p>
+        <p>{{$formatDate}}</p>
         <p class="text-blue-600 dark:text-blue-500 hover:underline">詳細を見る<i class="fa-solid fa-angle-right ml-2"></i></p>
     </div>
 </a>

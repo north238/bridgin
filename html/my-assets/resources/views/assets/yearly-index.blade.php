@@ -18,7 +18,7 @@
                 class="flex items-center justify-center px-2">
                 <a href="{{ route('assets.create') }}"
                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    <span>資産の登録</span><i class="fa-solid fa-angle-right ml-2"></i>
+                    <span>資産を登録する</span><i class="fa-solid fa-angle-right ml-2"></i>
                 </a>
             </div>
         </div>

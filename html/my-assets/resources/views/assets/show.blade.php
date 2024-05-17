@@ -1,15 +1,20 @@
 <x-app-layout>
+    <div class="alert-message">
+        @if (session('success-message'))
+            <x-alert-message name="success" color="green">
+                {{ session('success-message') }}
+            </x-alert-message>
+        @endif
+        @if (session('error-message'))
+            <x-alert-message name="error" color="red">
+                {{ session('error-message') }}
+            </x-alert-message>
+        @endif
+    </div>
     <section
-        class="max-w-screen-md my-4 sm:my-10 mx-auto block bg-white border border-slate-100 dark:border-dark_border sm:rounded-lg sm:shadow dark:bg-dark_table">
+        class="max-w-screen-md sm:my-10 mx-auto block bg-white border border-slate-100 dark:border-dark_border sm:rounded-lg sm:shadow dark:bg-dark_table">
         <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
-            <div class="alert-message">
-                @if (session('error-message'))
-                    <x-alert-message name="error" color="red">
-                        {{ session('error-message') }}
-                    </x-alert-message>
-                @endif
-            </div>
-            <div class="heading-title mt-3">
+            <div class="heading-title">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ __('edit_asset') }}</h2>
             </div>
             <form id="updated-form" class="validated-form mb-2" method="post"
@@ -31,7 +36,7 @@
                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
                         </label>
                     </div>
-                    <hr class="h-px mb-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table sm:col-span-2">
+                    <hr class="h-px mb-2 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table sm:col-span-2">
                     <div class="name-input sm:col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('asset_name') }}</label>
@@ -59,7 +64,7 @@
                                 value="{{ $assetData->registration_date }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                                 required>
-                            {{-- <i class="fa-regular fa-calendar text-gray-500 dark:text-gray-400"></i> --}}
+                            <i class="fa-regular fa-calendar text-gray-500 dark:text-white"></i>
                         </div>
                         <x-input-error :messages="$errors->get('registration_date')" class="mt-2" />
                     </div>
@@ -129,17 +134,17 @@
                         <input type="hidden" id="asset-type-flg" value="{{ $assetData->asset_type_flg }}">
                     </div>
                 </div>
-                <div class="edit-btn-group mt-6">
+                <div class="edit-btn-group mt-6 flex justify-center gap-5 sm:block">
                     <button id="updated-btn"
-                        class="text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-700 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700"><svg
-                            id="updated-icon" class="w-5 h-5 me-2 text-white dark:text-white" aria-hidden="true"
+                        class="me-4 text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-700 font-medium rounded-lg px-3 py-2.5 text-center inline-flex items-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700"><svg
+                            id="updated-icon" class="w-6 h-6 me-2 text-white dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2"
                                 d="M17.7 7.7A7.1 7.1 0 0 0 5 10.8M18 4v4h-4m-7.7 8.3A7.1 7.1 0 0 0 19 13.2M6 20v-4h4" />
                         </svg>
                         <svg aria-hidden="true" role="status" id="updated-loading-icon"
-                            class="w-4 h-4 me-3 text-white animate-spin hidden" viewBox="0 0 100 101" fill="none"
+                            class="w-6 h-6 me-2 text-white animate-spin hidden" viewBox="0 0 100 101" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
@@ -148,7 +153,7 @@
                                 d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
                                 fill="currentColor" />
                         </svg>
-                        <svg id="plus-icon" class="w-5 h-5 me-2 text-white dark:text-white hidden" aria-hidden="true"
+                        <svg id="plus-icon" class="w-6 h-6 me-2 text-white dark:text-white hidden" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -157,8 +162,8 @@
                         </svg>
                         <span id="updated-text">{{ __('update') }}</span></button>
                     <a id="deleted-btn" data-modal-target="deleted-modal" data-modal-toggle="deleted-modal"
-                        class="cursor-pointer text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-700 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg
-                            id="deleted-icon" class="w-5 h-5 me-2 text-white dark:text-white" aria-hidden="true"
+                        class="cursor-pointer text-red-500 focus:outline-none bg-white border-2 border-red-500 hover:bg-red-50 focus:z-10 focus:ring-4 focus:ring-red-600 font-semibold rounded-lg px-5 py-2.5 text-center inline-flex items-center"><svg
+                            id="deleted-icon" class="w-6 h-6 me-2 text-red-500" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2"
@@ -166,8 +171,7 @@
                         </svg>
                         {{ __('delete') }}</a>
                 </div>
-        </div>
-        </form>
+            </form>
         </div>
     </section>
 
@@ -193,7 +197,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-white">
                             この資産を削除してもよろしいでしょうか？</h3>
                         <div class="flex justify-center gap-4">
                             <form id="deleted-modal-form" class=""
@@ -201,8 +205,8 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" id="deleted-modal-btn"
-                                    class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-full text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                    <svg id="deleted-modal-icon" class="w-5 h-5 me-2 text-white dark:text-white"
+                                    class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 text-md font-medium rounded-lg inline-flex items-center px-5 py-2.5 text-center">
+                                    <svg id="deleted-modal-icon" class="w-6 h-6 me-2 text-white"
                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -223,7 +227,7 @@
                                 </button>
                             </form>
                             <button data-modal-hide="deleted-modal" type="button"
-                                class="py-2.5 px-5 text-sm font-medium rounded-full text-gray-900 focus:outline-none bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white dark:bg-dark_table dark:hover:bg-gray-700">
+                                class="py-2.5 px-5 text-md font-medium rounded-lg text-gray-900 focus:outline-none bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white dark:bg-dark_table dark:hover:bg-gray-700">
                                 キャンセル</button>
                         </div>
                     </div>
