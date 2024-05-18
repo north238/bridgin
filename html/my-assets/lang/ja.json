@@ -836,6 +836,7 @@
   "Zimbabwe": "ジンバブエ",
   "Zip / Postal Code": "郵便番号",
   "Åland Islands": "オーランド諸島",
+
   "action": "操作",
   "admin_system": "ユーザー管理システム",
   "admin_register": "管理者登録",
@@ -865,5 +866,19 @@
   "deleted_at": "削除日",
   "restore": "復元",
   "asset_trend": "資産推移",
-  "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。"
+
+  "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。",
+  "create_success_message": "資産の登録に成功しました。",
+  "create_error_message": "資産の登録に失敗しました。",
+  "create_error_log": "資産登録時にエラーが発生しています",
+  "update_success_message": "資産の追加に成功しました。",
+  "update_error_log": "資産追加時にエラーが発生しています",
+  "update_error_message": "資産の追加に失敗しました。",
+  "new_success_message": "資産の更新に成功しました。",
+  "new_error_log": "資産更新時にエラーが発生しています",
+  "new_error_message": "資産の更新に失敗しました。",
+  "delete_success_message": "資産を削除しました。削除されたデータは保存されます。",
+  "delete_error_log": "資産削除時にエラーが発生しています",
+  "delete_error_message": "資産の削除に失敗しました。"
+
 }
