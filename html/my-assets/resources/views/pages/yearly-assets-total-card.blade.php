@@ -1,5 +1,5 @@
 <a href="{{route('assets.index')}}"
-    class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-cyan-50 hover:border-slate-300 active:border-cyan-300">
+    class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-cyan-50 dark:hover:bg-gray-600 hover:border-slate-300 active:border-cyan-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
             <dt class="text-2xl font-bold">{{ number_format($monthlyTotalAmount) }}<span>&nbsp;円</span></dt>

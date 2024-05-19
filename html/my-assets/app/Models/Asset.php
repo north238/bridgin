@@ -35,7 +35,7 @@ class Asset extends Model
      * @param int $userId 資産を取得するユーザーのID
      * @return \Illuminate\Database\Query\Builder 資産データを含むクエリ結果
      */
-    public function getAssetsAllData($userId)
+    public function getAssetsPagination($userId)
     {
         $result = Asset::query()
             ->join('categories as c', 'assets.category_id', '=', 'c.id')
