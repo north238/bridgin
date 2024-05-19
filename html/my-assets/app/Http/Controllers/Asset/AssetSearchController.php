@@ -29,23 +29,25 @@ class AssetSearchController extends Controller
     {
         $requestFormDate = $request->input('form-date');
         $debutStatus = $request->input('debutStatus');
-        $formatDate = $this->assetService->createSearchTargetMonth($requestFormDate);
+        $formatDateBetween = $this->assetService->createSearchTargetMonth($requestFormDate);
 
-        return $this->displaySearchResults($requestFormDate, $formatDate, $debutStatus);
+        return $this->displaySearchResults($requestFormDate, $formatDateBetween, $debutStatus);
     }
 
     /**
      * 指定された条件で資産を検索する。
      *
-     * @param  string $formatDate 検索条件のフォーマットされた日付
+     * @param array $formatDateBetween フォーマットされた日付の配列
+     * @param int   $debutStatus       負債を表示するかどうかを示すステータス
      * @return \Illuminate\Support\Collection 検索した資産のコレクション
      */
-    public function searchAssets($formatDate)
+    public function searchAssets($formatDateBetween, $debutStatus)
     {
         $userId = Auth::user()->id;
         $sort =
             ['order' => 'registration_date', 'type' => 'DESC'];
-        $assetsData = $this->assets->fetchUserAssets($userId, $sort, $formatDate)->get();
+        $assetsData = $this->assetService->switchDebutVisibility($debutStatus, $userId, $sort);
+        $assetsData = $this->assets->filterAssetsByDateRange($assetsData, $formatDateBetween)->get();
 
         return $assetsData;
     }
@@ -53,15 +55,15 @@ class AssetSearchController extends Controller
     /**
      * 検索結果を表示する。
      *
-     * @param  string $requestFormDate フォームから送信された日付
-     * @param  string $formatDate      フォーマットされた日付
-     * @param  string $debutStatus     資産のデビュー状態
+     * @param  string $requestFormDate   フォームから送信された日付
+     * @param  array  $formatDateBetween フォーマットされた日付の配列
+     * @param  string $debutStatus       負債を表示するかどうかを示すステータス
      * @return Illuminate\Contracts\View\View 資産の検索結果を表示するビュー
      */
-    public function displaySearchResults($requestFormDate, $formatDate, $debutStatus)
+    public function displaySearchResults($requestFormDate, $formatDateBetween, $debutStatus)
     {
 
-        $assetsData = $this->searchAssets($formatDate);
+        $assetsData = $this->searchAssets($formatDateBetween, $debutStatus);
         $totalCount = $assetsData->count('id');
         $totalAmount = $assetsData->sum('amount');
 

@@ -35,28 +35,12 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <div class="switch-dark-with-light">
-                    <button id="theme-toggle" data-tooltip-target="tooltip-toggle" data-tooltip-placement="bottom"
-                        type="button"
-                        class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-full p-2 me-2 text-sm">
-                        <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon w-5 h-5 pt-1.5"></i>
-                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                                fill-rule="evenodd" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                    <div id="tooltip-toggle" role="tooltip"
-                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark_table">
-                        変更
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+                {{-- ダークモード切替アイコン --}}
+                @include('components.dark-with-light')
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center me-1 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-white bg-white dark:bg-dark_bg hover:text-gray-700 dark:hover:text-dark_sub_text focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center me-1 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-white bg-white dark:bg-dark_bg hover:text-gray-700 dark:hover:text-dark_sub_text focus:outline-none">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -92,22 +76,19 @@
             <!-- Hamburger -->
             <div id="mobile-hamburger" class="flex items-center sm:hidden">
                 <div class="switch-dark-with-light-sp flex items-center">
-                    <button id="theme-toggle-sp" data-tooltip-target="tooltip-toggle-sp" data-tooltip-placement="bottom"
-                        type="button"
+                    <button id="theme-toggle-sp" type="button"
                         class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2 m-2 text-sm">
-                        <i id="theme-toggle-dark-icon-sp" class="hidden w-5 h-5 pt-0.5 fa-solid fa-moon"></i>
-                        <svg id="theme-toggle-light-icon-sp" class="hidden w-5 h-5" fill="currentColor"
-                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <svg id="theme-toggle-dark-icon-sp" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon-sp" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
                                 fill-rule="evenodd" clip-rule="evenodd"></path>
                         </svg>
                     </button>
-                    <div id="tooltip-toggle-sp" role="tooltip"
-                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark_bg">
-                            変更
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
                 </div>
                 <div class="-me-2 flex items-center">
                     <button @click="open = ! open"
@@ -127,7 +108,8 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden dark:bg-dark_table border-y border-slate-200">
+    <div :class="{ 'block': open, 'hidden': !open }"
+        class="hidden sm:hidden dark:bg-dark_table border-y border-slate-200">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
                 <i class="fa-solid fa-hand-holding-dollar pr-2"></i>{{ __('assets_data') }}

@@ -1,20 +1,28 @@
+@php
+    $paginator = $displayAllData->links()->paginator;
+@endphp
 <div class="flex flex-col rounded-lg border dark:border-dark_border bg-white dark:bg-dark_table md:col-span-3">
     <div
         class="flex flex-col items-center justify-between gap-4 border-b border-slate-100 dark:border-dark_border p-5 text-center sm:flex-row sm:text-start">
         <div>
             <h2 class="mb-0.5 font-semibold dark:text-white">登録済みの資産</h2>
-            <h3 class="text-sm font-medium text-slate-600 dark:text-dark_sub_text">
-                直近の資産データ<strong class="dark:text-white">{{ $totalCount }}件</strong>を表示しています
-            </h3>
-        </div>
-        @if ($totalCount > 100)
-            <div>
-                <a href="javascript:void(0)"
-                    class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-slate-800 hover:border-violet-300 hover:text-violet-800 active:border-slate-200">
-                    全件表示する
-                </a>
+            <div class="text-sm font-medium text-slate-600 dark:text-dark_sub_text">
+                <p class="text-sm">
+                    {!! __('Showing') !!}
+                    @if ($paginator->firstItem())
+                        <span class="font-medium">{{ $paginator->firstItem() }}</span>
+                        {!! __('to') !!}
+                        <span class="font-medium">{{ $paginator->lastItem() }}</span>
+                    @else
+                        {{ $paginator->count() }}
+                    @endif
+                    {!! __('of') !!}
+                    <span class="font-medium">{{ $paginator->total() }}</span>
+                    {!! __('results') !!}
+                </p>
             </div>
-        @endif
+        </div>
+        @include('components.search-month')
     </div>
     {{-- 資産データがない場合の処理を追加 --}}
     @if ($displayAllData->isEmpty() !== true)
@@ -58,7 +66,7 @@
                     <tbody>
                         @foreach ($displayAllData as $asset)
                             <tr
-                                class="border-b border-slate-100  dark:bg-dark_table dark:border-dark_border hover:bg-gray-50 dark:hover:bg-gray-600">
+                                class="border-b border-slate-100 dark:bg-dark_table dark:border-dark_border hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="px-3 py-3 text-start text-slate-600 dark:text-white">
                                     {{ $asset['registration_date'] }}</td>
                                 <td class="text-slate-800 dark:text-white px-3 py-3 font-medium text-start">

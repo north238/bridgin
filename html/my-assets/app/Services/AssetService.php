@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use App\Models\Asset;
@@ -56,6 +55,14 @@ class AssetService
 
     /**
      * 前月比率を計算して返却する
+     * @param \Illuminate\Support\Collection $data 資産データのコレクション。キーは年月（'Y-m'形式）で、値は各月の合計金額と資産数。
+     * @return \Illuminate\Support\Collection 前月比率を含む新しいコレクション。各月のデータには、以下のキーが含まれます：
+     * - 'month'：年月（'Y-m'形式）
+     * - 'totalAmount'：その月の合計金額
+     * - 'assetCount'：その月の資産数
+     * - 'increaseAndDecreaseAmount'：増減額
+     * - 'monthOverMonthRatio'：前月比率
+     * - 'ratioClass'：前月比率に基づいたクラス（'positive'、'negative'、または'even'）
      */
     public function calcMonthOverMonthRatios($data)
     {
@@ -181,7 +188,7 @@ class AssetService
     /**
      * 取得した日時から検索対象の年月を作成
      * @param  string $date
-     * @@return array [Carbon] 現在の年月の範囲
+     * @return array [Carbon] 現在の年月の範囲
      */
     public function createSearchTargetMonth($date)
     {
@@ -239,8 +246,7 @@ class AssetService
     }
 
     /**
-     * 資産データのバリデーションを行います。
-     *
+     * 資産データのバリデーション
      * @param Illuminate\Http\Request $request リクエストオブジェクト
      * @param int $userId 資産を登録するユーザーのID
      * @return App\Models\Asset バリデーション済みの資産データ

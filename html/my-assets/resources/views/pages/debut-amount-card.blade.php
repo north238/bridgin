@@ -1,9 +1,9 @@
 <a href="{{route('assets.debut.index')}}"
-    class="flex flex-col rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-rose-50 hover:border-slate-300 active:border-rose-300">
+    class="flex flex-col rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-rose-50 dark:hover:bg-gray-600 hover:border-slate-300 active:border-rose-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
             <dt class="text-2xl font-bold text-rose-500">{{ number_format($debutAssetTotalAmount) }}<span>&nbsp;円</span></dt>
-            <dd class="text-sm font-medium text-slate-500 dark:text-white mt-2">負債額</dd>
+            <dd class="text-md font-medium text-slate-500 dark:text-white mt-2">負債合計額</dd>
         </dl>
         <div
             class="flex h-12 w-12 items-center justify-center rounded-xl border border-rose-100 dark:border-dark_border bg-rose-50 dark:bg-rose-400 text-rose-500 dark:text-rose-300">
@@ -14,7 +14,8 @@
             </svg>
         </div>
     </div>
-    <div class="border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
-        <p>負債合計額&nbsp;{{$formatDate}}</p>
+    <div class="flex justify-between border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
+        <p>{{$formatDate}}</p>
+        <p class="text-blue-600 dark:text-blue-500 hover:underline">詳細を見る<i class="fa-solid fa-angle-right ml-2"></i></p>
     </div>
 </a>

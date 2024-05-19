@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\AssetService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 
 class AssetsController extends Controller
 {
@@ -36,12 +36,11 @@ class AssetsController extends Controller
      * 資産表示画面
      * ユーザーがログインしており、自身が作成したユーザーの場合にのみアクセス可能
      * @param  Request $request HTTPリクエスト
-     * @return View             資産データを表示するビュー
+     * @return \Illuminate\Contracts\View 資産データを表示するビュー
      */
     public function index(Request $request)
     {
         $userId = Auth::user()->id;
-        $formatDate = $this->assetService->getFormatDate();
         $sort = ['order' => 'registration_date', 'type' => 'DESC'];
 
         $debutStatus = $request->input('debutStatus');
@@ -68,6 +67,7 @@ class AssetsController extends Controller
 
     /**
      * 資産登録画面
+     * @return \Illuminate\Contracts\View 資産登録画面を表示するビュー
      */
     public function create()
     {
@@ -75,12 +75,20 @@ class AssetsController extends Controller
         $genres = $this->genres->getGenreData()->get();
         $categories = $this->categories->getCategoriesData()->get();
 
-        return view('assets.create', compact('genres', 'categories', 'formatDate'));
+        $data = [
+            'genres' => $genres,
+            'categories' => $categories,
+            'formatDate' => $formatDate
+        ];
+
+        return view('assets.create', $data);
     }
 
     /**
      * 資産をデータベースに保存
-     * フォームバリデーションを導入する
+     * @param \App\Http\Requests\AssetCreateRequest $request 資産登録時のデータ
+     * @return \Illuminate\Http\RedirectResponse 登録成功時はダッシュボードへ遷移し、失敗時は元の画面へ戻る
+     * @throws \Exception 資産の保存時に例外が発生した場合
      */
     public function store(AssetCreateRequest $request)
     {
@@ -94,15 +102,24 @@ class AssetsController extends Controller
             $asset->save();
             DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', '資産の登録に成功しました。');
+            return redirect()->route('assets.dashboard')->with('success-message', __('create_success_message'));
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error-message', '資産の登録に失敗しました。' . $e->getMessage());
+            Log::error(__('create_error_log'), [
+                'stack_trace' => $e->getTraceAsString(),
+                'error_message' => $e->getMessage(),
+                'method' => request()->method(),
+                'parameters' => request()->all(),
+            ]);
+            return back()->withInput()->with('error-message', __('create_error_message'));
         }
     }
 
     /**
      * 資産詳細画面
+     * @param string $id 資産ID
+     * @return \Illuminate\Contracts\View ビューを返却
      */
     public function show(string $id)
     {
@@ -111,11 +128,21 @@ class AssetsController extends Controller
         $genres = $this->genres->getGenreData()->get();
         $categories = $this->categories->getCategoriesData()->get();
 
-        return view('assets.show', compact('assetData', 'categories', 'genres'));
+        $data = [
+            'assetData' => $assetData,
+            'genres' => $genres,
+            'categories' => $categories,
+        ];
+
+        return view('assets.show', $data);
     }
 
     /**
      * 資産更新
+     * @param \App\Http\Requests\AssetCreateRequest $request 資産作成リクエスト
+     * @param string $id 資産ID
+     * @return \Illuminate\Http\RedirectResponse リダイレクトレスポンスを返す
+     * @throws \Exception 資産の追加または更新時に例外が発生した場合
      */
     public function update(AssetCreateRequest $request, string $id)
     {
@@ -133,10 +160,16 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect()->route('assets.index')->with('success-message', '資産の追加に成功しました。');
+                return redirect()->back()->with('success-message', __('update_success_message'));
             } catch (\Exception $e) {
                 DB::rollBack();
-                return back()->withInput()->with('error-message', '資産の追加に失敗しました。' . $e->getMessage());
+                Log::error(__('update_error_log'), [
+                    'stack_trace' => $e->getTraceAsString(),
+                    'error_message' => $e->getMessage(),
+                    'method' => request()->method(),
+                    'parameters' => request()->all(),
+                ]);
+                return back()->withInput()->with('error-message', __('update_error_message'));
             }
             // 更新の場合の処理
         } else {
@@ -148,16 +181,25 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect()->route('assets.index')->with('success-message', '資産の更新に成功しました。');
+                return redirect()->back()->with('success-message', __('new_success_message'));
             } catch (\Exception $e) {
                 DB::rollBack();
-                return back()->withInput()->with('error-message', '資産の更新に失敗しました。' . $e->getMessage());
+                Log::error(__('new_error_log'), [
+                    'stack_trace' => $e->getTraceAsString(),
+                    'error_message' => $e->getMessage(),
+                    'method' => request()->method(),
+                    'parameters' => request()->all(),
+                ]);
+                return back()->withInput()->with('error-message', __('new_error_message'));
             }
         }
     }
 
     /**
      * 資産削除
+     * @param string $id 資産ID
+     * @return \Illuminate\Http\RedirectResponse リダイレクトレスポンスを返す
+     * @throws \Exception 資産削除時に例外が発生した場合
      */
     public function destroy(string $id)
     {
@@ -169,10 +211,16 @@ class AssetsController extends Controller
             $asset->delete();
             DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', '資産を削除しました。削除されたデータは保存されます。');
+            return redirect()->route('assets.index')->with('success-message', __('delete_success_message'));
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error-message', '資産の削除に失敗しました。' . $e->getMessage());
+            Log::error(__('delete_error_log'), [
+                'stack_trace' => $e->getTraceAsString(),
+                'error_message' => $e->getMessage(),
+                'method' => request()->method(),
+                'parameters' => request()->all(),
+            ]);
+            return back()->withInput()->with('error-message', __('delete_error_message'));
         }
     }
 }
