@@ -33,7 +33,7 @@ class YearlyAssetsController extends Controller
         $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
 
         // すべてのデータを取得
-        $displayAllData = $assetsAllData->get();
+        $displayAllData = $this->assets->getAssetsPagination($userId)->paginate(10);
         $totalCount = $this->assets->calculateTotalCount($assetsAllData);
         $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsAllData);
         $formatDate = $this->assetService->getFormatYearMonth($latestMonthDate);
@@ -50,6 +50,7 @@ class YearlyAssetsController extends Controller
             'displayAllData' => $displayAllData,
             'totalCount' => $totalCount,
             'formatDate' => $formatDate,
+            'latestMonthDate' => $latestMonthDate,
             'monthlyTotalAmount' => $monthlyTotalAmount,
             'debutAssetTotalAmount' => $debutAssetTotalAmount,
             'latestMonthIncreaseDecreaseAmount' => $latestMonthIncreaseDecreaseAmount,

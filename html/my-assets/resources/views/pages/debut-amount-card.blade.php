@@ -1,5 +1,5 @@
 <a href="{{route('assets.debut.index')}}"
-    class="flex flex-col rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-rose-50 hover:border-slate-300 active:border-rose-300">
+    class="flex flex-col rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-rose-50 dark:hover:bg-gray-600 hover:border-slate-300 active:border-rose-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
             <dt class="text-2xl font-bold text-rose-500">{{ number_format($debutAssetTotalAmount) }}<span>&nbsp;円</span></dt>

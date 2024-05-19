@@ -21,6 +21,7 @@
 
     input[type="month"] {
         position: relative;
+        line-height: 1;
         &::-webkit-calendar-picker-indicator {
             position: absolute;
             -webkit-appearance: none;
@@ -42,7 +43,7 @@
         right: 0;
         transform: translateY(-50%);
         margin-right: 10px;
-        line-height: 1.2;
+        line-height: 1;
     }
 }
 
