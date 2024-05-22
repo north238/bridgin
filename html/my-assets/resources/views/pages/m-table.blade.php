@@ -10,21 +10,16 @@
             </div>
         @else
             <div class="flex flex-col sm:flex-row sm:justify-between items-center p-6 border-b border-slate-100 dark:border-dark_border">
-                <div>
+                <div class="flex flex-col items-center sm:items-start">
                     <h1 class="mb-1 text-xl text-slate-700 dark:text-white">月間資産データ</h1>
                     <h2 class="text-md text-slate-700 dark:text-white">
                         資産件数:&nbsp;{{ $totalCount }}<span>件</span>
                     </h2>
                 </div>
-                <div
-                    class="flex flex-none items-center justify-center gap-2 rounded px-2 sm:justify-end sm:bg-transparent sm:px-0">
-                    <form id="asset-switch-form" action="{{ route('assets.userDisplayMethodChange') }}" method="post">
-                        @csrf
-                        <input type="hidden" id="debut-status" name="debut-status" value={{ $debutStatus }}>
-                        <button type="submit"
-                            class="block gap-1 py-2 px-3 text-md text-white rounded-lg border bg-green-500 border-green-500 hover:bg-green-400 focus:ring-2 focus:outline-none focus:ring-green-400">表示切替</button>
-                    </form>
-                    @include('components.csv-export')
+
+                <div class="inline-flex rounded-md mt-3 sm:mt-0 shadow-sm" role="group">
+                    @include('components.debut-status-change-btn')
+                    @include('components.csv-download')
                 </div>
             </div>
             <div class="p-5">

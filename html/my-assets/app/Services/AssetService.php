@@ -199,6 +199,17 @@ class AssetService
     }
 
     /**
+     * 最新の年月日を整形（2024-05-01 -> 20240501)
+     * - csvのファイル名に使用する
+     * @param string $date 年月日
+     * @return string 整形された年月日
+     */
+    public function getCsvFilename($date)
+    {
+        return str_replace('-', '', $date);
+    }
+
+    /**
      * 受け取った年月日をフォーマット
      * @param  string $date 年月日
      * @return string 変換された年月

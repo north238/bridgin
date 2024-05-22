@@ -5,7 +5,7 @@
     @csrf
     <div class="calender-input-icon">
         <input type="month" name="form-date" id="form-date" value="{{ $firstOfMonth }}"
-            class="bg-white py-3 border rounded-s-lg border-gray-300 text-slate-600 focus:ring-blue-400 focus:border-blue-400 block w-full dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+            class="bg-white py-3 border rounded-s-lg border-gray-300 text-slate-600 focus:ring-blue-400 focus:border-blue-400 block w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
             required>
             <i class="fa-regular fa-calendar text-gray-500 dark:text-white"></i>
     </div>
