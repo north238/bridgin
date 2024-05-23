@@ -868,6 +868,7 @@
   "asset_trend": "資産推移",
   "yearly_message": "ようこそ、ここからすべての資産へアクセスできます",
   "asset_create_btn": "資産を登録する",
+  "display_change": "表示切替",
 
   "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。",
   "create_success_message": "資産の登録に成功しました。",

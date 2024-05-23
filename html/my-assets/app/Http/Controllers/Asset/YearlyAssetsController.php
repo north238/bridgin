@@ -30,9 +30,8 @@ class YearlyAssetsController extends Controller
         $userId = Auth::user()->id;
         $sort = ['order' => 'registration_date', 'type' => 'DESC'];
 
-        $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
-
         // すべてのデータを取得
+        $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
         $displayAllData = $this->assets->getAssetsPagination($userId)->paginate(10);
         $totalCount = $this->assets->calculateTotalCount($assetsAllData);
         $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsAllData);
@@ -46,7 +45,11 @@ class YearlyAssetsController extends Controller
         // 負債額の合計を取得(条件を絞るため資産データを再取得する)
         $debutAssetTotalAmount = $this->assetService->debutAmountDisplay($userId, $sort, $latestMonthDate);
 
+        // ダウンロードデータを取得
+        $downloadData = $this->getDownloadData($userId, $sort);
+
         $assetsData = [
+            'downloadData' => $downloadData,
             'displayAllData' => $displayAllData,
             'totalCount' => $totalCount,
             'formatDate' => $formatDate,
@@ -82,5 +85,17 @@ class YearlyAssetsController extends Controller
         $assetsMonthlyData = $this->assets->filterAssetsByDateRange($assetsData, $betweenMonthArray)->get();
 
         return $assetsMonthlyData;
+    }
+
+    /**
+     * 年間ダウンロードデータを取得
+     * @param int $userId 資産を取得するユーザーのID
+     * @param array $sort 資産を取得する際の並び替え基準
+     */
+    public function getDownloadData($userId, $sort)
+    {
+        $assetsData = $this->assets->fetchUserAssets($userId, $sort)->get();
+
+        return $assetsData;
     }
 }
