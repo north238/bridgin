@@ -41,7 +41,7 @@
         position: absolute;
         top: 50%;
         right: 0;
-        transform: translateY(-50%);
+        transform: translateY(-55%);
         margin-right: 10px;
         line-height: 1;
     }
@@ -128,9 +128,9 @@ html,
 
 .positive,
 .even {
-    @apply text-green-600;
+    @apply text-green-500;
 }
 
 .negative {
-    @apply text-red-600;
+    @apply text-red-500;
 }

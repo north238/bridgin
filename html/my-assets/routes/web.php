@@ -10,6 +10,7 @@ use App\Http\Controllers\Asset\AssetSearchController;
 use App\Http\Controllers\Asset\AssetTrendController;
 use App\Http\Controllers\Asset\CurrentMonthAssetController;
 use App\Http\Controllers\AssetSwitchStatusController;
+use App\Http\Controllers\CsvFileDownloadController;
 use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,18 +45,13 @@ Route::middleware('auth')->group(function () {
 // 表示切替、CSVダウンロード機能
 Route::middleware('auth')->group(function() {
     Route::post('/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
-    Route::post('/csv-export', [CsvFilesController::class, 'csvExport'])->name('assets.csvExport');
-    // Route::post('/pagination/index', [AjaxController::class, 'ajaxPaginationIndex'])->name('ajax.pagination.index');
-    // Route::get('/pagination/show', [AjaxController::class, 'ajaxPaginationShow'])->name('ajax.pagination.show');
-    // Route::post('/sort/get', [AjaxController::class, 'getSortFetchData'])->name('sort.get');
-    // Route::get('/sort/post', [AjaxController::class, 'PostSortData'])->name('sort.post');
+    Route::post('/csv-download', [CsvFileDownloadController::class, 'getFormRequestData'])->name('post.assets.csvDownload');
 });
 
 // 削除した資産の復元
 Route::middleware('auth')->group(function() {
     Route::get('/restore/show', [AssetRestoreController::class, 'showDeletedAssets'])->name('assets.showDeletedAssets');
     Route::get('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
-    Route::post('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
 });
 
 // 資産推移グラフ

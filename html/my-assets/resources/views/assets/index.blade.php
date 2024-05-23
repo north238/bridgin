@@ -28,7 +28,7 @@
                 <h2 class="text-slate-800 dark:text-white">期間:&nbsp;{{ $monthSelectorVal }}</h2>
             </div>
             <div class="flex items-center justify-center">
-                @include('components.search-month')
+                <x-search-month :value="$latestMonthDate" />
             </div>
         </div>
         <hr class="h-px my-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
