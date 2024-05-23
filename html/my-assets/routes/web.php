@@ -53,7 +53,6 @@ Route::middleware('auth')->group(function() {
 Route::middleware('auth')->group(function() {
     Route::get('/restore/show', [AssetRestoreController::class, 'showDeletedAssets'])->name('assets.showDeletedAssets');
     Route::get('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
-    Route::post('/restore/{id}', [AssetRestoreController::class, 'restoreAsset'])->name('assets.restoreAsset');
 });
 
 // 資産推移グラフ

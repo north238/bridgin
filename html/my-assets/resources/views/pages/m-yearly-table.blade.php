@@ -3,7 +3,7 @@
 @endphp
 <div class="flex flex-col rounded-lg border dark:border-dark_border bg-white dark:bg-dark_table md:col-span-3">
     <div
-        class="flex flex-col items-center justify-between gap-4 border-b border-slate-100 dark:border-dark_border p-5 text-center sm:flex-row sm:text-start">
+        class="flex flex-col items-end justify-between gap-4 border-b border-slate-100 dark:border-dark_border p-5  text-center sm:flex-row sm:text-start">
         <div>
             <h2 class="mb-0.5 font-semibold dark:text-white">登録済みの資産</h2>
             <div class="text-sm font-medium text-slate-600 dark:text-dark_sub_text">
@@ -22,7 +22,10 @@
                 </p>
             </div>
         </div>
-        @include('components.search-month')
+        <div class="flex items-center justify-between gap-3">
+            <x-csv-download :assets="$downloadData" class="rounded-lg"/>
+            <x-search-month :value="$latestMonthDate" />
+        </div>
     </div>
     {{-- 資産データがない場合の処理を追加 --}}
     @if ($displayAllData->isEmpty() !== true)

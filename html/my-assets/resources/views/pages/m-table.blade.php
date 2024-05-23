@@ -18,8 +18,8 @@
                 </div>
 
                 <div class="inline-flex rounded-md mt-3 sm:mt-0 shadow-sm" role="group">
-                    @include('components.debut-status-change-btn')
-                    @include('components.csv-download')
+                    <x-debut-status-change-btn :value="$debutStatus"/>
+                    <x-csv-download :assets="$assetsData" class="rounded-e-lg"/>
                 </div>
             </div>
             <div class="p-5">
