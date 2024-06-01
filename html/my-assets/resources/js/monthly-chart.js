@@ -10,8 +10,8 @@ import Chart from "chart.js/auto";
         { year: 2016, count: 28 },
     ];
 
-    new Chart(document.getElementById("asset-chart"), {
-        type: "bar",
+    new Chart(document.getElementById("monthly-chart"), {
+        type: "doughnut",
         data: {
             labels: data.map((row) => row.year),
             datasets: [

@@ -156,15 +156,21 @@ class Asset extends Model
     }
 
     /**
-     * 負債額データの取得
-     * @param  Collection $assetData
-     * @param  array      [Carbon] $betweenMonthArray
+     * 負債データの取得
+     * @param \Illuminate\Database\Eloquent\Builder $assetData
+     * @param array[Carbon] $betweenMonthArray
      * @return Collection $result ユーザーの負債額データのコレクション
      */
-    public function getDebutAssetsData($assetData, $betweenMonthArray)
+    public function getDebutAssetsData($assetData, $betweenMonthArray = null)
     {
-        return $assetData->whereIn('g.id', [8])
-            ->whereBetween('registration_date', $betweenMonthArray);
+        $result =
+            $assetData->where('genre_id', 8);
+
+        if (!empty($betweenMonthArray)) {
+            $result = $result->whereBetween('registration_date', $betweenMonthArray);
+        }
+
+        return $result;
     }
 
     /**

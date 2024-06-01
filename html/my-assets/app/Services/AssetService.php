@@ -33,6 +33,26 @@ class AssetService
     }
 
     /**
+     * 登録された資産データに年月がない場合に補完する
+     * @param \Illuminate\Support\Collection $data
+     * @param array $allMonths 年月の配列
+     * @return \Illuminate\Support\Collection すべての年月が補完されたデータ, 年月で並び替え（キーを昇順に）
+     */
+    public function registeredAssetDataComplement($data, $allMonths)
+    {
+        $result = $this->groupByMonthOfRegistration($data);
+
+        foreach ($allMonths as $month) {
+            if (!isset($result[$month])) {
+                $result[$month] = collect([['registration_date' => $month, 'amount' => 0]]);
+            }
+        }
+
+        return $result->sortKeys();
+    }
+
+
+    /**
      * 資産グループの合計金額と資産数を計算して新しい構造で返す
      * @param \Illuminate\Support\Collection $data 資産データのコレクション
      * @return \Illuminate\Support\Collection 合計金額と資産数を含む新しい構造のコレクション
@@ -70,7 +90,7 @@ class AssetService
         $monthOverMonthRatios = new Collection();
         $previousMonthTotalAmount = 0;
 
-        foreach($months as $month) {
+        foreach ($months as $month) {
             $currentMonthData = $data->get($month);
             $currentMonthTotalAmount = $currentMonthData['totalAmount'];
             $assetCount = $currentMonthData['assetCount'];
@@ -244,16 +264,30 @@ class AssetService
 
     /**
      * ひと月前の日付に変換する
+     * - 翌月に取得したい日がない場合にズレが発生するため記述
+     * - 例) 2024-10-31 -> 2024-10-01を取得してしまう
+     * - https://qiita.com/gungungggun/items/76e9a2a28f34a16570ff
+     *
      * @param  string $date 年月日を取得
      * @return string $formatDate フォーマットされた年月
      */
     public function getPreviousMonthDate($date)
     {
-        $carbonDate = Carbon::parse($date);
+        $carbonDate = Carbon::parse($date)->settings(['monthOverflow' => false]);
         $previousMonthDate =
             $carbonDate->subMonth()->format('Y-m-01');
 
         return $previousMonthDate;
+    }
+
+    /**
+     * 最大・最小月の取得
+     * @param  string $date 年月日を取得
+     * @return object $formatDate フォーマットされた年月
+     */
+    public function formaDate($date)
+    {
+        return Carbon::parse($date)->settings(['monthOverflow' => false])->startOfMonth();
     }
 
     /**

@@ -13,42 +13,26 @@
             </x-alert-message>
         </div>
     @endif
-    <div class="block m-6 p-6 bg-slate-50 border border-gray-200 rounded-lg shadow">
-        <x-slot name="header">
-            <h2 class="font-semibold text-gray-800 leading-tight">
-                {{ __('asset_trend') }}
-            </h2>
-        </x-slot>
-        <div class="flex justify-between items-center gap-4 mx-12 my-5">
-            <div
-                class="flex flex-row items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-gray-200 rounded-lg">
-                <h2 class="text-2xl font-medium title-font text-gray-900 dark:text-white">
-                    {{ __('total_amount') }}</h2>
-                <p class="text-base dark:text-white">
-                {{-- <p class="text-xl">{{ number_format($totalAmount) }}<span>円</span></p> --}}
-                </p>
+    <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
+        <div class="flex flex-col gap-2 text-center sm:flex-row sm:items-center sm:justify-between sm:text-start">
+            <div class="grow">
+                <h1 class="mb-1 text-xl font-medium text-slate-900 dark:text-white">{{__('asset_trend')}}</h1>
+                <h2 class="text-sm sm:text-md font-medium text-slate-500 dark:text-white">
+                    {{__('chart_message')}}
+                </h2>
             </div>
-            <div class="p-3 bg-white dark:bg-gray-800 border border-gray-200 rounded-lg align-middle">
-                <form id="asset-switch-form" action="{{ route('assets.userDisplayMethodChange') }}" method="post">
-                    @csrf
-                    {{-- <input type="hidden" id="debut-status" name="debut-status" value={{ $debutStatus }}> --}}
-                    <button type="submit">表示切替</button>
-                </form>
+            <div
+                class="flex items-center justify-center px-2">
+                <a href="{{ route('assets.create') }}"
+                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    <span>{{__('asset_create_btn')}}</span><i class="fa-solid fa-angle-right ml-2"></i>
+                </a>
             </div>
         </div>
-        <div>
-            <canvas id="asset-chart"></canvas>
+        <hr class="h-px my-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8">
+            @include('chart.yearly-chart')
+            @include('chart.monthly-chart')
         </div>
     </div>
-    {{-- @section('scripts')
-        <script type="text/javascript">
-            const formatDate = "{{ $formatDate }}";
-            const assetMinDate = "{{ $assetMinDate }}";
-            const sortUrl = "{{ route('sort.get') }}";
-            const redirectIndex = "{{ route('assets.index') }}"
-        </script>
-    @endsection --}}
-    @push('script-files')
-        @vite(['resources/js/asset-trend-chart.js'])
-    @endpush
 </x-app-layout>
