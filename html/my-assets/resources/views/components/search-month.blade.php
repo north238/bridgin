@@ -4,13 +4,12 @@
 <form id="month-form-data" class="flex items-center" method="POST" action="{{ route('search.index') }}">
     @csrf
     <div class="calender-input-icon">
-        <input type="month" name="form-date" id="form-date" value="{{ $firstOfMonth }}"
-            class="bg-white py-3 border rounded-s-lg border-gray-300 text-slate-600 focus:ring-blue-400 focus:border-blue-400 block w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+        <input type="month" name="search-date" id="search-date" value="{{ $firstOfMonth }}"
+            class="py-3 border-0 border-b-2 border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-32 dark:border-gray-700 dark:text-white dark:focus:border-blue-500"
             required>
-            <i class="fa-regular fa-calendar text-gray-500 dark:text-white"></i>
     </div>
     <button type="submit"
-        class="text-white font-medium h-full border rounded-e-lg w-full py-2 px-3.5 bg-blue-500 border-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-400"><i
+        class="text-gray-500 dark:text-white hover:transform hover:duration-200 hover:-translate-y-1"><i
             class="fa-solid fa-magnifying-glass"></i><span class="sr-only">Search</span></button>
 
     <input type="hidden" id="first-day-of-month" name="first-day-of-month" value="{{ $firstOfMonth }}">

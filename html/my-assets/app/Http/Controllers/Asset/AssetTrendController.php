@@ -13,7 +13,7 @@ class AssetTrendController extends Controller
 {
     private $assets;
     private $assetService;
-    const SORT = ['order' => 'registration_date', 'type' => 'ASC'];
+    const SORT = ['order' => 'registration_date', 'type' => 'DESC'];
 
     public function __construct(
         Asset $assets,
@@ -32,29 +32,17 @@ class AssetTrendController extends Controller
     {
         // データを取得
         $assetsMonthlyData = $this->getAssetMonthlyData($request);
-        $assetsYearlyData = $this->getAssetYearlyData($request);
+        $assetsYearlyData = $this->getAssetYearlyData();
         // グラフを表示
         $monthlyDoughnutChart = $this->createMonthlyDoughnutChart($assetsMonthlyData);
         $yearlyBarChart = $this->createYearlyBarChart($assetsYearlyData);
         $data = [
+            'assetsMonthlyData' => $assetsMonthlyData,
             'yearlyBarChart' => $yearlyBarChart,
             'monthlyDoughnutChart' => $monthlyDoughnutChart
         ];
 
         return view('assets.trend-index', $data);
-    }
-
-    /**
-     * 資産の月を指定して表示する
-     * @param Illuminate\Http\Request $request
-     * @return array[Carbon] $formatDateBetween 年月の範囲
-     */
-    public function searchAssetData(Request $request)
-    {
-        $requestDate = $request->input('search-date');
-        $formatDateBetween = $this->assetService->createSearchTargetMonth($requestDate);
-
-        return $formatDateBetween;
     }
 
     /**
@@ -67,12 +55,19 @@ class AssetTrendController extends Controller
         $monthlyDoughnutChart =
             app()->chartjs
             ->name('monthlyChart')
-            ->type('doughnut')
-            ->size(['width' => 400, 'height' => 200])
-            ->labels($assetsMonthlyData['assetNames'])
+            ->type('pie')
+            ->size(['width' => 300, 'height' => 300])
+            // ->labels($assetsMonthlyData['assetNames'])
             ->datasets([
                 [
-                    'data' => $assetsMonthlyData['assetAmounts']
+                    'type' => 'pie',
+                    'label' => 'カテゴリ（小分類）',
+                    'data' => $assetsMonthlyData['categoryTotalAmountArrays']
+                ],
+                [
+                    'type' => 'pie',
+                    'label' => 'ジャンル（大分類）',
+                    'data' => $assetsMonthlyData['genreTotalAmountArrays']
                 ]
             ])
             ->options([
@@ -98,7 +93,8 @@ class AssetTrendController extends Controller
     }
 
     /**
-     * 資産データの取得(初期表示データ)
+     * 資産データの取得(初期表示データ、負債データは除く)
+     *
      * @param \Illuminate\Http\Request $request リクエスト
      * @return array $data 月間データの配列
      */
@@ -109,9 +105,11 @@ class AssetTrendController extends Controller
 
         // すべてのデータを取得
         $assetsData = $this->assets->fetchUserAssets($userId, $sort);
+        // 負債データを取り除く
+        $assetsData = $this->assets->filterAssetsByDebutData($assetsData);
 
         // 月指定がある場合
-        if ($request) {
+        if ($request->input('search-date')) {
             $betweenMonthArray = $this->searchAssetData($request);
         } else {
             $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsData);
@@ -119,19 +117,109 @@ class AssetTrendController extends Controller
         }
         $assetsMonthlyData = $this->assets->filterAssetsByDateRange($assetsData, $betweenMonthArray)->get();
 
-        // 各配列を取得
-        $assetNames = $assetsMonthlyData->pluck('name')->all();
-        $assetAmounts = $assetsMonthlyData->pluck('amount')->all();
-        $assetTotalAmount = $assetsMonthlyData->sum('amount');
+        // カテゴリ別の資産を取得（カテゴリ名、資産名、金額）
+        $categoryData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'category_name');
+        $categoryTotalAmountArrays = $this->fetchGroupedArrayFromSpecifiedArray($categoryData, 'totalAmountArray');
+        $categoryTotalAmountArrays = $this->flattenArray($categoryTotalAmountArrays);
+
+        // ジャンル別の資産を取得（ジャンル名、資産名、金額）
+        $genreData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'genre_name');
+        $genreTotalAmountArrays = $this->fetchGroupedArrayFromSpecifiedArray($genreData, 'fieldTotalAmountArray');
+        // $labels = $genreData->keys()->all();
+
+        // 資産合計額を取得
+        $totalAmount =  $this->assets->calculateTotalAmount($assetsData);
 
         $data = [
-            'assetNames' => $assetNames,
-            'assetAmounts' => $assetAmounts,
-            'assetTotalAmount' => $assetTotalAmount,
-            'assetsMonthlyData' => $assetsMonthlyData
+            'totalAmount' => $totalAmount,
+            'betweenMonthArray' => $betweenMonthArray,
+            'assetsMonthlyData' => $assetsMonthlyData,
+            'genreTotalAmountArrays' => $genreTotalAmountArrays,
+            'categoryTotalAmountArrays' => $categoryTotalAmountArrays
         ];
 
         return $data;
+    }
+
+    /**
+     * 資産の月を指定して表示する
+     *
+     * @param Illuminate\Http\Request $request
+     * @return array[Carbon] $formatDateBetween 年月の範囲
+     */
+    public function searchAssetData(Request $request)
+    {
+        $requestDate = $request->input('search-date');
+        $formatDateBetween = $this->assetService->createSearchTargetMonth($requestDate);
+
+        return $formatDateBetween;
+    }
+
+    /**
+     * 動的に選択されたフィールドの資産データを取得する
+     *
+     * @param \Illuminate\Support\Collection $data 選択された資産データのコレクション
+     * @param string $field グループ化したいフィールド
+     * @return \Illuminate\Support\Collection $amountsByField 資産名, 合計金額, フィールド合計金額がまとめられたデータ
+     */
+    public function getAssetDataEachGenreCategory($data, $field)
+    {
+        // フィールド名でグループ化
+        $groupedByField = $data->groupBy(function ($asset) use ($field) {
+            return $asset->{$field};
+        });
+
+        $amountsByField = $groupedByField->map(function ($group) {
+            $totalAmountArray = $group->pluck('amount')->all();
+            $assetNamesArray = $group->pluck('name')->all();
+            $fieldTotalAmountArray = $group->sum('amount');
+
+            return [
+                'totalAmountArray' => $totalAmountArray,
+                'assetNamesArray' => $assetNamesArray,
+                'fieldTotalAmountArray' => $fieldTotalAmountArray
+            ];
+        });
+
+        return $amountsByField;
+    }
+
+    /**
+     * グループ化された配列から指定した配列を取り出す
+     *
+     * @param \Illuminate\Support\Collection $arrayData 資産名, 合計金額, フィールド合計金額がまとめられたデータ
+     * @param string $dataField 指定したいフィールド
+     * @return array $fetchArrays 指定して取り出した配列
+     */
+    public function fetchGroupedArrayFromSpecifiedArray($arrayData, $dataField)
+    {
+        $fetchArrays = [];
+
+        foreach ($arrayData as $data) {
+            if (isset($data[$dataField])) {
+                $fetchArrays[] = $data[$dataField];
+            }
+        }
+
+        return $fetchArrays;
+    }
+
+    /**
+     * ネストされた配列を一つのフラットな配列にする
+     *
+     * @param array $nestedArray
+     * @return array
+     */
+    public function flattenArray($nestedArray)
+    {
+        $flattenedArray = [];
+
+        foreach ($nestedArray as $array) {
+            // ネストされた配列をフラット化してマージ
+            $flattenedArray = array_merge($flattenedArray, $array);
+        }
+
+        return $flattenedArray;
     }
 
     /**

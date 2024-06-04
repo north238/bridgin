@@ -82,9 +82,9 @@ class Asset extends Model
 
     /**
      * 資産データを指定した期間で絞り込む
-     * @param Collection $data 資産データのコレクション
+     * @param \Illuminate\Support\Collection $data 資産データのコレクション
      * @param array $betweenMonthArray 取得したい年月の期間
-     * @return Collection 絞り込まれた資産データのコレクション
+     * @return \Illuminate\Database\Query\Builder 絞り込まれた資産データのコレクション
      */
     public function filterAssetsByDateRange($data, $betweenMonthArray)
     {
@@ -92,9 +92,19 @@ class Asset extends Model
     }
 
     /**
+     * 資産データの負債を取り除く
+     * @param \Illuminate\Support\Collection $data 資産データのコレクション
+     * @return \Illuminate\Database\Query\Builder 絞り込まれた資産データのコレクション
+     */
+    public function filterAssetsByDebutData($data)
+    {
+        return $data->whereNot('genre_id', 8);
+    }
+
+    /**
      * 資産データから最新の登録日を取得する
-     * @param  Collection $assetData 資産データのコレクション
-     * @return string|null           最新の登録日（文字列形式）。データが空の場合はnullを返す。
+     * @param  \Illuminate\Support\Collection $assetData 資産データのコレクション
+     * @return string|null           最新の登録日（文字列形式）、データが空の場合はnullを返す
      */
     public function getLatestRegistrationDate($assetData)
     {
@@ -102,22 +112,8 @@ class Asset extends Model
     }
 
     /**
-     * データの最小値を取得
-     * @param  int    $userId 資産を取得するユーザーのID
-     * @return string $result 登録された最小の日時
-     */
-    public function minAsset($userId)
-    {
-        $result = Asset::query()
-            ->where('user_id', $userId)
-            ->min('registration_date');
-
-        return $result;
-    }
-
-    /**
      * 資産データの合計金額を計算する
-     * @param  Collection $assetData 資産データのコレクション
+     * @param  \Illuminate\Support\Collection $assetData 資産データのコレクション
      * @return float                 合計金額
      */
     public function calculateTotalAmount($assetData)
@@ -127,7 +123,7 @@ class Asset extends Model
 
     /**
      * 資産データの総数を計算する
-     * @param  Collection $assetData 資産データのコレクション
+     * @param  \Illuminate\Support\Collection $assetData 資産データのコレクション
      * @return int                   資産の総数
      */
     public function calculateTotalCount($assetData)
@@ -159,7 +155,7 @@ class Asset extends Model
      * 負債データの取得
      * @param \Illuminate\Database\Eloquent\Builder $assetData
      * @param array[Carbon] $betweenMonthArray
-     * @return Collection $result ユーザーの負債額データのコレクション
+     * @return \Illuminate\Database\Query\Builder $result ユーザーの負債額データのコレクション
      */
     public function getDebutAssetsData($assetData, $betweenMonthArray = null)
     {
@@ -185,22 +181,6 @@ class Asset extends Model
             ->get();
 
         return $query;
-    }
-
-    /**
-     * 資産推移を表示するデータの取得
-     * 年間表示の場合
-     * 必要なデータ:（年月、資産名、資産額、ユーザー）
-     * グラフ: 積みあげ棒グラフ（各資産データが積みあがっている）
-     * → 固定資産、流動資産が分かれている（比率が見たい）
-     * → 資産目標額の表示
-     * → 資産合計額（折れ線グラフ）
-     * 資産入力がない月はどうする（固定資産だけ表示？ 0と表示？）
-     * 
-     */
-    public function fetchAssetTrendData()
-    {
-        return;
     }
 
     public function user(): BelongsTo
