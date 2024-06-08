@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Genre extends Model
+class Color extends Model
 {
     use HasFactory;
 
@@ -14,26 +14,16 @@ class Genre extends Model
         'id',
     ];
     protected $fillable = [
-        'name',
-        'risk_rank'
+        'color_code'
     ];
 
-    /**
-     * ジャンルデータの取得
-     */
-    public function getGenreData()
+    public function genres(): HasMany
     {
-        $result = Genre::query();
-        return $result;
+        return $this->hasMany(Genre::class);
     }
 
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
-    }
-
-    public function colors(): HasMany
-    {
-        return $this->hasMany(Color::class);
     }
 }

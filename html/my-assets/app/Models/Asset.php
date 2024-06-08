@@ -66,7 +66,8 @@ class Asset extends Model
         $result = Asset::query()
             ->join('categories as c', 'assets.category_id', '=', 'c.id')
             ->join('genres as g', 'c.genre_id', '=', 'g.id')
-            ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank'])
+            ->join('m_chart_colors as mcc', 'g.color_id', '=', 'mcc.id')
+            ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank', 'mcc.color_code'])
             ->where('user_id', $userId);
 
         if (isset($betweenMonthArray) === true) {

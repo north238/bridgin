@@ -58,18 +58,19 @@ class AssetTrendController extends Controller
             app()->chartjs
             ->name('monthlyChart')
             ->type('pie')
-            ->size(['width' => 300, 'height' => 300])
+            ->size(['width' => 100, 'height' => 100])
             ->datasets([
                 [
                     'type' => 'pie',
                     'label' => 'カテゴリ（小分類）',
-                    'data' => $assetsMonthlyData['categoryArrays']
+                    'data' => $assetsMonthlyData['categoryArrays'],
+                    'backgroundColor' => $assetsMonthlyData['categoryColorArrays']
                 ],
                 [
                     'type' => 'pie',
                     'label' => 'ジャンル（大分類）',
                     'data' => $assetsMonthlyData['genreArrays'],
-                    'backgroundColor' => ['#4ADE80', '#F87171', '#F59E0B', '#14B8A6', '#3B82F6', '#6366F1']
+                    'backgroundColor' => $assetsMonthlyData['genreColorArrays']
                 ]
             ])
             ->optionsRaw("{
@@ -143,12 +144,14 @@ class AssetTrendController extends Controller
 
         // カテゴリ別の資産を取得（カテゴリ名、資産名、金額）
         $categoryData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'category_name');
-        $categoryArrays = $this->fetchGroupedArrayFromSpecifiedArray($categoryData, 'assetNamesArray', 'totalAmountArray');
+        $categoryArrays = $this->fetchGroupedArrayFromSpecifiedArray($categoryData, 'assetNamesArray', 'totalAmountArray', 'colorCodeArray');
         $categoryArrays = $this->combineArrays($categoryArrays);
+        $categoryColorArrays = $this->fetchColorCodeFromArray($categoryArrays);
 
         // ジャンル別の資産を取得（ジャンル名、資産名、金額）
         $genreData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'genre_name');
         $genreArrays = $this->combineKeysAndTotalAmounts($genreData);
+        $genreColorArrays = $this->fetchColorCodeFromArray($genreArrays);
 
         // 資産合計額を取得
         $totalAmount =  $this->assets->calculateTotalAmount($assetsData);
@@ -158,7 +161,9 @@ class AssetTrendController extends Controller
             'betweenMonthArray' => $betweenMonthArray,
             'assetsMonthlyData' => $assetsMonthlyData,
             'genreArrays' => $genreArrays,
-            'categoryArrays' => $categoryArrays
+            'genreColorArrays' => $genreColorArrays,
+            'categoryArrays' => $categoryArrays,
+            'categoryColorArrays' => $categoryColorArrays
         ];
 
         return $data;
@@ -195,11 +200,13 @@ class AssetTrendController extends Controller
         $amountsByField = $groupedByField->map(function ($group) {
             $totalAmountArray = $group->pluck('amount')->all();
             $assetNamesArray = $group->pluck('name')->all();
+            $colorCodeArray = $group->pluck('color_code')->all();
             $fieldTotalAmountArray = $group->sum('amount');
 
             return [
                 'totalAmountArray' => $totalAmountArray,
                 'assetNamesArray' => $assetNamesArray,
+                'colorCodeArray' => $colorCodeArray,
                 'fieldTotalAmountArray' => $fieldTotalAmountArray
             ];
         });
@@ -214,13 +221,14 @@ class AssetTrendController extends Controller
      * @param string $dataField 指定したいフィールド
      * @return array $fetchArrays 指定して取り出した配列
      */
-    public function fetchGroupedArrayFromSpecifiedArray($arrayData, $dataNameField, $dataAmountField)
+    public function fetchGroupedArrayFromSpecifiedArray($arrayData, $dataNameField, $dataAmountField, $colorCodeArray)
     {
         $fetchArrays = [];
         foreach ($arrayData as $array) {
             $fetchArrays[] = [
                 'name' => $array[$dataNameField],
-                'amount' => $array[$dataAmountField]
+                'amount' => $array[$dataAmountField],
+                'color_code' => $array[$colorCodeArray]
             ];
         }
 
@@ -241,7 +249,8 @@ class AssetTrendController extends Controller
             foreach ($array['name'] as $index => $name) {
                 $combinedArray[] = [
                     'name' => $name,
-                    'amount' => $array['amount'][$index]
+                    'amount' => $array['amount'][$index],
+                    'color_code' => $array['color_code'][$index]
                 ];
             }
         }
@@ -253,7 +262,7 @@ class AssetTrendController extends Controller
      * 配列のキーと合計資産額を結合する
      *
      * @param array $arrays キーと'fieldTotalAmountArray'値を含む連想配列
-     * @return array 'name'としてキーを持ち、'amount'として合計資産額を持つ配列
+     * @return array 'name', 'amount'を持つ配列
      */
     public function combineKeysAndTotalAmounts($arrays)
     {
@@ -262,11 +271,29 @@ class AssetTrendController extends Controller
         foreach ($arrays as $key => $value) {
             $combinedArray[] = [
                 'name' => $key,
-                'amount' => $value['fieldTotalAmountArray']
+                'amount' => $value['fieldTotalAmountArray'],
+                'color_code' => $value['colorCodeArray'][0]
             ];
         }
 
         return $combinedArray;
+    }
+
+    /**
+     * 配列からカラーコードを取り出す
+     *
+     * @param array $arrays 資産名、金額、カラーコードを含む配列
+     * @return array $colorCodeArrays カラーコードの配列
+     */
+    public function fetchColorCodeFromArray($arrays)
+    {
+        $colorCodeArrays = [];
+
+        foreach ($arrays as $array) {
+            $colorCodeArrays[] = $array['color_code'];
+        }
+
+        return $colorCodeArrays;
     }
 
 
