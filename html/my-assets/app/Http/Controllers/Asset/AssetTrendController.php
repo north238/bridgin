@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\callback;
+
 class AssetTrendController extends Controller
 {
     private $assets;
@@ -57,37 +59,59 @@ class AssetTrendController extends Controller
             ->name('monthlyChart')
             ->type('pie')
             ->size(['width' => 300, 'height' => 300])
-            // ->labels($assetsMonthlyData['assetNames'])
             ->datasets([
                 [
                     'type' => 'pie',
                     'label' => 'カテゴリ（小分類）',
-                    'data' => $assetsMonthlyData['categoryTotalAmountArrays']
+                    'data' => $assetsMonthlyData['categoryArrays']
                 ],
                 [
                     'type' => 'pie',
                     'label' => 'ジャンル（大分類）',
-                    'data' => $assetsMonthlyData['genreTotalAmountArrays']
+                    'data' => $assetsMonthlyData['genreArrays'],
+                    'backgroundColor' => ['#4ADE80', '#F87171', '#F59E0B', '#14B8A6', '#3B82F6', '#6366F1']
                 ]
             ])
-            ->options([
-                "scales" => [
-                    "y" => [
-                        "display" => false
-                    ]
-                ],
-                "plugins" => [
-                    "legend" => [
-                        "labels" => [
-                            "font" => [
-                                "size" => 10
-                            ],
-                            "padding" => 5,
-                            "boxWidth" => 10
-                        ],
-                    ]
-                ]
-            ]);
+            ->optionsRaw("{
+                parsing: {
+                    key: 'amount'
+                },
+                plugins: {
+                    tooltip: {
+                        enabled: true,
+                        usePointStyle: true,
+                        callbacks: {
+                            labelPointStyle: function(context) {
+                                return {
+                                    pointStyle: 'pie'
+                                };
+                            },
+                            title: function(context) {
+                                const data = context[0].dataset.label;
+                                return data;
+                            },
+                            label: function(context) {
+                                let label = '';
+                                const data = context.raw;
+                                if (data) {
+                                    const name = data.name;
+                                    const amount = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(data.amount);
+                                    label = ['資産名：' + name, '金額：' + amount];
+                                }
+                                return label;
+                            },
+                            footer: function(context) {
+                                const data = context[0].dataset.data;
+                                const parsed = context[0].parsed;
+                                const totalAmount = data.reduce((sum, item) => sum + item.amount, 0);
+                                const ratio = Math.round((parsed / totalAmount) * 100);
+                                const footer = '資産比率：' + ratio + '%';
+                                return footer;
+                            }
+                        }
+                    }
+                }
+            }");
 
         return $monthlyDoughnutChart;
     }
@@ -119,13 +143,12 @@ class AssetTrendController extends Controller
 
         // カテゴリ別の資産を取得（カテゴリ名、資産名、金額）
         $categoryData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'category_name');
-        $categoryTotalAmountArrays = $this->fetchGroupedArrayFromSpecifiedArray($categoryData, 'totalAmountArray');
-        $categoryTotalAmountArrays = $this->flattenArray($categoryTotalAmountArrays);
+        $categoryArrays = $this->fetchGroupedArrayFromSpecifiedArray($categoryData, 'assetNamesArray', 'totalAmountArray');
+        $categoryArrays = $this->combineArrays($categoryArrays);
 
         // ジャンル別の資産を取得（ジャンル名、資産名、金額）
         $genreData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'genre_name');
-        $genreTotalAmountArrays = $this->fetchGroupedArrayFromSpecifiedArray($genreData, 'fieldTotalAmountArray');
-        // $labels = $genreData->keys()->all();
+        $genreArrays = $this->combineKeysAndTotalAmounts($genreData);
 
         // 資産合計額を取得
         $totalAmount =  $this->assets->calculateTotalAmount($assetsData);
@@ -134,8 +157,8 @@ class AssetTrendController extends Controller
             'totalAmount' => $totalAmount,
             'betweenMonthArray' => $betweenMonthArray,
             'assetsMonthlyData' => $assetsMonthlyData,
-            'genreTotalAmountArrays' => $genreTotalAmountArrays,
-            'categoryTotalAmountArrays' => $categoryTotalAmountArrays
+            'genreArrays' => $genreArrays,
+            'categoryArrays' => $categoryArrays
         ];
 
         return $data;
@@ -191,36 +214,61 @@ class AssetTrendController extends Controller
      * @param string $dataField 指定したいフィールド
      * @return array $fetchArrays 指定して取り出した配列
      */
-    public function fetchGroupedArrayFromSpecifiedArray($arrayData, $dataField)
+    public function fetchGroupedArrayFromSpecifiedArray($arrayData, $dataNameField, $dataAmountField)
     {
         $fetchArrays = [];
-
-        foreach ($arrayData as $data) {
-            if (isset($data[$dataField])) {
-                $fetchArrays[] = $data[$dataField];
-            }
+        foreach ($arrayData as $array) {
+            $fetchArrays[] = [
+                'name' => $array[$dataNameField],
+                'amount' => $array[$dataAmountField]
+            ];
         }
 
         return $fetchArrays;
     }
 
     /**
-     * ネストされた配列を一つのフラットな配列にする
+     * 2つの配列を結合する
      *
-     * @param array $nestedArray
+     * @param array $arrays 2つの配列
      * @return array
      */
-    public function flattenArray($nestedArray)
+    public function combineArrays($arrays)
     {
-        $flattenedArray = [];
+        $combinedArray = [];
 
-        foreach ($nestedArray as $array) {
-            // ネストされた配列をフラット化してマージ
-            $flattenedArray = array_merge($flattenedArray, $array);
+        foreach ($arrays as $array) {
+            foreach ($array['name'] as $index => $name) {
+                $combinedArray[] = [
+                    'name' => $name,
+                    'amount' => $array['amount'][$index]
+                ];
+            }
         }
 
-        return $flattenedArray;
+        return $combinedArray;
     }
+
+    /**
+     * 配列のキーと合計資産額を結合する
+     *
+     * @param array $arrays キーと'fieldTotalAmountArray'値を含む連想配列
+     * @return array 'name'としてキーを持ち、'amount'として合計資産額を持つ配列
+     */
+    public function combineKeysAndTotalAmounts($arrays)
+    {
+        $combinedArray = [];
+
+        foreach ($arrays as $key => $value) {
+            $combinedArray[] = [
+                'name' => $key,
+                'amount' => $value['fieldTotalAmountArray']
+            ];
+        }
+
+        return $combinedArray;
+    }
+
 
     /**
      * 年間チャートを生成
