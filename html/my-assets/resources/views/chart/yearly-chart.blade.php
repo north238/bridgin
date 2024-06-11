@@ -1,58 +1,79 @@
-<div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-    <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
-        <div class="flex items-center">
-            <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
-                <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 19">
-                    <path
-                        d="M14.5 0A3.987 3.987 0 0 0 11 2.1a4.977 4.977 0 0 1 3.9 5.858A3.989 3.989 0 0 0 14.5 0ZM9 13h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z" />
-                    <path
-                        d="M5 19h10v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2ZM5 7a5.008 5.008 0 0 1 4-4.9 3.988 3.988 0 1 0-3.9 5.859A4.974 4.974 0 0 1 5 7Zm5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5-1h-.424a5.016 5.016 0 0 1-1.942 2.232A6.007 6.007 0 0 1 17 17h2a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5ZM5.424 9H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h2a6.007 6.007 0 0 1 4.366-5.768A5.016 5.016 0 0 1 5.424 9Z" />
-                </svg>
-            </div>
-            <div>
-                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">3.4k</h5>
-                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Leads generated per week</p>
-            </div>
-        </div>
+<div class="flex flex-col justify-between w-full bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
+    <div class="flex justify-between pb-9 mb-4 border-b border-gray-200 dark:border-gray-700">
         <div>
-            <span
-                class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-green-900 dark:text-green-300">
-                <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 10 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5 13V1m0 0L1 5m4-4 4 4" />
+            <div class="flex flex-row mb-1">
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">年間チャート</h5>
+                <svg data-popover-target="yearly-chart-info" data-popover-placement="bottom"
+                    class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm0 16a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm1-5.034V12a1 1 0 0 1-2 0v-1.418a1 1 0 0 1 1.038-.999 1.436 1.436 0 0 0 1.488-1.441 1.501 1.501 0 1 0-3-.116.986.986 0 0 1-1.037.961 1 1 0 0 1-.96-1.037A3.5 3.5 0 1 1 11 11.466Z" />
                 </svg>
-                42.5%
-            </span>
+            </div>
+            <div class="flex flex-row items-center">
+                @php
+                    $monthArray = $assetsYearlyData['betweenMonthArray'];
+                    $firstDayOfMonth = date('Y-m-01', strtotime($monthArray[0]));
+                    $lastDayOfMonth = date('Y-m-t', strtotime($monthArray[1]));
+                    $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
+                @endphp
+                <span class="flex w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5 flex-shrink-0"></span>
+                <p class="text-slate-800 dark:text-white">期間:&nbsp;{{ $monthSelectorVal }}</p>
+            </div>
+        </div>
+        <div data-popover id="yearly-chart-info" role="tooltip"
+            class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
+            <div class="p-3 space-y-2">
+                <h3 class="font-semibold text-gray-900 dark:text-white">年間チャート詳細</h3>
+                <p>登録された資産を年単位で表示しています。チャートの特性上、登録されていない月の資産も表示されております。</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white">表示期間</h3>
+                <p>表示期間は年単位です。表示期間を変更したい場合はグラフ下の検索窓に入力し検索してください。</p>
+            </div>
+            <div data-popper-arrow></div>
         </div>
     </div>
 
-    <div class="grid grid-cols-2">
-        <dl class="flex items-center">
-            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Money spent:</dt>
-            <dd class="text-gray-900 text-sm dark:text-white font-semibold">$3,232</dd>
-        </dl>
-        <dl class="flex items-center justify-end">
-            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Conversion rate:</dt>
-            <dd class="text-gray-900 text-sm dark:text-white font-semibold">1.2%</dd>
-        </dl>
-    </div>
+    @if ($assetsYearlyData['assetsYearlyData']->isEmpty())
+        <div class="pb-3 flex justify-center items-center">
+            検索結果はありません。データを登録してください。
+        </div>
+    @else
+        <div class="pb-3 my-5 flex justify-center items-center">
+            {!! $yearlyBarChart->render() !!}
+        </div>
+    @endif
 
-    <div>
-        {!! $yearlyBarChart->render() !!}
-    </div>
     <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div class="flex justify-between items-center pt-5">
-            <a href="#"
+            @php
+                $yearArray = $assetsYearlyData['betweenMonthArray'];
+                $displayYear = date('Y-m', strtotime($yearArray[0]));
+            @endphp
+            <form action="{{ route('asset-trend.search') }}" method="post" class="flex items-center">
+                @csrf
+                <div class="calender-input-icon">
+                    <input type="month" name="search-year-date" id="search-year-date" value="{{ $displayYear }}"
+                        class="py-3 border-0 border-b-2 border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-32 dark:border-gray-700 dark:text-white dark:focus:border-blue-500"
+                        required>
+                </div>
+                <button type="submit"
+                    class="text-gray-500 dark:text-white hover:transform hover:duration-200 hover:-translate-y-1"><i
+                        class="fa-solid fa-magnifying-glass"></i><span class="sr-only">Search</span></button>
+                <input type="hidden" id="first-day-of-year" name="first-day-of-year" value="{{ $displayYear }}">
+            </form>
+            <button type="button" data-modal-target="yearly-modal" data-modal-toggle="yearly-modal"
                 class="inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
-                詳細を見る
+                データを見る
                 <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="m1 9 4-4-4-4" />
                 </svg>
-            </a>
+            </button>
         </div>
     </div>
 </div>
+
+<x-chart-data-modal type="yearly" name="年間チャート詳細">
+    hogehoge
+</x-chart-data-modal>

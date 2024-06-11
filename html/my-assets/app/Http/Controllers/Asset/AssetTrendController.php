@@ -5,11 +5,8 @@ namespace App\Http\Controllers\Asset;
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
 use App\Services\AssetService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use function PHPUnit\Framework\callback;
 
 class AssetTrendController extends Controller
 {
@@ -34,12 +31,13 @@ class AssetTrendController extends Controller
     {
         // データを取得
         $assetsMonthlyData = $this->getAssetMonthlyData($request);
-        $assetsYearlyData = $this->getAssetYearlyData();
+        $assetsYearlyData = $this->getAssetYearlyData($request);
         // グラフを表示
         $monthlyDoughnutChart = $this->createMonthlyDoughnutChart($assetsMonthlyData);
         $yearlyBarChart = $this->createYearlyBarChart($assetsYearlyData);
         $data = [
             'assetsMonthlyData' => $assetsMonthlyData,
+            'assetsYearlyData' => $assetsYearlyData,
             'yearlyBarChart' => $yearlyBarChart,
             'monthlyDoughnutChart' => $monthlyDoughnutChart
         ];
@@ -58,13 +56,13 @@ class AssetTrendController extends Controller
             app()->chartjs
             ->name('monthlyChart')
             ->type('pie')
-            ->size(['width' => 100, 'height' => 100])
             ->datasets([
                 [
                     'type' => 'pie',
                     'label' => 'カテゴリ（小分類）',
                     'data' => $assetsMonthlyData['categoryArrays'],
-                    'backgroundColor' => $assetsMonthlyData['categoryColorArrays']
+                    'backgroundColor' => $assetsMonthlyData['categoryColorArrays'],
+                    'hoverOffset' => 2
                 ],
                 [
                     'type' => 'pie',
@@ -105,8 +103,9 @@ class AssetTrendController extends Controller
                                 const data = context[0].dataset.data;
                                 const parsed = context[0].parsed;
                                 const totalAmount = data.reduce((sum, item) => sum + item.amount, 0);
-                                const ratio = Math.round((parsed / totalAmount) * 100);
-                                const footer = '資産比率：' + ratio + '%';
+                                const percentage = (parsed / totalAmount) * 100;
+                                const roundedPercentage = parseFloat(percentage.toFixed(1));
+                                const footer = '資産比率：' + roundedPercentage + '%';
                                 return footer;
                             }
                         }
@@ -134,7 +133,7 @@ class AssetTrendController extends Controller
         $assetsData = $this->assets->filterAssetsByDebutData($assetsData);
 
         // 月指定がある場合
-        if ($request->input('search-date')) {
+        if ($request->input('search-month-date')) {
             $betweenMonthArray = $this->searchAssetData($request);
         } else {
             $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsData);
@@ -146,12 +145,13 @@ class AssetTrendController extends Controller
         $categoryData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'category_name');
         $categoryArrays = $this->fetchGroupedArrayFromSpecifiedArray($categoryData, 'assetNamesArray', 'totalAmountArray', 'colorCodeArray');
         $categoryArrays = $this->combineArrays($categoryArrays);
-        $categoryColorArrays = $this->fetchColorCodeFromArray($categoryArrays);
+        $categoryColorArrays = $this->fetchColorCodeFromArray($categoryArrays, 'color_code');
 
         // ジャンル別の資産を取得（ジャンル名、資産名、金額）
         $genreData = $this->getAssetDataEachGenreCategory($assetsMonthlyData, 'genre_name');
         $genreArrays = $this->combineKeysAndTotalAmounts($genreData);
-        $genreColorArrays = $this->fetchColorCodeFromArray($genreArrays);
+        $genreNameArrays = $this->fetchColorCodeFromArray($genreArrays, 'name');
+        $genreColorArrays = $this->fetchColorCodeFromArray($genreArrays, 'color_code');
 
         // 資産合計額を取得
         $totalAmount =  $this->assets->calculateTotalAmount($assetsData);
@@ -160,7 +160,9 @@ class AssetTrendController extends Controller
             'totalAmount' => $totalAmount,
             'betweenMonthArray' => $betweenMonthArray,
             'assetsMonthlyData' => $assetsMonthlyData,
+            'genreData' => $genreData,
             'genreArrays' => $genreArrays,
+            'genreNameArrays' => $genreNameArrays,
             'genreColorArrays' => $genreColorArrays,
             'categoryArrays' => $categoryArrays,
             'categoryColorArrays' => $categoryColorArrays
@@ -177,10 +179,18 @@ class AssetTrendController extends Controller
      */
     public function searchAssetData(Request $request)
     {
-        $requestDate = $request->input('search-date');
-        $formatDateBetween = $this->assetService->createSearchTargetMonth($requestDate);
+        $requestMonthDate = $request->input('search-month-date');
+        $requestYearDate = $request->input('search-year-date');
+        if (!empty($requestMonthDate)) {
+            $formatDateBetween = $this->assetService->createSearchTargetMonth($requestMonthDate);
+            return $formatDateBetween;
+        }
 
-        return $formatDateBetween;
+        if (!empty($requestYearDate)) {
+            $yearString = explode("-", $requestYearDate)[0];
+            $formatDateBetween = $this->assetService->getStartAndEndOfYear($yearString);
+            return $formatDateBetween;
+        }
     }
 
     /**
@@ -210,6 +220,7 @@ class AssetTrendController extends Controller
                 'fieldTotalAmountArray' => $fieldTotalAmountArray
             ];
         });
+        // dd($amountsByField);
 
         return $amountsByField;
     }
@@ -262,7 +273,7 @@ class AssetTrendController extends Controller
      * 配列のキーと合計資産額を結合する
      *
      * @param array $arrays キーと'fieldTotalAmountArray'値を含む連想配列
-     * @return array 'name', 'amount'を持つ配列
+     * @return array $combinedArray 資産名、金額、カラーコードを持つ配列
      */
     public function combineKeysAndTotalAmounts($arrays)
     {
@@ -285,12 +296,12 @@ class AssetTrendController extends Controller
      * @param array $arrays 資産名、金額、カラーコードを含む配列
      * @return array $colorCodeArrays カラーコードの配列
      */
-    public function fetchColorCodeFromArray($arrays)
+    public function fetchColorCodeFromArray($arrays, $field)
     {
         $colorCodeArrays = [];
 
         foreach ($arrays as $array) {
-            $colorCodeArrays[] = $array['color_code'];
+            $colorCodeArrays[] = $array[$field];
         }
 
         return $colorCodeArrays;
@@ -308,34 +319,95 @@ class AssetTrendController extends Controller
         $yearlyBarChart = app()->chartjs
             ->name('yearlyChart')
             ->type('bar')
-            ->size(['width' => 400, 'height' => 300])
+            ->size(['width' => 300, 'height' => 280])
             ->labels($assetsYearlyData['labels'])
             ->datasets([
                 [
                     'type' => 'bar',
-                    "label" => "資産",
-                    'data' => $assetsYearlyData['assetsDataArray']
+                    'label' => '資産',
+                    'data' => $assetsYearlyData['assetsDataArray'],
+                    'backgroundColor' => '#22C55E',
+                    'borderColor' => '#000',
+                    'borderWidth' => 1,
+                    'borderSkipped' => false,
+                    'order' => 2
                 ],
                 [
                     'type' => 'bar',
-                    "label" => "負債",
-                    'data' => $assetsYearlyData['debutDataArray']
+                    'label' => '負債',
+                    'data' => $assetsYearlyData['debutDataArray'],
+                    'backgroundColor' => '#F87171',
+                    'borderColor' => '#000',
+                    'borderWidth' => 1,
+                    'borderSkipped' => false,
+                    'order' => 3
                 ],
                 [
                     'type' => 'line',
                     'label' => '資産合計',
-                    'data' => $assetsYearlyData['yearlyDataArray']
+                    'data' => $assetsYearlyData['yearlyDataArray'],
+                    'backgroundColor' => '#FBBF24',
+                    'borderWidth' => 1,
+                    'borderColor' => '#FBBF24',
+                    'pointStyle' => 'rect',
+                    'pointRadius' => 5,
+                    'pointHoverRadius' => 7,
+                    'pointBorderColor' => '#000',
+                    'pointBackgroundColor' => '#FBBF24',
+                    'order' => 1
                 ]
             ])
-            ->options([
-                "scales" => [
-                    "y" => [
-                        'ticks' => [
-                            'min' => 0 // 時系列
-                        ]
-                    ]
-                ]
-            ]);
+            ->optionsRaw("{
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        grid: {
+                            tickColor: '#000'
+                        },
+                        border: {
+                            color: '#000',
+                            width: 1
+                        }
+                    },
+                    y: {
+                        grid: {
+                            tickColor: '#000'
+                        },
+                        border: {
+                            color: '#000',
+                            width: 1
+                        }
+                    },
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        enabled: true,
+                        usePointStyle: true,
+                        callbacks: {
+                            labelPointStyle: function(context) {
+                                return {
+                                    pointStyle: 'rect'
+                                };
+                            },
+                            title: function(context) {
+                                const data = context[0].dataset.label;
+                                return data;
+                            },
+                            label: function(context) {
+                                let label = '';
+                                if (context) {
+                                    const amount = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(context.raw);
+                                    label = ['金額：' + amount];
+                                }
+                                return label;
+                            },
+                        }
+                    }
+                }
+            }");
 
         return $yearlyBarChart;
     }
@@ -345,7 +417,7 @@ class AssetTrendController extends Controller
      *
      * @return array $yearlyData グラフに表示するデータの配列
      */
-    public function getAssetYearlyData()
+    public function getAssetYearlyData($request)
     {
         $userId = Auth::user()->id;
         $sort = self::SORT;
@@ -353,25 +425,49 @@ class AssetTrendController extends Controller
         // 全てのデータを取得
         $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
 
+        if ($request->input('search-year-date')) {
+            $betweenMonthArray = $this->searchAssetData($request);
+        } else {
+            $betweenMonthArray = $this->getDisplayYears($assetsAllData);
+        }
+
         // 年間のすべての資産データを取得
-        $allMonths = $this->generateAllYearMonth($assetsAllData);
-        $yearlyDataArray = $this->getChartDataForAssets($assetsAllData, $allMonths);
+        $assetsYearlyData = $this->assets->filterAssetsByDateRange($assetsAllData, $betweenMonthArray);
+        $allMonths = $this->generateAllYearMonth($assetsYearlyData);
+        $yearlyDataArray = $this->getChartDataForAssets($assetsYearlyData, $allMonths);
 
         // 年間の負債を除く資産データを取得
-        $assetsData = $assetsAllData->whereNot('genre_id', 8);
+        $assetsData = $assetsYearlyData->whereNot('genre_id', 8);
         $assetsDataArray = $this->getChartDataForAssets($assetsData, $allMonths);
 
         // 年間の負債データを取得
-        $debutDataArray = $this->formatDebutData($userId, $sort, $allMonths);
+        $debutDataArray = $this->formatDebutData($userId, $sort, $betweenMonthArray, $allMonths);
 
         $yearlyData = [
+            'assetsYearlyData' => $assetsYearlyData->get(),
             'yearlyDataArray' => $yearlyDataArray,
             'assetsDataArray' => $assetsDataArray,
             'debutDataArray' => $debutDataArray,
+            'betweenMonthArray' => $betweenMonthArray,
             'labels' => $allMonths
         ];
 
         return $yearlyData;
+    }
+
+    /**
+     * 表示する年を取得する
+     * @param string $date 年月日
+     * @return array [Carbon] 年月の範囲
+     */
+    public function getDisplayYears($data)
+    {
+        $latestMonthDate = $this->assets->getLatestRegistrationDate($data);
+        $yearString = explode("-", $latestMonthDate)[0];
+
+        $betweenMonthArray = $this->assetService->getStartAndEndOfYear($yearString);
+
+        return $betweenMonthArray;
     }
 
     /**
@@ -417,13 +513,14 @@ class AssetTrendController extends Controller
      *
      * @param string $userId ユーザーID
      * @param array $sort ソート条件(['order' => 'registration_date', 'type' => 'DESC'])
+     * @param array [Carbon] 年月の範囲
      * @param array $allMonths すべての年月を含む配列
      * @return array $debutDataArray 並び替え, 補完がされた負債データの配列
      */
-    public function formatDebutData($userId, $sort, $allMonths)
+    public function formatDebutData($userId, $sort, $betweenMonthArray, $allMonths)
     {
         $assetsData = $this->assets->fetchUserAssets($userId, $sort);
-        $debutAssetData = $this->assets->getDebutAssetsData($assetsData);
+        $debutAssetData = $this->assets->getDebutAssetsData($assetsData, $betweenMonthArray);
         $debutDataArray = $this->getChartDataForAssets($debutAssetData, $allMonths);
 
         return $debutDataArray;

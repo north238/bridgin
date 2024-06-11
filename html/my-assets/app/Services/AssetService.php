@@ -219,6 +219,19 @@ class AssetService
     }
 
     /**
+     * 取得した年から検索対象の年月を作成
+     * @param  string $year
+     * @return array [Carbon] 現在の年月の範囲
+     */
+    public function getStartAndEndOfYear($year)
+    {
+        $startOfYear = Carbon::createFromDate($year, 1, 1)->startOfDay();
+        $endOfYear = Carbon::createFromDate($year, 12, 31)->endOfDay();
+        $betweenMonthArray = [$startOfYear, $endOfYear];
+        return $betweenMonthArray;
+    }
+
+    /**
      * 最新の年月日を整形（2024-05-01 -> 20240501)
      * - csvのファイル名に使用する
      * @param string $date 年月日
