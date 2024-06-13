@@ -98,5 +98,5 @@
 </div>
 
 <x-chart-data-modal type="monthly" name="月間チャート詳細">
-    <x-chart-data-table :data="$assetsMonthlyData['genreData']" :totalAmount="$assetsMonthlyData['totalAmount']"/>
+    <x-chart-data-table :data="$assetsMonthlyData['genreData']" />
 </x-chart-data-modal>

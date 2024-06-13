@@ -57,7 +57,7 @@
                         required>
                 </div>
                 <button type="submit"
-                    class="text-gray-500 dark:text-white hover:transform hover:duration-200 hover:-translate-y-1"><i
+                    class="text-gray-600 dark:text-white hover:transform hover:duration-200 hover:-translate-y-1"><i
                         class="fa-solid fa-magnifying-glass"></i><span class="sr-only">Search</span></button>
                 <input type="hidden" id="first-day-of-year" name="first-day-of-year" value="{{ $displayYear }}">
             </form>
@@ -75,5 +75,5 @@
 </div>
 
 <x-chart-data-modal type="yearly" name="年間チャート詳細">
-    hogehoge
+    <x-chart-yearly-data-table :data="$assetsYearlyData" />
 </x-chart-data-modal>
