@@ -7,8 +7,18 @@ use App\Services\AssetService;
 
 class ChartService
 {
-
+    /**
+     * 資産データのモデルインスタンス
+     *
+     * @var Asset
+     */
     private $assets;
+
+    /**
+     * 資産データを操作するサービス
+     *
+     * @var AssetService
+     */
     private $assetService;
 
     public function __construct(

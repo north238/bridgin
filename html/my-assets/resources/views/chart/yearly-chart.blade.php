@@ -1,5 +1,6 @@
-<div class="flex flex-col justify-between w-full bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
-    <div class="flex justify-between pb-9 mb-4 border-b border-gray-200 dark:border-gray-700">
+<div
+    class="flex flex-col justify-between w-full bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
+    <div class="pb-9 mb-4 border-b border-gray-200 dark:border-gray-700">
         <div>
             <div class="flex flex-row mb-1">
                 <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">年間チャート</h5>
@@ -10,16 +11,15 @@
                         d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm0 16a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm1-5.034V12a1 1 0 0 1-2 0v-1.418a1 1 0 0 1 1.038-.999 1.436 1.436 0 0 0 1.488-1.441 1.501 1.501 0 1 0-3-.116.986.986 0 0 1-1.037.961 1 1 0 0 1-.96-1.037A3.5 3.5 0 1 1 11 11.466Z" />
                 </svg>
             </div>
-            <div class="flex flex-row items-center">
-                @php
-                    $monthArray = $assetsYearlyData['betweenMonthArray'];
-                    $firstDayOfMonth = date('Y-m-01', strtotime($monthArray[0]));
-                    $lastDayOfMonth = date('Y-m-t', strtotime($monthArray[1]));
-                    $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
-                @endphp
-                <span class="flex w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5 flex-shrink-0"></span>
-                <p class="text-slate-800 dark:text-white">期間:&nbsp;{{ $monthSelectorVal }}</p>
-            </div>
+            @php
+                $monthArray = $assetsYearlyData['betweenMonthArray'];
+                $firstDayOfMonth = date('Y-m-01', strtotime($monthArray[0]));
+                $lastDayOfMonth = date('Y-m-t', strtotime($monthArray[1]));
+                $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
+            @endphp
+            <p class="inline-flex items-center text-slate-800 dark:text-white"><span
+                    class="w-1.5 h-1.5 bg-blue-600 rounded-full me-2"></span>期間:&nbsp;{{ $monthSelectorVal }}
+            </p>
         </div>
         <div data-popover id="yearly-chart-info" role="tooltip"
             class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
@@ -38,8 +38,8 @@
             検索結果はありません。データを登録してください。
         </div>
     @else
-        <div class="pb-3 my-5 flex justify-center items-center">
-            {!! $yearlyBarChart->render() !!}
+        <div class="pb-3 flex justify-center items-center dark:text-white my-5 h-full w-full mx-auto">
+            <canvas id="yearly-chart"></canvas>
         </div>
     @endif
 
@@ -77,3 +77,7 @@
 <x-chart-data-modal type="yearly" name="年間チャート詳細">
     <x-chart-yearly-data-table :data="$assetsYearlyData" />
 </x-chart-data-modal>
+
+@push('script-files')
+    @vite(['resources/js/yearly-chart.js'])
+@endpush

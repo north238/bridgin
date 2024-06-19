@@ -1,7 +1,7 @@
 @props(['data'])
 
 <div class="bg-white dark:bg-dark_table overflow-hidden">
-    @if (false)
+    @if ($data->isEmpty())
         <div class="bg-white dark:bg-dark_table sm:rounded-lg overflow-hidden">
             <div class="flex flex-col justify-center items-center w-full p-6">
                 <div class="text-slate-700 dark:text-white">

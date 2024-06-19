@@ -29,7 +29,7 @@ class AssetTrendController extends Controller
     private $assetService;
 
     /**
-     * グラフ生成を行うサービス
+     * グラフ生成に関するデータを取得するサービス
      *
      * @var ChartService
      */
@@ -45,7 +45,7 @@ class AssetTrendController extends Controller
     /**
      * @param Asset $assets 資産データのモデルインスタンス
      * @param AssetService $assetService 資産データを操作するサービス
-     * @param ChartService $chartService グラフ生成を行うサービス
+     * @param ChartService $chartService グラフ生成に関するデータを取得するサービス
      */
     public function __construct(
         Asset $assets,
@@ -59,6 +59,7 @@ class AssetTrendController extends Controller
 
     /**
      * 資産推移を表示する
+     *
      * @param \Illuminate\Http\Request $request リクエスト
      * @return \Illuminate\View\View 取得した変数の配列をビューに渡す
      */
@@ -67,14 +68,9 @@ class AssetTrendController extends Controller
         // データを取得
         $assetsMonthlyData = $this->getAssetMonthlyData($request);
         $assetsYearlyData = $this->getAssetYearlyData($request);
-        // グラフを表示
-        $monthlyDoughnutChart = $this->createMonthlyDoughnutChart($assetsMonthlyData);
-        $yearlyBarChart = $this->createYearlyBarChart($assetsYearlyData);
         $data = [
             'assetsMonthlyData' => $assetsMonthlyData,
             'assetsYearlyData' => $assetsYearlyData,
-            'yearlyBarChart' => $yearlyBarChart,
-            'monthlyDoughnutChart' => $monthlyDoughnutChart
         ];
 
         return view('assets.trend-index', $data);
@@ -82,6 +78,7 @@ class AssetTrendController extends Controller
 
     /**
      * 資産の月を指定して表示する
+     * - 受け取ったリクエストで返却する値が異なる
      *
      * @param Illuminate\Http\Request $request
      * @return array[Carbon] $formatDateBetween 年月の範囲
@@ -90,6 +87,7 @@ class AssetTrendController extends Controller
     {
         $requestMonthDate = $request->input('search-month-date');
         $requestYearDate = $request->input('search-year-date');
+
         if (!empty($requestMonthDate)) {
             $formatDateBetween = $this->assetService->createSearchTargetMonth($requestMonthDate);
             return $formatDateBetween;
@@ -160,6 +158,7 @@ class AssetTrendController extends Controller
     /**
      * 年間データの取得
      *
+     * @param \Illuminate\Http\Request $request リクエスト
      * @return array $yearlyData グラフに表示するデータの配列
      */
     public function getAssetYearlyData($request)
@@ -170,6 +169,7 @@ class AssetTrendController extends Controller
         // 全てのデータを取得
         $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
 
+        // 検索があった場合
         if ($request->input('search-year-date')) {
             $betweenMonthArray = $this->searchAssetData($request);
         } else {
@@ -200,178 +200,4 @@ class AssetTrendController extends Controller
         return $yearlyData;
     }
 
-    /**
-     * 月間チャートを生成
-     * @param array $assetsMonthlyData 資産データの配列
-     * @return \IcehouseVentures\LaravelChartjs\Builder $monthlyDoughnutChart 月間チャートオブジェクト
-     */
-    public function createMonthlyDoughnutChart($assetsMonthlyData)
-    {
-        $monthlyDoughnutChart =
-            app()->chartjs
-            ->name('monthlyChart')
-            ->type('pie')
-            ->datasets([
-                [
-                    'type' => 'pie',
-                    'label' => 'カテゴリ（小分類）',
-                    'data' => $assetsMonthlyData['categoryArrays'],
-                    'backgroundColor' => $assetsMonthlyData['categoryColorArrays'],
-                    'hoverOffset' => 2
-                ],
-                [
-                    'type' => 'pie',
-                    'label' => 'ジャンル（大分類）',
-                    'data' => $assetsMonthlyData['genreArrays'],
-                    'backgroundColor' => $assetsMonthlyData['genreColorArrays']
-                ]
-            ])
-            ->optionsRaw("{
-                parsing: {
-                    key: 'amount'
-                },
-                plugins: {
-                    tooltip: {
-                        enabled: true,
-                        usePointStyle: true,
-                        callbacks: {
-                            labelPointStyle: function(context) {
-                                return {
-                                    pointStyle: 'pie'
-                                };
-                            },
-                            title: function(context) {
-                                const data = context[0].dataset.label;
-                                return data;
-                            },
-                            label: function(context) {
-                                let label = '';
-                                const data = context.raw;
-                                if (data) {
-                                    const name = data.name;
-                                    const amount = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(data.amount);
-                                    label = ['資産名：' + name, '金額：' + amount];
-                                }
-                                return label;
-                            },
-                            footer: function(context) {
-                                const data = context[0].dataset.data;
-                                const parsed = context[0].parsed;
-                                const totalAmount = data.reduce((sum, item) => sum + item.amount, 0);
-                                const percentage = (parsed / totalAmount) * 100;
-                                const roundedPercentage = parseFloat(percentage.toFixed(1));
-                                const footer = '資産比率：' + roundedPercentage + '%';
-                                return footer;
-                            }
-                        }
-                    }
-                }
-            }");
-
-        return $monthlyDoughnutChart;
-    }
-
-    /**
-     * 年間チャートを生成
-     *
-     * @param array $assetsYearlyData 年間データの配列
-     * @return \IcehouseVentures\LaravelChartjs\Builder $monthlyDoughnutChart 年間チャートオブジェクト
-     */
-    public function createYearlyBarChart($assetsYearlyData)
-    {
-        $yearlyBarChart = app()->chartjs
-            ->name('yearlyChart')
-            ->type('bar')
-            ->size(['width' => 300, 'height' => 280])
-            ->labels($assetsYearlyData['labels'])
-            ->datasets([
-                [
-                    'type' => 'bar',
-                    'label' => '資産',
-                    'data' => $assetsYearlyData['assetsDataArray'],
-                    'backgroundColor' => '#22C55E',
-                    'borderColor' => '#000',
-                    'borderWidth' => 1,
-                    'borderSkipped' => false,
-                    'order' => 2
-                ],
-                [
-                    'type' => 'bar',
-                    'label' => '負債',
-                    'data' => $assetsYearlyData['debutDataArray'],
-                    'backgroundColor' => '#F87171',
-                    'borderColor' => '#000',
-                    'borderWidth' => 1,
-                    'borderSkipped' => false,
-                    'order' => 3
-                ],
-                [
-                    'type' => 'line',
-                    'label' => '資産合計',
-                    'data' => $assetsYearlyData['yearlyDataArray'],
-                    'backgroundColor' => '#FBBF24',
-                    'borderWidth' => 1,
-                    'borderColor' => '#FBBF24',
-                    'pointStyle' => 'rect',
-                    'pointRadius' => 5,
-                    'pointHoverRadius' => 7,
-                    'pointBorderColor' => '#000',
-                    'pointBackgroundColor' => '#FBBF24',
-                    'order' => 1
-                ]
-            ])
-            ->optionsRaw("{
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            tickColor: '#000'
-                        },
-                        border: {
-                            color: '#000',
-                            width: 1
-                        }
-                    },
-                    y: {
-                        grid: {
-                            tickColor: '#000'
-                        },
-                        border: {
-                            color: '#000',
-                            width: 1
-                        }
-                    },
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        enabled: true,
-                        usePointStyle: true,
-                        callbacks: {
-                            labelPointStyle: function(context) {
-                                return {
-                                    pointStyle: 'rect'
-                                };
-                            },
-                            title: function(context) {
-                                const data = context[0].dataset.label;
-                                return data;
-                            },
-                            label: function(context) {
-                                let label = '';
-                                if (context) {
-                                    const amount = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(context.raw);
-                                    label = ['金額：' + amount];
-                                }
-                                return label;
-                            },
-                        }
-                    }
-                }
-            }");
-
-        return $yearlyBarChart;
-    }
 }

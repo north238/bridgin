@@ -1,4 +1,5 @@
-<div class="flex flex-col justify-between w-full bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
+<div
+    class="flex flex-col justify-between w-full bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
     <div class="flex justify-between pb-3 border-b border-slate-200 dark:border-dark_border">
         <div class="flex justify-center items-center">
             <div>
@@ -11,19 +12,23 @@
                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm0 16a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm1-5.034V12a1 1 0 0 1-2 0v-1.418a1 1 0 0 1 1.038-.999 1.436 1.436 0 0 0 1.488-1.441 1.501 1.501 0 1 0-3-.116.986.986 0 0 1-1.037.961 1 1 0 0 1-.96-1.037A3.5 3.5 0 1 1 11 11.466Z" />
                     </svg>
                 </div>
-                <div class="flex flex-row items-center">
-                    <span class="flex w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5 flex-shrink-0"></span>
-                    <p class="text-slate-800 dark:text-white">資産合計額:&nbsp;{{ number_format($assetsMonthlyData['totalAmount']) }}&nbsp;円</p>
+                <div>
+                    <p class="inline-flex items-center text-slate-800 dark:text-white">
+                        <span class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
+                        資産合計額:&nbsp;{{ number_format($assetsMonthlyData['totalAmount']) }}&nbsp;円
+                    </p>
                 </div>
-                <div class="flex flex-row items-center">
+                <div>
                     @php
                         $monthArray = $assetsMonthlyData['betweenMonthArray'];
                         $firstDayOfMonth = date('Y-m-01', strtotime($monthArray[0]));
                         $lastDayOfMonth = date('Y-m-t', strtotime($monthArray[1]));
                         $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
                     @endphp
-                    <span class="flex w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5 flex-shrink-0"></span>
-                    <p class="text-slate-800 dark:text-white">期間:&nbsp;{{ $monthSelectorVal }}</p>
+                    <p class="inline-flex items-center text-slate-800 dark:text-white"><span
+                            class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
+                        期間:&nbsp;{{ $monthSelectorVal }}
+                    </p>
                 </div>
             </div>
             <div data-popover id="monthly-chart-info" role="tooltip"
@@ -62,7 +67,7 @@
         </div>
     @else
         <div class="pb-3 flex justify-center items-center my-5 mx-auto max-w-80">
-            {!! $monthlyDoughnutChart->render() !!}
+            <canvas id="monthly-chart"></canvas>
         </div>
     @endif
 
@@ -100,3 +105,7 @@
 <x-chart-data-modal type="monthly" name="月間チャート詳細">
     <x-chart-data-table :data="$assetsMonthlyData['genreData']" />
 </x-chart-data-modal>
+
+@push('script-files')
+    @vite(['resources/js/monthly-chart.js'])
+@endpush

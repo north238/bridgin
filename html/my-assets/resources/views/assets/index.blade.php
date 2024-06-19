@@ -38,7 +38,7 @@
     @section('scripts')
         <script type="text/javascript">
             const latestMonthDate = "{{ $latestMonthDate }}";
-            const redirectIndex = "{{ route('assets.index') }}"
+            const redirectIndex = "{{ route('assets.index') }}";
         </script>
     @endsection
 

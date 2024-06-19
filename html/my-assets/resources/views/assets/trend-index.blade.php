@@ -35,4 +35,17 @@
             @include('chart.monthly-chart')
         </div>
     </div>
+
+    @section('scripts')
+    <script type="text/javascript">
+        const categoryArrays = {!! @json_encode($assetsMonthlyData['categoryArrays']) !!};
+            const categoryColorArrays = {!! @json_encode($assetsMonthlyData['categoryColorArrays']) !!};
+            const genreArrays = {!! @json_encode($assetsMonthlyData['genreArrays']) !!};
+            const genreColorArrays = {!! @json_encode($assetsMonthlyData['genreColorArrays']) !!};
+            const labels = {!! @json_encode($assetsYearlyData['labels']) !!};
+            const assetsDataArray = {!! @json_encode($assetsYearlyData['assetsDataArray']) !!};
+            const debutDataArray = {!! @json_encode($assetsYearlyData['debutDataArray']) !!};
+            const yearlyDataArray = {!! @json_encode($assetsYearlyData['yearlyDataArray']) !!};
+    </script>
+@endsection
 </x-app-layout>
