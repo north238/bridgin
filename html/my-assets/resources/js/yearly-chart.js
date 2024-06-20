@@ -147,9 +147,9 @@ const config = {
 
 function yearlyBarChart() {
     // 既存のチャートを破棄
-    if (yearlyChartInstance) {
-        yearlyChartInstance.destroy();
-    }
+    // if (yearlyChartInstance) {
+    //     yearlyChartInstance.destroy();
+    // }
 
     yearlyChartInstance = new Chart(yearlyChart, config);
     darkMode();

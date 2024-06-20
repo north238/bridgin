@@ -27,8 +27,8 @@ const config = {
                         var value = context.dataset.data[context.dataIndex];
                         return value.amount < 15000 ? "end" : "center";
                     },
-                    offset: -9,
-                    display: true,
+                    offset: -6,
+                    display: "auto",
                 },
             },
             {
@@ -38,8 +38,22 @@ const config = {
                 backgroundColor: genreColorArrays,
                 radius: "165%",
                 datalabels: {
-                    align: "end",
-                    offset: -5,
+                    align: "center",
+                    textAlign: "center",
+                    formatter: function (value, context) {
+                        const val = context.dataset.data[context.dataIndex];
+                        const data = context.dataset.data;
+                        const totalAmount = data.reduce(
+                            (sum, item) => sum + item.amount,
+                            0
+                        );
+                        const name = val.name;
+                        const amount = val.amount;
+                        const ratio = (amount / totalAmount) * 100;
+                        const formatRatio = parseFloat(ratio.toFixed(0)) + "%";
+                        const formatRatioAndName = [name, formatRatio];
+                        return formatRatioAndName;
+                    },
                 },
             },
         ],
@@ -77,11 +91,10 @@ const config = {
                     );
                     const amount = value.amount;
                     const ratio = (amount / totalAmount) * 100;
-                    return ratio > 5;
+                    return ratio > 8;
                 },
                 color: "white",
                 font: {
-                    weight: "bold",
                     size: 14,
                 },
             },

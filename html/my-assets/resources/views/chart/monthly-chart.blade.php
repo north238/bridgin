@@ -66,7 +66,7 @@
     </div>
     @if ($isChartDataEmpty)
         <div class="pb-3 flex justify-center items-center">
-            検索結果はありません。データを登録してください。
+            検索結果はありません。資産を登録してください。
         </div>
     @else
         <div class="pb-3 flex justify-center items-center my-5 mx-auto max-w-80">
