@@ -38,4 +38,9 @@ class Category extends Model
     {
         return $this->belongsTo(Genre::class);
     }
+
+    public function colors(): HasMany
+    {
+        return $this->hasMany(Color::class);
+    }
 }

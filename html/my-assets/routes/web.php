@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Asset\YearlyAssetsController;
 use App\Http\Controllers\Asset\AssetsController;
@@ -11,7 +10,6 @@ use App\Http\Controllers\Asset\AssetTrendController;
 use App\Http\Controllers\Asset\CurrentMonthAssetController;
 use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFileDownloadController;
-use App\Http\Controllers\CsvFilesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,7 +29,7 @@ Route::middleware('auth')->group(function() {
 
 // 各詳細画面表示
 Route::middleware('auth')->group(function () {
-    Route::resource('assets', AssetsController::class);
+    Route::resource('/dashboard/assets', AssetsController::class);
     Route::get('/dashboard/debut', [DebutAssetController::class, 'debutAssetsIndex'])->name('assets.debut.index');
     Route::get('/dashboard/current-month', [CurrentMonthAssetController::class, 'currentMonthAssetsIndex'])->name('assets.currentMonth.index');
 });
@@ -57,7 +55,7 @@ Route::middleware('auth')->group(function() {
 // 資産推移グラフ
 Route::middleware('auth')->group(function() {
     Route::get('/asset-trend', [AssetTrendController::class, 'showAssetTrend'])->name('asset-trend.index');
-    
+    Route::post('/asset-trend', [AssetTrendController::class, 'showAssetTrend'])->name('asset-trend.search');
 });
 
 require __DIR__.'/auth.php';

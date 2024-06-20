@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(UserCommentSeeder::class);
+        $this->call(MChartColorSeeder::class);
         $this->call(GenreSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(AssetsSeeder::class);
