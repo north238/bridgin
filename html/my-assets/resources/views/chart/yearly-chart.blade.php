@@ -1,6 +1,9 @@
+@php
+    $isYearlyChartEmpty = $assetsYearlyData['assetsYearlyData']->isEmpty();
+@endphp
 <div
-    class="flex flex-col justify-between w-full bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
-    <div class="pb-9 mb-4 border-b border-gray-200 dark:border-gray-700">
+    class="flex flex-col justify-between w-full min-h-[540px] bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
+    <div class="pb-3 border-b border-gray-200 dark:border-gray-700">
         <div>
             <div class="flex flex-row mb-1">
                 <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">年間チャート</h5>
@@ -38,7 +41,7 @@
             検索結果はありません。データを登録してください。
         </div>
     @else
-        <div class="pb-3 flex justify-center items-center dark:text-white my-5 h-full w-full mx-auto">
+        <div class="pb-3 flex justify-center items-center my-5 h-full w-full mx-auto">
             <canvas id="yearly-chart"></canvas>
         </div>
     @endif
@@ -78,6 +81,6 @@
     <x-chart-yearly-data-table :data="$assetsYearlyData" />
 </x-chart-data-modal>
 
-@push('script-files')
+@pushIf(!$isYearlyChartEmpty, 'script-files')
     @vite(['resources/js/yearly-chart.js'])
-@endpush
+@endPushIf

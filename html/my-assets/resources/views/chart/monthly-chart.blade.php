@@ -1,5 +1,8 @@
+@php
+    $isChartDataEmpty = $assetsMonthlyData['assetsMonthlyData']->isEmpty();
+@endphp
 <div
-    class="flex flex-col justify-between w-full bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
+    class="flex flex-col justify-between w-full min-h-[540px] bg-white rounded-lg border border-slate-200 dark:border-dark_border dark:bg-dark_table hover:border-slate-300 p-4 md:p-6">
     <div class="flex justify-between pb-3 border-b border-slate-200 dark:border-dark_border">
         <div class="flex justify-center items-center">
             <div>
@@ -61,7 +64,7 @@
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
     </div>
-    @if ($assetsMonthlyData['assetsMonthlyData']->isEmpty())
+    @if ($isChartDataEmpty)
         <div class="pb-3 flex justify-center items-center">
             検索結果はありません。データを登録してください。
         </div>
@@ -106,6 +109,6 @@
     <x-chart-data-table :data="$assetsMonthlyData['genreData']" />
 </x-chart-data-modal>
 
-@push('script-files')
+@pushIf(!$isChartDataEmpty, 'script-files')
     @vite(['resources/js/monthly-chart.js'])
-@endpush
+@endPushIf

@@ -43,7 +43,7 @@
     @endsection
 
     @pushIf($isAssetsDataEmpty, 'script-files')
-    @vite(['resources/js/debut-display-switching.js'])
+        @vite(['resources/js/debut-display-switching.js'])
     @endPushIf
 
 </x-app-layout>

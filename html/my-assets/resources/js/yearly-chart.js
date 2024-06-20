@@ -1,5 +1,7 @@
 import Chart from "chart.js/auto";
 
+// 複数のチャート作成を防止
+let yearlyChartInstance = null;
 const yearlyChart = document.getElementById("yearly-chart");
 const config = {
     type: "bar",
@@ -144,19 +146,62 @@ const config = {
 };
 
 function yearlyBarChart() {
-    new Chart(yearlyChart, config);
+    // 既存のチャートを破棄
+    if (yearlyChartInstance) {
+        yearlyChartInstance.destroy();
+    }
+
+    yearlyChartInstance = new Chart(yearlyChart, config);
+    darkMode();
 }
 
 function darkMode() {
-    if (
-        localStorage.getItem("color-theme") === "dark" ||
-        (!("color-theme" in localStorage) &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-                console.log('hoge');
-            }
+    if (!yearlyChartInstance) return;
+    const x = yearlyChartInstance.config.options.scales.x;
+    const y = yearlyChartInstance.config.options.scales.y;
+    const legendLabel = yearlyChartInstance.config.options.plugins.legend.labels;
+    // ローカルストレージにダークがあれば
+    if (localStorage.getItem("color-theme") === "dark") {
+        x.border.color = "#fff";
+        x.grid.tickColor = "#fff";
+        x.ticks.color = "#fff";
+        x.title.color = "#fff";
+        y.border.color = "#fff";
+        y.grid.tickColor = "#fff";
+        y.ticks.color = "#fff";
+        y.title.color = "#fff";
+        y.grid.color = "#fff";
+        legendLabel.color = "#fff";
+    } else {
+        x.border.color = "#000";
+        x.grid.tickColor = "#000";
+        x.ticks.color = "#666";
+        x.title.color = "#666";
+        y.border.color = "#000";
+        y.grid.tickColor = "#000";
+        y.ticks.color = "#666";
+        y.title.color = "#666";
+        y.grid.color = "#666";
+        legendLabel.color = "#666";
+    }
+    // チャートを更新
+    yearlyChartInstance.update();
 }
-darkMode();
+
+const themeToggleBtn = document.getElementById("theme-toggle");
+const themeToggleBtnSP = document.getElementById("theme-toggle-sp");
 
 window.addEventListener("DOMContentLoaded", () => {
+    // 画面読み込み時に新しくチャートを呼び出す
     yearlyBarChart();
+
+    // ダークモード切替ボタンクリックイベント
+    // SP, PCで分けている
+    if (themeToggleBtnSP) {
+        themeToggleBtnSP.addEventListener("click", darkMode);
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", darkMode);
+    }
 });
