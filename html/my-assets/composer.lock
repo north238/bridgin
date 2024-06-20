@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc72fdae234ff2cddecc1fedaeaf9c7b",
+    "content-hash": "08f9bdda1a7573d570ba966119d3f8b9",
     "packages": [
         {
             "name": "brick/math",
@@ -1391,16 +1391,16 @@
         },
         {
             "name": "icehouse-ventures/laravel-chartjs",
-            "version": "v1.0.7",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/icehouse-ventures/laravel-chartjs.git",
-                "reference": "a0bb14aaaa0e4245dbbc97142541ed2dad13a6b4"
+                "reference": "6576013be6de7c5299f44dc9217efca26bb2987b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/icehouse-ventures/laravel-chartjs/zipball/a0bb14aaaa0e4245dbbc97142541ed2dad13a6b4",
-                "reference": "a0bb14aaaa0e4245dbbc97142541ed2dad13a6b4",
+                "url": "https://api.github.com/repos/icehouse-ventures/laravel-chartjs/zipball/6576013be6de7c5299f44dc9217efca26bb2987b",
+                "reference": "6576013be6de7c5299f44dc9217efca26bb2987b",
                 "shasum": ""
             },
             "require": {
@@ -1447,9 +1447,9 @@
             ],
             "support": {
                 "issues": "https://github.com/icehouse-ventures/laravel-chartjs/issues",
-                "source": "https://github.com/icehouse-ventures/laravel-chartjs/tree/v1.0.7"
+                "source": "https://github.com/icehouse-ventures/laravel-chartjs/tree/v1.1.0"
             },
-            "time": "2024-03-11T09:21:38+00:00"
+            "time": "2024-05-17T01:06:33+00:00"
         },
         {
             "name": "kyslik/column-sortable",

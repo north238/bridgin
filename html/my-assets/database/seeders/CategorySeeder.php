@@ -21,118 +21,130 @@ class CategorySeeder extends Seeder
             [
                 'name' => '銀行口座',
                 'genre_id' => 1,
+                'color_code' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '日本円',
                 'genre_id' => 3,
+                'color_code' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '投資信託(特別)',
                 'genre_id' => 6,
+                'color_code' => 6,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '投資信託(NISA)',
                 'genre_id' => 6,
+                'color_code' => 6,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '個別株',
                 'genre_id' => 6,
+                'color_code' => 6,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '外貨',
                 'genre_id' => 2,
+                'color_code' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Bitcoin(BTC)',
                 'genre_id' => 4,
+                'color_code' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'アルトコイン',
                 'genre_id' => 4,
+                'color_code' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '金(GOLD)',
                 'genre_id' => 9,
+                'color_code' => 9,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '生命保険',
                 'genre_id' => 9,
+                'color_code' => 9,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '国債',
                 'genre_id' => 5,
+                'color_code' => 5,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '社債',
                 'genre_id' => 5,
+                'color_code' => 5,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '上場投資信託(海外)',
                 'genre_id' => 7,
+                'color_code' => 7,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '上場投資信託(国内)',
                 'genre_id' => 7,
+                'color_code' => 7,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '住宅ローン',
                 'genre_id' => 8,
+                'color_code' => 8,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'カーローン',
                 'genre_id' => 8,
+                'color_code' => 8,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'カードローン',
                 'genre_id' => 8,
+                'color_code' => 8,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => '奨学金',
                 'genre_id' => 8,
+                'color_code' => 8,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ];
-        // foreach ($categories as $categoryData) {
-        //     Category::create([
-        //         'name' => $categoryData['name'],
-        //         'genre_id' => $categoryData['genre_id'],
-        //     ]);
-        // }
         DB::table('categories')->insert($categories);
     }
 }

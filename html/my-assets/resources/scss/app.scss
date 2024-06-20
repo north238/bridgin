@@ -21,7 +21,7 @@
 
     input[type="month"] {
         position: relative;
-        line-height: 1;
+        line-height: 1.2;
         &::-webkit-calendar-picker-indicator {
             position: absolute;
             -webkit-appearance: none;

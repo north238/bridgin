@@ -35,7 +35,7 @@ class AssetsController extends Controller
     /**
      * 資産表示画面
      * ユーザーがログインしており、自身が作成したユーザーの場合にのみアクセス可能
-     * @param  Request $request HTTPリクエスト
+     * @param \Illuminate\Http\Request $request HTTPリクエスト
      * @return \Illuminate\Contracts\View 資産データを表示するビュー
      */
     public function index(Request $request)
