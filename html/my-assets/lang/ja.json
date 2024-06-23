@@ -866,8 +866,8 @@
   "deleted_at": "削除日",
   "restore": "復元",
   "asset_trend": "資産推移",
-  "yearly_message": "ようこそ、ここからすべての資産へアクセスできます",
-  "chart_message": "各チャートをクリックすればさらに詳しいデータを見ることができます",
+  "yearly_message": "ようこそ、ここからすべての資産へアクセスができます",
+  "chart_message": "データを見るをクリックすればさらに詳しいデータを見ることができます",
   "asset_create_btn": "資産を登録する",
   "display_change": "表示切替",
 

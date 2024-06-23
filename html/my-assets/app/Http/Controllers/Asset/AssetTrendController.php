@@ -60,14 +60,15 @@ class AssetTrendController extends Controller
     /**
      * 資産推移を表示する
      *
-     * @param \Illuminate\Http\Request $request リクエスト
+     * @param array[Carbon]|null $formatMonthDateBetween 検索対象の年月範囲
+     * @param array[Carbon]|null $formatYearDateBetween 検索対象の年月範囲
      * @return \Illuminate\View\View 取得した変数の配列をビューに渡す
      */
-    public function showAssetTrend(Request $request)
+    public function showAssetTrend($formatMonthDateBetween = null, $formatYearDateBetween = null)
     {
         // データを取得
-        $assetsMonthlyData = $this->getAssetMonthlyData($request);
-        $assetsYearlyData = $this->getAssetYearlyData($request);
+        $assetsMonthlyData = $this->getAssetMonthlyData($formatMonthDateBetween);
+        $assetsYearlyData = $this->getAssetYearlyData($formatYearDateBetween);
         $data = [
             'assetsMonthlyData' => $assetsMonthlyData,
             'assetsYearlyData' => $assetsYearlyData,
@@ -77,11 +78,16 @@ class AssetTrendController extends Controller
     }
 
     /**
-     * 資産の月を指定して表示する
-     * - 受け取ったリクエストで返却する値が異なる
+     * 指定された月または年の範囲で資産データを検索し、結果を返します。
      *
-     * @param Illuminate\Http\Request $request
-     * @return array[Carbon] $formatDateBetween 年月の範囲
+     * - 指定された月がある場合、その月の範囲でデータを検索し、該当する年のデータも検索します。
+     * - 指定された年がある場合、その年の範囲でデータを検索します。
+     *
+     * @param Illuminate\Http\Request $request 検索条件が含まれるリクエストオブジェクト
+     * @return array $data 検索結果のデータ
+     *     - 'formatMonthDateBetween': Carbonオブジェクトの配列（指定された月の範囲）
+     *     - 'formatYearDateBetween': Carbonオブジェクトの配列（指定された年の範囲）
+     * @throws \Exception パラメータが不正またはデータ取得に失敗した場合に例外をスローする
      */
     public function searchAssetData(Request $request)
     {
@@ -89,24 +95,33 @@ class AssetTrendController extends Controller
         $requestYearDate = $request->input('search-year-date');
 
         if (!empty($requestMonthDate)) {
-            $formatDateBetween = $this->assetService->createSearchTargetMonth($requestMonthDate);
-            return $formatDateBetween;
+            $formatMonthDateBetween = $this->assetService->createSearchTargetMonth($requestMonthDate);
+            // 月間を検索するときは年間も検索させたいため追加
+            $yearString = explode("-", $requestMonthDate)[0];
+            $formatYearDateBetween = $this->assetService->getStartAndEndOfYear($yearString);
+
+            return $this->showAssetTrend($formatMonthDateBetween, $formatYearDateBetween);
         }
 
         if (!empty($requestYearDate)) {
             $yearString = explode("-", $requestYearDate)[0];
-            $formatDateBetween = $this->assetService->getStartAndEndOfYear($yearString);
-            return $formatDateBetween;
+            $formatYearDateBetween = $this->assetService->getStartAndEndOfYear($yearString);
+
+            return
+                $this->showAssetTrend(null, $formatYearDateBetween);
         }
+
+        // リクエストに適切なパラメータが含まれていない場合の処理
+        throw new \Exception('Invalid request parameters');
     }
 
     /**
      * 資産データの取得(初期表示データ、負債データは除く)
      *
-     * @param \Illuminate\Http\Request $request リクエスト
+     * @param
      * @return array $data 月間データの配列
      */
-    public function getAssetMonthlyData(Request $request)
+    public function getAssetMonthlyData($betweenMonthArray)
     {
         $userId = Auth::user()->id;
         $sort = self::SORT;
@@ -117,9 +132,7 @@ class AssetTrendController extends Controller
         $assetsData = $this->assets->filterAssetsByDebutData($assetsData);
 
         // 月指定がある場合
-        if ($request->input('search-month-date')) {
-            $betweenMonthArray = $this->searchAssetData($request);
-        } else {
+        if (empty($betweenMonthArray)) {
             $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsData);
             $betweenMonthArray = $this->assetService->createSearchTargetMonth($latestMonthDate);
         }
@@ -158,10 +171,10 @@ class AssetTrendController extends Controller
     /**
      * 年間データの取得
      *
-     * @param \Illuminate\Http\Request $request リクエスト
+     * @param
      * @return array $yearlyData グラフに表示するデータの配列
      */
-    public function getAssetYearlyData($request)
+    public function getAssetYearlyData($betweenMonthArray)
     {
         $userId = Auth::user()->id;
         $sort = self::SORT;
@@ -170,9 +183,7 @@ class AssetTrendController extends Controller
         $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
 
         // 検索があった場合
-        if ($request->input('search-year-date')) {
-            $betweenMonthArray = $this->searchAssetData($request);
-        } else {
+        if (empty($betweenMonthArray)) {
             $betweenMonthArray = $this->chartService->getDisplayYears($assetsAllData);
         }
 
@@ -199,5 +210,4 @@ class AssetTrendController extends Controller
 
         return $yearlyData;
     }
-
 }

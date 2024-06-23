@@ -1,16 +1,5 @@
 <div
     class="flex flex-col rounded-lg overflow-hidden border dark:border-dark_border bg-white md:col-span-3 dark:bg-dark_table">
-    <div
-        class="flex flex-col items-center justify-between gap-4 border-b border-slate-100 dark:border-dark_border p-5 text-center sm:flex-row sm:text-start dark:bg-dark_table">
-        <div>
-            <h1 class="mb-1 text-xl text-slate-700 dark:text-white">
-                {{ __('total_amount') }}&nbsp;{{ number_format($latestTotalAmount) }}<span>&nbsp;円</span></h1>
-            <h2 class="text-md text-slate-700 dark:text-white">
-                期間:&nbsp;{{ $firstMonth }} ~ {{ $lastMonth }}
-            </h2>
-        </div>
-    </div>
-
     <div class="p-5">
         <div class="scrollbar-custom overflow-x-auto min-w-full rounded dark:border-dark_border">
             <table class="text-sm  align-middle min-w-full">
