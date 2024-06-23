@@ -80,9 +80,9 @@ const config = {
                 grid: {
                     color: function (context) {
                         if (context.tick.label === "0") {
-                            return "#000";
+                            return "#666";
                         } else {
-                            return "#D3D3D3";
+                            return "#DCDCDC";
                         }
                     },
                     lineWidth: 0.5,
@@ -147,9 +147,9 @@ const config = {
 
 function yearlyBarChart() {
     // 既存のチャートを破棄
-    if (yearlyChartInstance) {
-        yearlyChartInstance.destroy();
-    }
+    // if (yearlyChartInstance) {
+    //     yearlyChartInstance.destroy();
+    // }
 
     yearlyChartInstance = new Chart(yearlyChart, config);
     darkMode();
@@ -170,7 +170,7 @@ function darkMode() {
         y.grid.tickColor = "#fff";
         y.ticks.color = "#fff";
         y.title.color = "#fff";
-        y.grid.color = "#fff";
+        y.grid.color = "#DCDCDC";
         legendLabel.color = "#fff";
     } else {
         x.border.color = "#000";
@@ -181,7 +181,7 @@ function darkMode() {
         y.grid.tickColor = "#000";
         y.ticks.color = "#666";
         y.title.color = "#666";
-        y.grid.color = "#666";
+        y.grid.color = "#DCDCDC";
         legendLabel.color = "#666";
     }
     // チャートを更新
