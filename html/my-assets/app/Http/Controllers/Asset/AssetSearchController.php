@@ -27,7 +27,7 @@ class AssetSearchController extends Controller
      */
     public function receiveSearchRequest(Request $request)
     {
-        $requestFormDate = $request->input('form-date');
+        $requestFormDate = $request->input('search-date');
         $debutStatus = $request->input('debutStatus');
         $formatDateBetween = $this->assetService->createSearchTargetMonth($requestFormDate);
 
