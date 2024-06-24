@@ -71,13 +71,14 @@ $breakpoints: (
     width: 100%;
     height: 100%;
     background-color: #fff;
-    opacity: 90%;
     z-index: 9999;
     overflow: hidden;
     .loader {
-        color: #1c4c5b;
+        color: #60A5FA;
         position: relative;
         z-index: 10000;
+        min-width: 75px;
+        min-height: 75px;
         div {
             z-index: 10000;
             position: absolute;
