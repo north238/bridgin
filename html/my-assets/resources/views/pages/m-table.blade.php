@@ -10,15 +10,15 @@
             </div>
         @else
             <div
-                class="flex flex-col gap-3 sm:flex-row sm:justify-between items-center p-6 border-b border-slate-100 dark:border-dark_border">
-                <div class="flex">
-                    <div class="inline-flex rounded-md mt-3 sm:mt-0 shadow-sm" role="group">
-                        <x-debut-status-change-btn :value="$debutStatus" />
-                        <x-csv-download :assets="$assetsData" class="rounded-e-lg" />
-                    </div>
-                </div>
+                class="flex flex-row justify-between items-center p-4 sm:px-8 border-b border-slate-100 dark:border-dark_border">
                 <div class="flex items-center justify-end">
                     <x-search-month :value="$latestMonthDate" />
+                </div>
+                <div class="flex items-center">
+                    <div class="inline-flex rounded-md shadow-sm" role="group">
+                        <x-debut-status-change-btn :value="$debutStatus" />
+                        <x-csv-download :assets="$assetsData" class="rounded-e-lg border border-gray-300 dark:border-dark_border dark:bg-dark_table" />
+                    </div>
                 </div>
             </div>
             <div class="p-5">

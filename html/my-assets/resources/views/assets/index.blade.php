@@ -31,12 +31,12 @@
                 <p class="flex items-center text-sm sm:text-base text-slate-800 dark:text-white"><span
                         class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>期間:&nbsp;{{ $monthSelectorVal }}</p>
             </div>
-            <div class="flex items-center justify-end px-2">
+            <div class="flex items-center justify-center sm:justify-end px-2">
                 <form action="{{ route('asset-trend.search') }}" method="post"
                     class="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-500 hover:underline">
                     @csrf
                     <button type="submit">
-                        <span>チャートで確認する</span><i class="fa-solid fa-angle-right ml-2"></i>
+                        <span>チャートで見る</span><i class="fa-solid fa-angle-right ml-2"></i>
                     </button>
                     <input type="hidden" name="search-month-date" value="{{ $latestMonthDate }}">
                 </form>

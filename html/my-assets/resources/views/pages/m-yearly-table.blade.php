@@ -3,9 +3,9 @@
 @endphp
 <div class="flex flex-col rounded-lg border dark:border-dark_border bg-white dark:bg-dark_table md:col-span-3">
     <div
-        class="flex flex-col sm:items-end justify-between gap-4 border-b border-slate-100 dark:border-dark_border p-5  text-center sm:flex-row sm:text-start">
+        class="flex flex-row items-center justify-between gap-1 border-b border-slate-100 dark:border-dark_border p-3 sm:px-8 text-center sm:flex-row sm:items-end sm:text-start">
         <div class="flex flex-col items-start">
-            <h2 class="mb-0.5 font-semibold dark:text-white">登録済みの資産</h2>
+            <h2 class="mb-1 font-semibold dark:text-white">登録済みの資産</h2>
             <div class="text-sm font-medium text-slate-600 dark:text-dark_sub_text">
                 <p class="text-sm">
                     {!! __('Showing') !!}
@@ -22,8 +22,8 @@
                 </p>
             </div>
         </div>
-        <div class="flex items-center justify-between gap-3">
-            <x-csv-download :assets="$downloadData" class="rounded-lg"/>
+        <div class="flex flex-col items-end justify-end sm:flex-row sm:justify-between sm:gap-3 gap-0">
+            <x-csv-download :assets="$downloadData" class="rounded-lg dark:bg-dark_table"/>
             <x-search-month :value="$latestMonthDate" />
         </div>
     </div>
