@@ -11,35 +11,51 @@ const config = {
             {
                 label: "カテゴリ（小分類）",
                 data: categoryArrays,
+                borderColor: "#F5F5F5",
                 backgroundColor: categoryColorArrays,
                 datalabels: {
                     color: function (context) {
                         var value = context.dataset.data[context.dataIndex];
-                        return value.amount < 15000
+                        return value.amount < 16000
                             ? context.dataset.backgroundColor
                             : "white";
                     },
                     anchor: function (context) {
                         var value = context.dataset.data[context.dataIndex];
-                        return value.amount < 15000 ? "end" : "center";
+                        return value.amount < 16000 ? "end" : "center";
                     },
                     align: function (context) {
                         var value = context.dataset.data[context.dataIndex];
-                        return value.amount < 15000 ? "end" : "center";
+                        return value.amount < 16000 ? "end" : "center";
                     },
-                    offset: -9,
-                    display: true,
+                    offset: -6,
+                    display: "auto",
                 },
             },
             {
                 type: "pie",
                 label: "ジャンル（大分類）",
                 data: genreArrays,
+                borderColor: "#F5F5F5",
                 backgroundColor: genreColorArrays,
                 radius: "165%",
                 datalabels: {
-                    align: "end",
-                    offset: -5,
+                    align: "center",
+                    textAlign: "center",
+                    formatter: function (value, context) {
+                        const val = context.dataset.data[context.dataIndex];
+                        const data = context.dataset.data;
+                        const totalAmount = data.reduce(
+                            (sum, item) => sum + item.amount,
+                            0
+                        );
+                        const name = val.name;
+                        const amount = val.amount;
+                        const ratio = (amount / totalAmount) * 100;
+                        const formatRatio = parseFloat(ratio.toFixed(0)) + "%";
+                        const formatRatioAndName = [name, formatRatio];
+                        return formatRatioAndName;
+                    },
                 },
             },
         ],
@@ -77,11 +93,10 @@ const config = {
                     );
                     const amount = value.amount;
                     const ratio = (amount / totalAmount) * 100;
-                    return ratio > 5;
+                    return ratio > 8;
                 },
                 color: "white",
                 font: {
-                    weight: "bold",
                     size: 14,
                 },
             },

@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function() {
 // 資産推移グラフ
 Route::middleware('auth')->group(function() {
     Route::get('/asset-trend', [AssetTrendController::class, 'showAssetTrend'])->name('asset-trend.index');
-    Route::post('/asset-trend', [AssetTrendController::class, 'showAssetTrend'])->name('asset-trend.search');
+    Route::post('/asset-trend', [AssetTrendController::class, 'searchAssetData'])->name('asset-trend.search');
 });
 
 require __DIR__.'/auth.php';

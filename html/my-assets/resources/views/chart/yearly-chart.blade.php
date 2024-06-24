@@ -17,7 +17,7 @@
             @php
                 $monthArray = $assetsYearlyData['betweenMonthArray'];
                 $firstDayOfMonth = date('Y-m-01', strtotime($monthArray[0]));
-                $lastDayOfMonth = date('Y-m-t', strtotime($monthArray[1]));
+                $lastDayOfMonth = date('m-t', strtotime($monthArray[1]));
                 $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
             @endphp
             <p class="inline-flex items-center text-slate-800 dark:text-white"><span
@@ -38,7 +38,7 @@
 
     @if ($assetsYearlyData['assetsYearlyData']->isEmpty())
         <div class="pb-3 flex justify-center items-center">
-            検索結果はありません。データを登録してください。
+            検索結果はありません。資産を登録してください。
         </div>
     @else
         <div class="pb-3 flex justify-center items-center my-5 h-full w-full mx-auto">
@@ -56,7 +56,7 @@
                 @csrf
                 <div class="calender-input-icon">
                     <input type="month" name="search-year-date" id="search-year-date" value="{{ $displayYear }}"
-                        class="py-3 border-0 border-b-2 border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-32 dark:border-gray-700 dark:text-white dark:focus:border-blue-500"
+                        class="py-3 border-0 border-b-2 text-sm sm:text-base border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-28 sm:w-32 dark:border-gray-700 dark:text-white dark:focus:border-blue-500"
                         required>
                 </div>
                 <button type="submit"
@@ -65,13 +65,9 @@
                 <input type="hidden" id="first-day-of-year" name="first-day-of-year" value="{{ $displayYear }}">
             </form>
             <button type="button" data-modal-target="yearly-modal" data-modal-toggle="yearly-modal"
-                class="inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 hover:underline px-3 py-2">
                 データを見る
-                <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 9 4-4-4-4" />
-                </svg>
+                <i class="fa-solid fa-angle-right ml-2"></i>
             </button>
         </div>
     </div>
