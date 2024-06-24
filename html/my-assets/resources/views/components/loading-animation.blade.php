@@ -1,5 +1,5 @@
-<div id="loader" class="loader-wrap hidden dark:bg-dark_table">
-    <div class="loader dark:text-white">
+<div id="loader" class="loader-wrap dark:bg-dark_table">
+    <div class="loader">
         <div></div>
         <div></div>
     </div>
