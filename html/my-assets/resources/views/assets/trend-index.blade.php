@@ -14,22 +14,19 @@
         </div>
     @endif
     <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
-        <div class="flex flex-col gap-2 text-start sm:flex-row sm:items-center sm:justify-between sm:text-start">
+        <div class="flex items-center justify-between">
             <div class="grow">
-                <h1 class="mb-1 text-xl font-medium text-slate-900 dark:text-white">{{__('asset_trend')}}</h1>
-                <h2 class="text-sm sm:text-base font-medium text-slate-500 dark:text-white">
-                    {{__('chart_message')}}
-                </h2>
+                <h1 class="text-2xl font-semibold text-slate-800 dark:text-white">{{__('asset_trend')}}</h1>
             </div>
             <div
-                class="flex items-center justify-end px-2">
+                class="flex px-2">
                 <a href="{{ route('assets.create') }}"
                     class="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-500 hover:underline">
                     <span>{{__('asset_create_btn')}}</span><i class="fa-solid fa-angle-right ml-2"></i>
                 </a>
             </div>
         </div>
-        <hr class="h-px my-6 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
+        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-8">
             @include('chart.yearly-chart')
             @include('chart.monthly-chart')

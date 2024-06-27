@@ -2,8 +2,8 @@
     class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-cyan-50 dark:hover:bg-gray-600 hover:border-slate-300 active:border-cyan-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
-            <dt class="text-2xl font-bold">{{ number_format($monthlyTotalAmount) }}<span>&nbsp;円</span></dt>
-            <dd class="text-md font-medium text-slate-500 dark:text-white mt-2">資産合計額</dd>
+            <dt class="text-xl sm:text-2xl font-semibold">{{ number_format($monthlyTotalAmount) }}<span>&nbsp;円</span></dt>
+            <dd class="text-sm sm:text-base font-medium text-slate-500 dark:text-white mt-2">資産合計額</dd>
         </dl>
         <div
             class="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-100 dark:border-dark_border bg-cyan-50 dark:bg-dark_cyan text-cyan-500 dark:text-cyan-300">

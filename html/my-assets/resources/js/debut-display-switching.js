@@ -37,7 +37,24 @@ function debutStatusHandler() {
 }
 
 /**
- * 負債の背景色を変更する
+ * 負債トグルスイッチの変更
+ */
+function toggleSwitchChange() {
+    const toggleSwitchIcon = document.getElementById("toggle-switch-icon");
+    const debutStatus = document.getElementById("debut-status");
+    const statusVal = debutStatus.value;
+
+    if (statusVal === "1") {
+        toggleSwitchIcon.classList.add("fa-toggle-on");
+        toggleSwitchIcon.classList.remove("fa-toggle-off");
+    } else {
+        toggleSwitchIcon.classList.remove("fa-toggle-on");
+        toggleSwitchIcon.classList.add("fa-toggle-off");
+    }
+}
+
+/**
+ * 資産額の文字色を変更する
  */
 function debutAssetColor() {
     const genreNameTds = document.querySelectorAll("td[data-genre_id]");
@@ -54,7 +71,8 @@ function debutAssetColor() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     debutStatusHandler();
     debutAssetColor();
+    toggleSwitchChange();
 });
