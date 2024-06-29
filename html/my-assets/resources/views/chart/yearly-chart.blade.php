@@ -65,9 +65,9 @@
                 <input type="hidden" id="first-day-of-year" name="first-day-of-year" value="{{ $displayYear }}">
             </form>
             <button type="button" data-modal-target="yearly-modal" data-modal-toggle="yearly-modal"
-                class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 hover:underline px-3 py-2">
-                データを見る
-                <i class="fa-solid fa-angle-right ml-2"></i>
+                class="text-sm sm:text-base inline-flex items-center rounded-lg px-3 py-2">
+                <span class="text-blue-600 hover:underline">データを見る</span>
+                <i class="fa-solid fa-angle-right text-blue-600 ml-2"></i>
             </button>
         </div>
     </div>

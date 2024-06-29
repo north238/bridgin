@@ -60,7 +60,7 @@
                                 {{-- todo:月間データへどのように遷移するのか考える --}}
                                 <form action="{{route('search.index')}}" method="post">
                                     @csrf
-                                    <input type="hidden" name="form-date" value="{{$month}}">
+                                    <input type="hidden" name="search-date" value="{{$month}}">
                                     <input type="submit" class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline" value="詳細ページへ">
                                 </form>
                             </td>

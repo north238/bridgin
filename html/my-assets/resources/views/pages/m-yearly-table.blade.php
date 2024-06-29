@@ -1,31 +1,26 @@
 @php
     $paginator = $displayAllData->links()->paginator;
 @endphp
+<div class="px-3 font-medium text-slate-600 dark:text-dark_sub_text">
+    <p class="text-sm">
+        {!! __('Showing') !!}
+        @if ($paginator->firstItem())
+            <span class="font-medium">{{ $paginator->firstItem() }}</span>
+            {!! __('to') !!}
+            <span class="font-medium">{{ $paginator->lastItem() }}</span>
+        @else
+            {{ $paginator->count() }}
+        @endif
+        {!! __('of') !!}
+        <span class="font-medium">{{ $paginator->total() }}</span>
+        {!! __('results') !!}
+    </p>
+</div>
 <div class="flex flex-col rounded-lg border dark:border-dark_border bg-white dark:bg-dark_table md:col-span-3">
     <div
-        class="flex flex-row items-center justify-between gap-1 border-b border-slate-100 dark:border-dark_border p-3 sm:px-8 text-center sm:flex-row sm:items-end sm:text-start">
-        <div class="flex flex-col items-start">
-            <h2 class="mb-1 font-semibold dark:text-white">登録済みの資産</h2>
-            <div class="text-sm font-medium text-slate-600 dark:text-dark_sub_text">
-                <p class="text-sm">
-                    {!! __('Showing') !!}
-                    @if ($paginator->firstItem())
-                        <span class="font-medium">{{ $paginator->firstItem() }}</span>
-                        {!! __('to') !!}
-                        <span class="font-medium">{{ $paginator->lastItem() }}</span>
-                    @else
-                        {{ $paginator->count() }}
-                    @endif
-                    {!! __('of') !!}
-                    <span class="font-medium">{{ $paginator->total() }}</span>
-                    {!! __('results') !!}
-                </p>
-            </div>
-        </div>
-        <div class="flex flex-col items-end justify-end sm:flex-row sm:justify-between sm:gap-3 gap-0">
-            <x-csv-download :assets="$downloadData" class="rounded-lg dark:bg-dark_table"/>
-            <x-search-month :value="$latestMonthDate" />
-        </div>
+        class="flex items-center justify-between border-b border-slate-100 dark:border-dark_border py-3 px-6">
+        <x-search-month :value="$latestMonthDate" />
+        <x-csv-download :assets="$downloadData" class="rounded-lg border border-gray-300 dark:border-dark_border dark:bg-dark_table" />
     </div>
     {{-- 資産データがない場合の処理を追加 --}}
     @if ($displayAllData->isEmpty() !== true)

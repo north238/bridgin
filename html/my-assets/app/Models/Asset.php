@@ -177,8 +177,13 @@ class Asset extends Model
      */
     public function getRestoreAssets($userId)
     {
+        $selectedColumns = ['assets.*', 'c.name as category_name',  'g.name as genre_name', 'g.id as genre_id'];
         $query = Asset::onlyTrashed()
+            ->join('categories as c', 'assets.category_id', '=', 'c.id')
+            ->join('genres as g', 'c.genre_id', '=', 'g.id')
+            ->select($selectedColumns)
             ->where('user_id', $userId)
+            ->orderBy('deleted_at', 'DESC')
             ->get();
 
         return $query;
