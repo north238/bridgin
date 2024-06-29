@@ -61,7 +61,7 @@ $ vi .env
 ```
 $ docker compose up -d --build
 $ docker compose exec app bash
-$ cd my-assets
+$ cd bridgin
 $ sh init.sh
 $ npm run dev
 ```

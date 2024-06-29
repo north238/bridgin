@@ -13,7 +13,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
                     <x-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
-                        {{ __('assets_data') }}
+                        {{ __('dashboard') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
+                    <x-nav-link :href="route('asset-trend.index')" :active="request()->routeIs('asset-trend.index')">
+                        {{ __('chart') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
@@ -22,13 +27,8 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
-                    <x-nav-link :href="route('asset-trend.index')" :active="request()->routeIs('asset-trend.index')">
-                        {{ __('asset_trend') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex dark:text-white">
                     <x-nav-link :href="route('assets.showDeletedAssets')" :active="request()->routeIs('assets.showDeletedAssets')">
-                        {{ __('assets_restore') }}
+                        {{ __('restore') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -112,7 +112,12 @@
         class="hidden sm:hidden dark:bg-dark_table border-y border-slate-200">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
-                <i class="fa-solid fa-hand-holding-dollar pr-2"></i>{{ __('assets_data') }}
+                <i class="fa-solid fa-hand-holding-dollar pr-2"></i>{{ __('dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('asset-trend.index')" :active="request()->routeIs('asset-trend.index')">
+                <i class="fa-solid fa-chart-bar pr-2"></i>{{ __('chart') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
@@ -121,13 +126,8 @@
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('asset-trend.index')" :active="request()->routeIs('asset-trend.index')">
-                <i class="fa-solid fa-chart-bar pr-2"></i>{{ __('asset_trend') }}
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('assets.showDeletedAssets')" :active="request()->routeIs('assets.showDeletedAssets')">
-                <i class="fa-solid fa-trash-arrow-up pr-2"></i>{{ __('assets_restore') }}
+                <i class="fa-solid fa-trash-arrow-up pr-2"></i>{{ __('restore') }}
             </x-responsive-nav-link>
         </div>
 

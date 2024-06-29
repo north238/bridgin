@@ -26,7 +26,7 @@
                     </div>
                     <div class="flex items-center text-center text-sm sm:text-base text-slate-700 dark:text-white">
                         <span
-                            class="inline-flex w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>期間:&nbsp;{{ $firstMonth }}
+                            class="inline-flex w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>{{ __('period') }}&nbsp;{{ $firstMonth }}
                         ~
                         {{ $lastMonth }}
                     </div>

@@ -12,5 +12,6 @@
         class="text-gray-600 dark:text-white hover:transform hover:duration-200 hover:-translate-y-1"><i
             class="fa-solid fa-magnifying-glass"></i><span class="sr-only">Search</span></button>
 
+    <input type="hidden" name="debut-search-flg" value="{{ $status }}">
     <input type="hidden" id="first-day-of-month" name="first-day-of-month" value="{{ $firstOfMonth }}">
 </form>

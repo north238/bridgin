@@ -16,7 +16,7 @@
     <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
         <div class="flex items-center justify-between">
             <div class="grow">
-                <h1 class="text-2xl font-semibold text-slate-800 dark:text-white">{{__('asset_trend')}}</h1>
+                <h1 class="text-2xl font-semibold text-slate-800 dark:text-white">{{__('assets_trend')}}</h1>
             </div>
             <div
                 class="flex px-2">

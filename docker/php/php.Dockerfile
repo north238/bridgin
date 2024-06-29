@@ -21,10 +21,6 @@ RUN docker-php-ext-install \
     zip \
     pdo_mysql
 
-# Clear cache
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 # Composer install 2.7.2
 COPY --from=composer:2.72 /usr/bin/composer /usr/local/bin/composer
 
@@ -32,9 +28,13 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 
-# Nodejs install
+# Nodejs install 18.19
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
     apt-get install -y nodejs
+
+# Clear cache
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Wsl上で動かすためにユーザー名を追加
 RUN useradd -m f-kitayama

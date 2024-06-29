@@ -28,8 +28,13 @@ class AssetSearchController extends Controller
     public function receiveSearchRequest(Request $request)
     {
         $requestFormDate = $request->input('search-date');
-        $debutStatus = $request->input('debutStatus');
         $formatDateBetween = $this->assetService->createSearchTargetMonth($requestFormDate);
+        $debutStatus = $request->input('debutStatus');
+        $debutSearchFlg = $request->input('debut-search-flg');
+
+        if ($debutSearchFlg === "1") {
+            return $this->searchDebutAssets($requestFormDate, $formatDateBetween);
+        }
 
         return $this->displaySearchResults($requestFormDate, $formatDateBetween, $debutStatus);
     }
@@ -50,6 +55,34 @@ class AssetSearchController extends Controller
         $assetsData = $this->assets->filterAssetsByDateRange($assetsData, $formatDateBetween)->get();
 
         return $assetsData;
+    }
+
+    /**
+     * 検索対象の負債データを表示
+     *
+     * @param  string $requestFormDate   フォームから送信された日付
+     * @param array $formatDateBetween フォーマットされた日付の配列
+     * @return Illuminate\Contracts\View\View 資産の検索結果を表示するビュー
+     */
+    public function searchDebutAssets($requestFormDate, $formatDateBetween)
+    {
+        $userId = Auth::user()->id;
+        $sort =
+            ['order' => 'registration_date', 'type' => 'DESC'];
+
+        $assetData = $this->assets->fetchUserAssets($userId, $sort);
+        $debutAssetData = $this->assets->getDebutAssetsData($assetData, $formatDateBetween)->get();
+        $totalCount = $this->assets->calculateTotalCount($debutAssetData);
+        $debutTotalAmount = $this->assets->calculateTotalAmount($debutAssetData);
+
+        $debutAssetData = [
+            'latestMonthDate' => $requestFormDate,
+            'debutAssetData' => $debutAssetData,
+            'debutTotalAmount' => $debutTotalAmount,
+            'totalCount' => $totalCount
+        ];
+
+        return view('assets.debut-index', $debutAssetData);
     }
 
     /**
