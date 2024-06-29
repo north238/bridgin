@@ -4,21 +4,26 @@
             <div class="bg-white dark:bg-dark_table sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col justify-center items-center w-full p-6">
                     <div class="text-slate-700 dark:text-white">
-                        登録されているデータはありません
+                        {{ __('empty_data_message') }}
                     </div>
+                    <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">
+                        資産登録は<span class="text-blue-600 dark:text-blue-500 hover:underline">こちら</span><i
+                            class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500 ml-2"></i>
+                    </a>
                 </div>
             </div>
         @else
             <div
-                class="flex flex-col gap-3 sm:flex-row sm:justify-between items-center p-6 border-b border-slate-100 dark:border-dark_border">
-                <div class="flex">
-                    <div class="inline-flex rounded-md mt-3 sm:mt-0 shadow-sm" role="group">
-                        <x-debut-status-change-btn :value="$debutStatus" />
-                        <x-csv-download :assets="$assetsData" class="rounded-e-lg" />
-                    </div>
-                </div>
+                class="flex flex-row justify-between items-center p-4 sm:px-8 border-b border-slate-100 dark:border-dark_border">
                 <div class="flex items-center justify-end">
-                    <x-search-month :value="$latestMonthDate" />
+                    <x-search-month :value="$latestMonthDate" status="0" />
+                </div>
+                <div class="flex items-center">
+                    <div class="inline-flex rounded-md shadow-sm" role="group">
+                        <x-debut-status-change-btn :value="$debutStatus" />
+                        <x-csv-download :assets="$assetsData"
+                            class="rounded-e-lg border border-gray-300 dark:border-dark_border dark:bg-dark_table" />
+                    </div>
                 </div>
             </div>
             <div class="p-5">

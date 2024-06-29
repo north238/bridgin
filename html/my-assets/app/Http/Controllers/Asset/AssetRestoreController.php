@@ -7,6 +7,7 @@ use App\Models\Asset;
 use App\Services\AssetService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AssetRestoreController extends Controller
 {
@@ -29,17 +30,24 @@ class AssetRestoreController extends Controller
     {
         $userId = Auth::user()->id;
         $restoreAssetsData = $this->assets->getRestoreAssets($userId);
+        $totalCount = $this->assets->calculateTotalCount($restoreAssetsData);
 
-        if (count($restoreAssetsData) === 0) {
-            return back()->with('error-message', "削除されたデータは見つかりませんでした。");
-        }
-        return view('assets.restore', ['restoreAssetsData' => $restoreAssetsData]);
+        $data = [
+            'restoreAssetsData' => $restoreAssetsData,
+            'totalCount' => $totalCount
+        ];
+
+        return view('assets.restore', $data);
     }
 
     /**
      * 削除された資産の復元
-     * @param string $id
-     * @return Route assets.index
+     *
+     * @param string $id 復元する資産のID
+     * @return \Illuminate\Http\RedirectResponse 成功または失敗メッセージを含むリダイレクトレスポンス
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException 指定されたIDの資産が見つからない場合
+     * @throws \Exception データベース操作中にエラーが発生した場合
      */
     public function restoreAsset(string $id)
     {
@@ -50,10 +58,11 @@ class AssetRestoreController extends Controller
             $asset->restore();
             DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', '削除したデータの復元に成功しました。');
+            return back()->with('success-message', '資産の復元に成功しました。');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error-message', '削除したデータの復元に失敗しました。' . $e->getMessage());
+            Log::info($e->getMessage());
+            return back()->with('error-message', '資産の復元に失敗しました。');
         }
     }
 }

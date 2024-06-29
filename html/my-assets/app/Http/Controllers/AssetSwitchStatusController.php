@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\AssetSwitchStatus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AssetSwitchStatusController extends Controller
 {
@@ -32,12 +33,13 @@ class AssetSwitchStatusController extends Controller
 
             DB::commit();
 
-            session()->flash('success-message', '表示変更に成功しました。');
-            return response()->json(['success-message' => '表示変更に成功しました。']);
+            session()->flash('success-message', '負債の表示が切替えられました。');
+            return response()->json(['success-message' => '負債の表示が切替えられました。']);
         } catch (\Exception $e) {
             DB::rollBack();
-            session()->flash('error-message', '表示変更に失敗しました。' . $e->getMessage());
-            return response()->json(['error-message' => '表示変更に失敗しました。' . $e->getMessage()]);
+            Log::info($e->getMessage());
+            session()->flash('error-message', '表示変更に失敗しました。');
+            return response()->json(['error-message' => '表示変更に失敗しました。']);
         }
     }
 }

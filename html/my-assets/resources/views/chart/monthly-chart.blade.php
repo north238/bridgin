@@ -7,7 +7,8 @@
         <div class="flex justify-center items-center">
             <div>
                 <div class="flex flex-row mb-1">
-                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">月間チャート</h5>
+                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">
+                        {{ __('monthly_chart') }}</h5>
                     <svg data-popover-target="monthly-chart-info" data-popover-placement="bottom"
                         class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -18,7 +19,7 @@
                 <div>
                     <p class="inline-flex items-center text-slate-800 dark:text-white">
                         <span class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
-                        資産合計額:&nbsp;{{ number_format($assetsMonthlyData['totalAmount']) }}&nbsp;円
+                        {{ __('total_amount') }}:&nbsp;{{ number_format($assetsMonthlyData['totalAmount']) }}&nbsp;円
                     </p>
                 </div>
                 <div>
@@ -30,7 +31,7 @@
                     @endphp
                     <p class="inline-flex items-center text-slate-800 dark:text-white"><span
                             class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
-                        期間:&nbsp;{{ $monthSelectorVal }}
+                        {{ __('period') }}&nbsp;{{ $monthSelectorVal }}
                     </p>
                 </div>
             </div>
@@ -45,28 +46,16 @@
                 <div data-popper-arrow></div>
             </div>
         </div>
-        <form action="{{ route('post.assets.csvDownload') }}" method="post">
-            @csrf
-            <input type="hidden" id="export-data" name="export-data"
-                value="{{ $assetsMonthlyData['assetsMonthlyData'] }}">
-            <button type="submit" data-tooltip-target="data-tooltip" data-tooltip-placement="bottom"
-                class="hidden sm:inline-flex items-center justify-center text-gray-500 w-8 h-8 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm"><svg
-                    class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 16 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3" />
-                </svg><span class="sr-only">ダウンロード</span>
-            </button>
-        </form>
-        <div id="data-tooltip" role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ダウンロード
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
     </div>
     @if ($isChartDataEmpty)
-        <div class="pb-3 flex justify-center items-center">
-            検索結果はありません。資産を登録してください。
+        <div class="pb-3 flex flex-col justify-center items-center">
+            <div>
+                {{ __('search_error_message') }}
+            </div>
+            <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">
+                資産登録は<span class="text-blue-600 dark:text-blue-500 hover:underline">こちら</span><i
+                    class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500 ml-2"></i>
+            </a>
         </div>
     @else
         <div class="pb-3 flex justify-center items-center my-5 mx-auto max-w-80">
@@ -93,8 +82,8 @@
                 <input type="hidden" id="first-day-of-month" name="first-day-of-month" value="{{ $displayMonth }}">
             </form>
             <button type="button" data-modal-target="monthly-modal" data-modal-toggle="monthly-modal"
-                class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 hover:underline px-3 py-2">
-                データを見る
+                class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 dark:text-blue-500 px-3 py-2">
+                <span class="hover:underline">{{ __('display_data') }}</span>
                 <i class="fa-solid fa-angle-right ml-2"></i>
             </button>
         </div>

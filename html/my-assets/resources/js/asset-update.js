@@ -118,6 +118,13 @@ function assetUpdate() {
         .addEventListener("submit", handleDeletedModalFormSubmit);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+function generateShowBackUrl() {
+    const backBtn = document.getElementById("show-back-btn");
+    const previousUrl = backBtn.dataset.previousUrl;
+    backBtn.href = previousUrl;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
     assetUpdate();
+    generateShowBackUrl();
 });

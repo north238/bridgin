@@ -1,31 +1,26 @@
 @php
     $paginator = $displayAllData->links()->paginator;
 @endphp
+<div class="px-3 font-medium text-slate-600 dark:text-dark_sub_text">
+    <p class="text-sm">
+        {!! __('Showing') !!}
+        @if ($paginator->firstItem())
+            <span class="font-medium">{{ $paginator->firstItem() }}</span>
+            {!! __('to') !!}
+            <span class="font-medium">{{ $paginator->lastItem() }}</span>
+        @else
+            {{ $paginator->count() }}
+        @endif
+        {!! __('of') !!}
+        <span class="font-medium">{{ $paginator->total() }}</span>
+        {!! __('results') !!}
+    </p>
+</div>
 <div class="flex flex-col rounded-lg border dark:border-dark_border bg-white dark:bg-dark_table md:col-span-3">
-    <div
-        class="flex flex-col sm:items-end justify-between gap-4 border-b border-slate-100 dark:border-dark_border p-5  text-center sm:flex-row sm:text-start">
-        <div class="flex flex-col items-start">
-            <h2 class="mb-0.5 font-semibold dark:text-white">登録済みの資産</h2>
-            <div class="text-sm font-medium text-slate-600 dark:text-dark_sub_text">
-                <p class="text-sm">
-                    {!! __('Showing') !!}
-                    @if ($paginator->firstItem())
-                        <span class="font-medium">{{ $paginator->firstItem() }}</span>
-                        {!! __('to') !!}
-                        <span class="font-medium">{{ $paginator->lastItem() }}</span>
-                    @else
-                        {{ $paginator->count() }}
-                    @endif
-                    {!! __('of') !!}
-                    <span class="font-medium">{{ $paginator->total() }}</span>
-                    {!! __('results') !!}
-                </p>
-            </div>
-        </div>
-        <div class="flex items-center justify-between gap-3">
-            <x-csv-download :assets="$downloadData" class="rounded-lg"/>
-            <x-search-month :value="$latestMonthDate" />
-        </div>
+    <div class="flex items-center justify-between border-b border-slate-100 dark:border-dark_border py-3 px-6">
+        <x-search-month :value="$latestMonthDate" status="0" />
+        <x-csv-download :assets="$downloadData"
+            class="rounded-lg border border-gray-300 dark:border-dark_border dark:bg-dark_table" />
     </div>
     {{-- 資産データがない場合の処理を追加 --}}
     @if ($displayAllData->isEmpty() !== true)
@@ -103,7 +98,7 @@
     @else
         <div class="p-5">
             <div class="text-center text-slate-700 dark:text-white">
-                登録されているデータはありません
+                {{ __('empty_data_message') }}
             </div>
         </div>
     @endif

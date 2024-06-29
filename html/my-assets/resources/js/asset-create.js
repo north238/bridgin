@@ -22,7 +22,8 @@ function assetCreate() {
     document
         .getElementById("created-form")
         .addEventListener("submit", handleCreatedFormSubmit);
-
 }
 
+document.addEventListener("DOMContentLoaded", () => {
 assetCreate();
+});

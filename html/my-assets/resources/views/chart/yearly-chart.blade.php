@@ -6,7 +6,8 @@
     <div class="pb-3 border-b border-gray-200 dark:border-gray-700">
         <div>
             <div class="flex flex-row mb-1">
-                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">年間チャート</h5>
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">
+                    {{ __('yearly_chart') }}</h5>
                 <svg data-popover-target="yearly-chart-info" data-popover-placement="bottom"
                     class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -21,7 +22,7 @@
                 $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
             @endphp
             <p class="inline-flex items-center text-slate-800 dark:text-white"><span
-                    class="w-1.5 h-1.5 bg-blue-600 rounded-full me-2"></span>期間:&nbsp;{{ $monthSelectorVal }}
+                    class="w-1.5 h-1.5 bg-blue-600 rounded-full me-2"></span>{{ __('period') }}&nbsp;{{ $monthSelectorVal }}
             </p>
         </div>
         <div data-popover id="yearly-chart-info" role="tooltip"
@@ -37,8 +38,14 @@
     </div>
 
     @if ($assetsYearlyData['assetsYearlyData']->isEmpty())
-        <div class="pb-3 flex justify-center items-center">
-            検索結果はありません。資産を登録してください。
+        <div class="pb-3 flex flex-col justify-center items-center">
+            <div>
+                {{ __('search_error_message') }}
+            </div>
+            <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">
+                資産登録は<span class="text-blue-600 dark:text-blue-500 hover:underline">こちら</span><i
+                    class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500 ml-2"></i>
+            </a>
         </div>
     @else
         <div class="pb-3 flex justify-center items-center my-5 h-full w-full mx-auto">
@@ -65,9 +72,9 @@
                 <input type="hidden" id="first-day-of-year" name="first-day-of-year" value="{{ $displayYear }}">
             </form>
             <button type="button" data-modal-target="yearly-modal" data-modal-toggle="yearly-modal"
-                class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 hover:underline px-3 py-2">
-                データを見る
-                <i class="fa-solid fa-angle-right ml-2"></i>
+                class="text-sm sm:text-base inline-flex items-center rounded-lg px-3 py-2">
+                <span class="text-blue-600 hover:underline">{{ __('display_data') }}</span>
+                <i class="fa-solid fa-angle-right text-blue-600 ml-2"></i>
             </button>
         </div>
     </div>
@@ -78,5 +85,5 @@
 </x-chart-data-modal>
 
 @pushIf(!$isYearlyChartEmpty, 'script-files')
-    @vite(['resources/js/yearly-chart.js'])
+@vite(['resources/js/yearly-chart.js'])
 @endPushIf
