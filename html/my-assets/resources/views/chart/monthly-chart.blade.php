@@ -7,7 +7,8 @@
         <div class="flex justify-center items-center">
             <div>
                 <div class="flex flex-row mb-1">
-                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">月間チャート</h5>
+                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">
+                        {{ __('monthly_chart') }}</h5>
                     <svg data-popover-target="monthly-chart-info" data-popover-placement="bottom"
                         class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -18,7 +19,7 @@
                 <div>
                     <p class="inline-flex items-center text-slate-800 dark:text-white">
                         <span class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
-                        資産合計額:&nbsp;{{ number_format($assetsMonthlyData['totalAmount']) }}&nbsp;円
+                        {{ __('total_amount') }}:&nbsp;{{ number_format($assetsMonthlyData['totalAmount']) }}&nbsp;円
                     </p>
                 </div>
                 <div>
@@ -30,7 +31,7 @@
                     @endphp
                     <p class="inline-flex items-center text-slate-800 dark:text-white"><span
                             class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
-                        期間:&nbsp;{{ $monthSelectorVal }}
+                        {{ __('period') }}&nbsp;{{ $monthSelectorVal }}
                     </p>
                 </div>
             </div>
@@ -47,8 +48,14 @@
         </div>
     </div>
     @if ($isChartDataEmpty)
-        <div class="pb-3 flex justify-center items-center">
-            検索結果はありません。資産を登録してください。
+        <div class="pb-3 flex flex-col justify-center items-center">
+            <div>
+                {{ __('search_error_message') }}
+            </div>
+            <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">
+                資産登録は<span class="text-blue-600 dark:text-blue-500 hover:underline">こちら</span><i
+                    class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500 ml-2"></i>
+            </a>
         </div>
     @else
         <div class="pb-3 flex justify-center items-center my-5 mx-auto max-w-80">
@@ -76,7 +83,7 @@
             </form>
             <button type="button" data-modal-target="monthly-modal" data-modal-toggle="monthly-modal"
                 class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 dark:text-blue-500 px-3 py-2">
-                <span class="hover:underline">データを見る</span>
+                <span class="hover:underline">{{ __('display_data') }}</span>
                 <i class="fa-solid fa-angle-right ml-2"></i>
             </button>
         </div>

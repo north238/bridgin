@@ -42,7 +42,7 @@
         </div>
         <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
         <p class="ml-2 text-sm sm:text-base text-slate-700 dark:text-white">
-            削除件数:&nbsp;{{ $totalCount }}<span>件</span>
+            {{__('total_count')}}:&nbsp;{{ $totalCount }}<span>{{ __('count') }}</span>
         </p>
         @include('pages.restore-table')
     </div>

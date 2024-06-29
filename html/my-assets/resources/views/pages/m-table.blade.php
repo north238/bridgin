@@ -4,11 +4,11 @@
             <div class="bg-white dark:bg-dark_table sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col justify-center items-center w-full p-6">
                     <div class="text-slate-700 dark:text-white">
-                        登録されているデータはありません。
+                        {{ __('empty_data_message') }}
                     </div>
-                    <a href="{{ route('assets.create') }}"
-                        class="mt-2 text-sm sm:text-base font-medium">
-                        資産登録は<span class="text-blue-600 dark:text-blue-500 hover:underline">こちら</span><i class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500 ml-2"></i>
+                    <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">
+                        資産登録は<span class="text-blue-600 dark:text-blue-500 hover:underline">こちら</span><i
+                            class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500 ml-2"></i>
                     </a>
                 </div>
             </div>
@@ -16,7 +16,7 @@
             <div
                 class="flex flex-row justify-between items-center p-4 sm:px-8 border-b border-slate-100 dark:border-dark_border">
                 <div class="flex items-center justify-end">
-                    <x-search-month :value="$latestMonthDate" />
+                    <x-search-month :value="$latestMonthDate" status="0" />
                 </div>
                 <div class="flex items-center">
                     <div class="inline-flex rounded-md shadow-sm" role="group">

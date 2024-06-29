@@ -17,8 +17,8 @@
             <div class="heading-title pr-2 flex items-center justify-between">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ __('edit_asset') }}</h2>
                 <a href="javascript:" data-previous-url="{{ $previousUrl }}" id="show-back-btn"
-                    class="text-sm text-blue-600 dark:text-blue-500"><i
-                        class="fa-solid fa-angle-left mr-2"></i><span class="hover:underline">戻る</span></a>
+                    class="text-sm text-blue-600 dark:text-blue-500"><i class="fa-solid fa-angle-left mr-2"></i><span
+                        class="hover:underline">{{ __('back_btn') }}</span></a>
             </div>
             <hr class="h-px mb-2 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table sm:col-span-2">
 
@@ -31,7 +31,7 @@
                         <input type="hidden" name="changed_type_flg" value="0">
                         <p class="me-4 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>
-                            資産を複製する場合はチェックしてください</p>
+                            {{ __('checked_message') }}</p>
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="changed_type_flg" name="changed_type_flg" value="1"
                                 class="sr-only peer">
@@ -101,7 +101,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
-                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>資産タイプ選択</p>
+                                class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('assets_type') }}</p>
                         <ul class="grid gap-3 sm:gap-6 md:grid-cols-2">
                             <li>
                                 <input type="checkbox" id="current-asset" name="asset_type_flg" value="0"
@@ -110,7 +110,7 @@
                                     class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-table peer-checked:border-green-500 hover:text-gray-600 dark:peer-checked:text-white peer-checked:text-gray-800 hover:bg-green-50 dark:text-dark_sub_text dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border">
                                     <div class="block">
                                         <div class="w-full font-semibold mb-2"><i
-                                                class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>流動資産
+                                                class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>{{ __('current-asset') }}
                                         </div>
                                         <div class="w-full text-sm">
                                             <i class="fa-solid fa-circle-info text-green-500 mb-0.5"></i>
@@ -126,7 +126,8 @@
                                     class="inline-flex items-center justify-between w-full p-2.5 text-gray-500 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-table peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-white peer-checked:text-gray-800 hover:bg-blue-50 dark:text-dark_sub_text dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border">
                                     <div class="block">
                                         <div class="w-full font-semibold mb-2"><i
-                                                class="fa-solid fa-vault text-blue-600 me-1"></i>固定資産</div>
+                                                class="fa-solid fa-vault text-blue-600 me-1"></i>{{ __('fixed-asset') }}
+                                        </div>
                                         <div class="w-full text-sm"><i
                                                 class="fa-solid fa-circle-info text-blue-600 mb-0.5"></i>
                                             資産の価値が毎月<u class="underline font-semibold">変動しない</u>場合はこちらを選択してください
@@ -202,7 +203,7 @@
                                 stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-white">
-                            この資産を削除してもよろしいでしょうか？</h3>
+                            {{ __('delete_check_message') }}</h3>
                         <div class="flex justify-center gap-4">
                             <form id="deleted-modal-form" class=""
                                 action="{{ route('assets.destroy', [$assetData->id]) }}" method="post">
@@ -231,7 +232,7 @@
                             </form>
                             <button data-modal-hide="deleted-modal" type="button"
                                 class="py-2.5 px-5 text-md font-medium rounded-lg text-gray-900 focus:outline-none bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white dark:bg-dark_table dark:hover:bg-gray-700">
-                                キャンセル</button>
+                                {{ __('cancel_btn') }}</button>
                         </div>
                     </div>
                 </div>

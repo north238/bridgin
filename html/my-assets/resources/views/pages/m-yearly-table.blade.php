@@ -17,10 +17,10 @@
     </p>
 </div>
 <div class="flex flex-col rounded-lg border dark:border-dark_border bg-white dark:bg-dark_table md:col-span-3">
-    <div
-        class="flex items-center justify-between border-b border-slate-100 dark:border-dark_border py-3 px-6">
-        <x-search-month :value="$latestMonthDate" />
-        <x-csv-download :assets="$downloadData" class="rounded-lg border border-gray-300 dark:border-dark_border dark:bg-dark_table" />
+    <div class="flex items-center justify-between border-b border-slate-100 dark:border-dark_border py-3 px-6">
+        <x-search-month :value="$latestMonthDate" status="0" />
+        <x-csv-download :assets="$downloadData"
+            class="rounded-lg border border-gray-300 dark:border-dark_border dark:bg-dark_table" />
     </div>
     {{-- 資産データがない場合の処理を追加 --}}
     @if ($displayAllData->isEmpty() !== true)
@@ -98,7 +98,7 @@
     @else
         <div class="p-5">
             <div class="text-center text-slate-700 dark:text-white">
-                登録されているデータはありません
+                {{ __('empty_data_message') }}
             </div>
         </div>
     @endif
