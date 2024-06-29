@@ -24,13 +24,6 @@ function assetCreate() {
         .addEventListener("submit", handleCreatedFormSubmit);
 }
 
-function generateCreateBackUrl() {
-    const backBtn = document.getElementById("create-back-btn");
-    const previousUrl = backBtn.dataset.previousUrl;
-    backBtn.href = previousUrl;
-}
-
 document.addEventListener("DOMContentLoaded", () => {
 assetCreate();
-generateCreateBackUrl();
 });

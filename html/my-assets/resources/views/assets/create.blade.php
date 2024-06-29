@@ -11,9 +11,9 @@
         <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div class="flex items-center justify-between pr-2">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('create_asset') }}</h2>
-                <a href="javascript:" data-previous-url="{{ $previousUrl }}" id="create-back-btn"
-                    class="text-sm text-blue-600 dark:text-blue-500"><i
-                        class="fa-solid fa-angle-left mr-2"></i><span class="hover:underline">戻る</span></a>
+                <a href="{{ route('assets.dashboard') }}" id="create-back-btn"
+                    class="text-sm text-blue-600 dark:text-blue-500"><i class="fa-solid fa-angle-left mr-2"></i><span
+                        class="hover:underline">戻る</span></a>
             </div>
             <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table">
             <form id="created-form" class="validated-form mb-2" method="post" action="{{ route('assets.store') }}"
