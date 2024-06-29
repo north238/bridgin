@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\AssetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class AssetsController extends Controller
 {
@@ -71,6 +72,7 @@ class AssetsController extends Controller
      */
     public function create()
     {
+        $previousUrl = URL::previous();
         $formatDate = $this->assetService->getFormatDate();
         $genres = $this->genres->getGenreData()->get();
         $categories = $this->categories->getCategoriesData()->get();
@@ -78,7 +80,8 @@ class AssetsController extends Controller
         $data = [
             'genres' => $genres,
             'categories' => $categories,
-            'formatDate' => $formatDate
+            'formatDate' => $formatDate,
+            'previousUrl' => $previousUrl
         ];
 
         return view('assets.create', $data);
@@ -123,6 +126,7 @@ class AssetsController extends Controller
      */
     public function show(string $id)
     {
+        $previousUrl = URL::previous();
         $userId = Auth::user()->id;
         $assetData = $this->assets->getAssetData($id, $userId);
         $genres = $this->genres->getGenreData()->get();
@@ -132,6 +136,7 @@ class AssetsController extends Controller
             'assetData' => $assetData,
             'genres' => $genres,
             'categories' => $categories,
+            'previousUrl' => $previousUrl
         ];
 
         return view('assets.show', $data);

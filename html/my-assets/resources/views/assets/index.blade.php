@@ -36,10 +36,10 @@
                 資産件数:&nbsp;{{ $totalCount }}<span>件</span>
             </p>
             <form action="{{ route('asset-trend.search') }}" method="post"
-                class="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                class="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-500">
                 @csrf
                 <button type="submit">
-                    <span>チャートで見る</span><i class="fa-solid fa-angle-right ml-2"></i>
+                    <span class="hover:underline">チャートで見る</span><i class="fa-solid fa-angle-right ml-2"></i>
                 </button>
                 <input type="hidden" name="search-month-date" value="{{ $latestMonthDate }}">
             </form>

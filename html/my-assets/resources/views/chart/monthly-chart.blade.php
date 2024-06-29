@@ -75,8 +75,8 @@
                 <input type="hidden" id="first-day-of-month" name="first-day-of-month" value="{{ $displayMonth }}">
             </form>
             <button type="button" data-modal-target="monthly-modal" data-modal-toggle="monthly-modal"
-                class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 hover:underline px-3 py-2">
-                データを見る
+                class="text-sm sm:text-base inline-flex items-center rounded-lg text-blue-600 dark:text-blue-500 px-3 py-2">
+                <span class="hover:underline">データを見る</span>
                 <i class="fa-solid fa-angle-right ml-2"></i>
             </button>
         </div>

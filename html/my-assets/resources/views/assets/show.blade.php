@@ -14,29 +14,33 @@
     <section
         class="max-w-screen-md sm:my-10 mx-auto block bg-white border border-slate-100 dark:border-dark_border sm:rounded-lg sm:shadow dark:bg-dark_table">
         <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
-            <div class="heading-title">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ __('edit_asset') }}</h2>
+            <div class="heading-title pr-2 flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ __('edit_asset') }}</h2>
+                <a href="javascript:" data-previous-url="{{ $previousUrl }}" id="show-back-btn"
+                    class="text-sm text-blue-600 dark:text-blue-500"><i
+                        class="fa-solid fa-angle-left mr-2"></i><span class="hover:underline">戻る</span></a>
             </div>
+            <hr class="h-px mb-2 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table sm:col-span-2">
+
             <form id="updated-form" class="validated-form mb-2" method="post"
                 action="{{ route('assets.update', [$assetData->id]) }}" novalidate>
                 @csrf
                 @method('PATCH')
                 <div class="grid gap-3 sm:grid-cols-2 sm:gap-6">
-                    <div class="action-checkbox flex sm:col-span-2">
+                    <div class="action-checkbox flex justify-between items-start sm:col-span-2">
                         <input type="hidden" name="changed_type_flg" value="0">
                         <p class="me-4 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>
-                            同じ名称の資産を追加する場合はチェックしてください</p>
+                            資産を複製する場合はチェックしてください</p>
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" id="changed_type_flg" name="changed_type_flg" value="1"
                                 class="sr-only peer">
                             <div
-                                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-3 peer-focus:ring-blue-600 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border peer-checked:bg-blue-600">
+                                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-3 peer-focus:ring-blue-500 dark:peer-focus:ring-blue-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border peer-checked:bg-blue-500">
                             </div>
                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
                         </label>
                     </div>
-                    <hr class="h-px mb-2 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_table sm:col-span-2">
                     <div class="name-input sm:col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('asset_name') }}</label>
@@ -206,9 +210,8 @@
                                 @method('DELETE')
                                 <button type="submit" id="deleted-modal-btn"
                                     class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 text-md font-medium rounded-lg inline-flex items-center px-5 py-2.5 text-center">
-                                    <svg id="deleted-modal-icon" class="w-6 h-6 me-2 text-white"
-                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24">
+                                    <svg id="deleted-modal-icon" class="w-6 h-6 me-2 text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2"
                                             d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />

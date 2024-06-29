@@ -872,16 +872,16 @@
   "display_change": "表示切替",
 
   "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。",
-  "create_success_message": "資産の登録に成功しました。",
+  "create_success_message": "新しい資産が資産が登録されました。",
   "create_error_message": "資産の登録に失敗しました。",
   "create_error_log": "資産登録時にエラーが発生しています",
-  "update_success_message": "資産の追加に成功しました。",
+  "update_success_message": "新しい資産を追加しました。",
   "update_error_log": "資産追加時にエラーが発生しています",
   "update_error_message": "資産の追加に失敗しました。",
-  "new_success_message": "資産の更新に成功しました。",
+  "new_success_message": "資産が更新されました。",
   "new_error_log": "資産更新時にエラーが発生しています",
   "new_error_message": "資産の更新に失敗しました。",
-  "delete_success_message": "資産を削除しました。削除されたデータは保存されます。",
+  "delete_success_message": "資産を削除しました。削除されたデータは保存されています。",
   "delete_error_log": "資産削除時にエラーが発生しています",
   "delete_error_message": "資産の削除に失敗しました。"
 
