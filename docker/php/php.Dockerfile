@@ -1,12 +1,14 @@
 FROM php:8.2-fpm
+
+# 開発環境でViteに接続するため
 EXPOSE 5173
-COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
     && apt-get install -y --fix-missing \
         zlib1g-dev \
         mariadb-client \
         vim \
+        git \
         libzip-dev \
     &&  pecl install redis \
     && docker-php-ext-enable redis
@@ -17,17 +19,14 @@ RUN pecl install xdebug \
 
 RUN docker-php-ext-install \
     zip \
-    pdo_mysql 
+    pdo_mysql
 
 # Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Composer install
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer global require laravel/installer
+# Composer install 2.7.2
+COPY --from=composer:2.72 /usr/bin/composer /usr/local/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
@@ -37,8 +36,13 @@ ENV PATH $PATH:/composer/vendor/bin
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
     apt-get install -y nodejs
 
+# Wsl上で動かすためにユーザー名を追加
 RUN useradd -m f-kitayama
 
 WORKDIR /var/www/html
 
-RUN chown -R www-data:www-data /var/www
+COPY . ./
+COPY php.ini /usr/local/etc/php/
+
+RUN chown -R www-data:www-data /var/www \
+    chomd 777 -R /var/www
