@@ -35,8 +35,8 @@
 - ターミナルに下記のコードを入力
 
 ```
-$ git clone https://github.com/north238/laravel_docker_my-assets.git
-$ cd laravel_docker_my-assets
+$ git clone git clone git@github.com:north238/bridgin.git
+$ cd bridgin
 ```
 
 - DB の設定

@@ -1,12 +1,12 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 dark:bg-dark_bg dark:border-dark_border">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto pr-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('assets.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
+                <div class="shrink-0 flex items-center overflow-hidden">
+                    <a href="{{ route('assets.dashboard') }}" class="max-w-[170px] sm:max-w-[200px]">
+                        <img src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}">
                     </a>
                 </div>
 
@@ -56,7 +56,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            <i class="fa-regular fa-user pr-2"></i>{{ __('Profile') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -66,7 +66,7 @@
                             <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                <i class="fa-solid fa-arrow-right-from-bracket pr-2"></i>{{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>

@@ -37,6 +37,7 @@ export default {
             dark_cyan: "#0ea5e9",
             dark_input: "#374151",
             dark_input_border: "#4b5563",
+            nav_bg_color: "#5bbaff",
         },
         screens: {
             sm: "480px",

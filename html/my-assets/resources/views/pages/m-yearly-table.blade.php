@@ -30,7 +30,7 @@
                     <thead class="dark:bg-dark_table">
                         <tr class="border-b-2 border-slate-100 dark:border-dark_border">
                             <th scope="col"
-                                class="min-w-[150px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
+                                class="min-w-[120px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
                                 <div class="flex items-center">
                                     {{ __('registration_date') }}
                                 </div>
@@ -51,7 +51,7 @@
                                 </div>
                             </th>
                             <th scope="col"
-                                class="min-w-[150px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
+                                class="min-w-[120px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
                                 <div class="flex items-center">
                                     {{ __('amount') }}
                                 </div>
