@@ -3,7 +3,7 @@ FROM nginx:stable-alpine
 ENV NGINXUSER=laravel
 ENV NGINXGROUP=laravel
 
-RUN mkdir -p /var/www/my-assets/public
+COPY . ./
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 
