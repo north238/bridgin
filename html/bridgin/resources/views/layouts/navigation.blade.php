@@ -109,7 +109,7 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }"
-        class="hidden sm:hidden dark:bg-dark_table border-y border-slate-200">
+        class="hidden sm:hidden dark:bg-dark_table border-y border-slate-200 dark:border-dark_border">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('assets.dashboard')" :active="request()->routeIs('assets.dashboard')">
                 <i class="fa-solid fa-hand-holding-dollar pr-2"></i>{{ __('dashboard') }}
@@ -132,14 +132,14 @@
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-dark_border">
+        <div class="pt-4 pb-1 border-t border-slate-200 dark:border-dark_border">
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800 dark:text-white">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500 dark:text-white">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('profile.edit')" class="dark:text-white">
                     <i class="fa-regular fa-user pr-2"></i>{{ __('Profile') }}
                 </x-responsive-nav-link>
 
@@ -147,7 +147,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
+                    <x-responsive-nav-link :href="route('logout')" class="dark:text-white"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         <i class="fa-solid fa-arrow-right-from-bracket pr-2"></i>{{ __('Log Out') }}

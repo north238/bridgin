@@ -22,7 +22,7 @@ RUN docker-php-ext-install \
     pdo_mysql
 
 # Composer install 2.7.2
-COPY --from=composer:2.72 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.7.2 /usr/bin/composer /usr/local/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
