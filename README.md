@@ -24,6 +24,7 @@
 - mysql:8.0
 - nginx:stable-alpine
 - redis:alpine
+- node:18.20.3
 
 ## 簡単な説明
 
@@ -35,7 +36,7 @@
 - ターミナルに下記のコードを入力
 
 ```
-$ git clone git clone git@github.com:north238/bridgin.git
+$ git clone git@github.com:north238/bridgin.git
 $ cd bridgin
 ```
 

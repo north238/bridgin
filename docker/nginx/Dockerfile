@@ -3,9 +3,9 @@ FROM nginx:stable-alpine
 ENV NGINXUSER=laravel
 ENV NGINXGROUP=laravel
 
-COPY . ./
+COPY . .
 
-COPY default.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 RUN sed -i "s/user www-data/user laravel/g" /etc/nginx/nginx.conf
 
