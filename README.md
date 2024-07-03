@@ -60,9 +60,16 @@ $ vi .env
 - Docker 起動の手順
 
 ```
+REPOSITORY    TAG       IMAGE ID       CREATED              SIZE      SHARED SIZE   UNIQUE SIZE   CONTAINERS
+bridgin-web   latest    0620580999d1   52 seconds ago       415MB     0B            415.4MB       1
+bridgin-app   latest    1e12b6b85531   About a minute ago   1.24GB    7.799MB       1.232GB       1
+mysql         8.0       0b60ddd8609d   41 hours ago         572MB     0B            572MB         1
+redis         alpine    38a44d796822   5 weeks ago          40.7MB    7.799MB       32.92MB       1
+```
+
+```
 $ docker compose up -d --build
 $ docker compose exec app bash
-$ cd bridgin
 $ sh init.sh
 $ npm run dev
 ```
@@ -72,6 +79,12 @@ $ npm run dev
 ## その他
 
 - Windows 環境での開発ですので、Mac ユーザーの方は Docker が起動されない可能性があります。ご容赦ください
+
+- dockerですべて削除するときのコマンド(※既存のプロジェクトも削除されます)
+```
+$ docker compose down
+$ docker system prune -a -f --volumes
+```
 
 ## 作者
 

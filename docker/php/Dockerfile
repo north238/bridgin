@@ -1,4 +1,4 @@
-FROM node:18.20.3-slim AS node
+FROM node:20.15.0-alpine3.20 AS node
 FROM php:8.2-fpm-alpine AS php-fpm
 
 # 開発環境でViteに接続するため
@@ -39,11 +39,9 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
 
-# Nodejs install 18.20.3
+# Nodejs install 20.15.0
 COPY --from=node /usr/local/bin /usr/local/bin
-
-# RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
-#     apt-get install -y nodejs
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 
 WORKDIR /var/www/html
 
