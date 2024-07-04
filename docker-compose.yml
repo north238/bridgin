@@ -37,17 +37,16 @@ services:
     image: mysql:8.0
     container_name: bridgin_db
     environment:
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASS}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - TZ=${TZ}
     command: mysqld --default-authentication-plugin=mysql_native_password
     volumes:
       - ./docker/mysql/logs:/var/log/mysql
       - ./docker/mysql/data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/mysql/sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
     networks:

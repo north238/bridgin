@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Orchid\Icons\IconFinder;
 use Illuminate\Support\ServiceProvider;
 use App\View\Components\CsvDownload;
 use Illuminate\Support\Facades\Blade;
@@ -21,9 +20,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(IconFinder $iconFinder): void
+    public function boot(): void
     {
-        // $iconFinder->registerIconDirectory('fa', storage_path('app/icons'));
-        Blade::component('csv-download', CsvDownload::class);
+        //
     }
 }

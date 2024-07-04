@@ -36,7 +36,7 @@
 - ターミナルに下記のコードを入力
 
 ```
-$ git clone git@github.com:north238/bridgin.git
+$ git clone https://github.com/north238/bridgin.git
 $ cd bridgin
 ```
 

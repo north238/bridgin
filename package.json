@@ -1,5 +1,9 @@
 {
-    "private": true,
+    "name": "bridgin",
+    "version": "1.0.0",
+    "author": "f-kitayama",
+    "description": "",
+    "license": "MIT",
     "type": "module",
     "scripts": {
         "dev": "vite --host",
@@ -21,7 +25,10 @@
         "chart.js": "^4.4.2",
         "chartjs-plugin-datalabels": "^2.2.0",
         "flowbite": "^2.3.0",
-        "flowbite-datepicker": "^1.2.6",
-        "jquery": "^3.7.1"
+        "flowbite-datepicker": "^1.2.6"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/north238/bridgin.git"
     }
 }

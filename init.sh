@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# install高速化
-composer global require hirak/prestissimo
 composer install --optimize-autoloader --no-dev
 cp .env.example .env
 

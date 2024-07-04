@@ -51,4 +51,4 @@ COPY ./docker/php/php.ini /usr/local/etc/php/
 RUN chown -R www-data:www-data /var/www/html && \
     chmod 755 -R /var/www/html
 
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]
