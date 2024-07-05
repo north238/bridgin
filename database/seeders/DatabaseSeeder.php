@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(NotificationSeeder::class);
         $this->call(AssetTargetSeeder::class);
         $this->call(AssetChangesSeeder::class);
-        $this->call(AssetSwitchStatus::class);
+        $this->call(AssetSwitchStatusSeeder::class);
     }
 }

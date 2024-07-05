@@ -4,6 +4,7 @@ FROM php:8.2-fpm-alpine AS php-fpm
 # 開発環境でViteに接続するため
 EXPOSE 5173
 
+# PHPの依存関係をインストール
 RUN apk add --no-cache \
     $PHPIZE_DEPS \
     zlib-dev \
@@ -13,6 +14,8 @@ RUN apk add --no-cache \
     curl-dev \
     linux-headers \
     tzdata \
+    php-mysqli \
+    mysql-client \
     bash
 
 # PHP拡張機能をインストール

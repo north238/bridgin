@@ -13,7 +13,7 @@ php artisan route:clear
 php artisan view:clear
 
 # マイグレーション（リセットしてから）
-php artisan migrate:refresh
+php artisan migrate:refresh --seed
 
 # nodejsをセットアップ
 npm cache clear --force

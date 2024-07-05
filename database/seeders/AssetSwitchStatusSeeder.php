@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -40,7 +39,6 @@ class AssetSwitchStatusSeeder extends Seeder
                     'debut_status' => 1,
                     'asset_type_status' => 1
                 ],
-
             ];
             DB::table('asset_switch_statuses')->insert($assetSwitchStatus);
         }

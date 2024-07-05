@@ -11,9 +11,9 @@ services:
       - bridgin_network
     volumes:
       - .:/var/www/html
-      - app_node_modules:/app/node_modules
-      - app_vender:/app/vendor
       - ./docker/php/logs:/var/log
+      - app_vender:/app/vendor
+      - app_node_modules:/app/node_modules
     extra_hosts:
       - host.docker.internal:host-gateway # windows環境でxdebugを使うために記述
 
@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
     ports:
-      - 8888:80
+      - 9000:80
     volumes:
       - .:/var/www/html
     tty: true
@@ -46,7 +46,6 @@ services:
     volumes:
       - ./docker/mysql/logs:/var/log/mysql
       - ./docker/mysql/data:/var/lib/mysql
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - 3306:3306
     networks:
