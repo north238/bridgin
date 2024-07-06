@@ -14,8 +14,8 @@ services:
       - ./docker/php/logs:/var/log
       - app_vender:/app/vendor
       - app_node_modules:/app/node_modules
-    extra_hosts:
-      - host.docker.internal:host-gateway # windows環境でxdebugを使うために記述
+    # extra_hosts:
+    #   - host.docker.internal:host-gateway # windows環境でxdebugを使うために記述
 
   web:
     container_name: bridgin_web
@@ -65,7 +65,6 @@ services:
       - bridgin_network
     tty: true
 
-# 軽量化のため名前付きvolumesで保存
 volumes:
   app_node_modules:
   app_vender:

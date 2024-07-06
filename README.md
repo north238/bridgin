@@ -12,19 +12,19 @@
 # 開発環境
 
 - Windows10
-- wsl
+- wsl2
 - ubuntu22.04
 - github
+- Docker
 
 # ツール・ライブラリの名前
 
-- Docker
 - laravel:10
 - PHP:8.3
 - mysql:8.0
 - nginx:stable-alpine
 - redis:alpine
-- node:18.20.3
+- node:20.15.0
 
 ## 簡単な説明
 
@@ -33,31 +33,32 @@
 
 ## インストール
 
-- ターミナルに下記のコードを入力
+- ターミナルで下記のコードを入力
 
 ```
 $ git clone https://github.com/north238/bridgin.git
 $ cd bridgin
+$ cp .env.example .env
+```
+- cpコマンドが権限で使えない場合
+```
+$ sudo cp .env.example .env
 ```
 
-- DB の設定
-- .env を作成して下記を記述（yml ファイルで必要なため）
+## Docker 起動の手順
+
+- 下記のコマンドを実行してください
 
 ```
-DB_NAME=db-laravel
-DB_USER=db-user
-DB_PASS=db-pass
-TZ=Asia/Tokyo
+$ docker compose up -d --build
 ```
 
-```
-$ vi .env
-```
+- コンテナ完成形確認
 
-- 参考: vi コマンドがわからない場合は下記を参考にしてください
-- [【Linux 初心者向け】できた！vi コマンドで編集と保存](https://beyondjapan.com/blog/2020/06/vi/)
-
-- Docker 起動の手順
+```
+$ docker compose ps
+```
+- 下記の表示があればOK
 
 ```
 REPOSITORY    TAG       IMAGE ID       CREATED              SIZE      SHARED SIZE   UNIQUE SIZE   CONTAINERS
@@ -67,23 +68,38 @@ mysql         8.0       0b60ddd8609d   41 hours ago         572MB     0B        
 redis         alpine    38a44d796822   5 weeks ago          40.7MB    7.799MB       32.92MB       1
 ```
 
+## アプリケーション立ち上げ
+
+- コンテナ内での操作
 ```
-$ docker compose up -d --build
 $ docker compose exec app bash
 $ sh init.sh
 $ npm run dev
 ```
 
-- ホーム画面起動
+## 画面表示
+
+- 下記のURLへアクセス
+```
+http://localhost:9000
+```
+- 画面が表示されれば成功
 
 ## その他
 
-- Windows 環境での開発ですので、Mac ユーザーの方は Docker が起動されない可能性があります。ご容赦ください
-
-- dockerですべて削除するときのコマンド(※既存のプロジェクトも削除されます)
+- Windows 環境での開発ですので、Mac ユーザーの方は Docker が起動されない可能性があります。ご容赦ください。
+- docker環境構築で詰まったとき（削除系コマンド）
 ```
-$ docker compose down
-$ docker system prune -a -f --volumes
+$ docker container prune
+$ docker image prune
+$ docker network prune
+$ docker volume prune
+$ docker system prune --volumes
+```
+
+- プロジェクトをすべて削除するとき(※プロジェクトのコンテナ、イメージ、ボリューム、ネットワークが削除されます)
+```
+$ docker compose down --rmi all --volumes --remove-orphans
 ```
 
 ## 作者

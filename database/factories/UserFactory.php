@@ -23,7 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $date = $this->faker->dateTimeBetween('-1year');        
+        $date = $this->faker->dateTimeBetween('-1year');
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->safeEmail(),

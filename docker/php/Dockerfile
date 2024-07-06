@@ -19,8 +19,8 @@ RUN apk add --no-cache \
     bash
 
 # PHP拡張機能をインストール
-RUN pecl install redis xdebug && \
-    docker-php-ext-enable redis xdebug && \
+RUN pecl install redis && \
+    docker-php-ext-enable redis && \
     docker-php-ext-install zip \
     pdo_mysql \
     ctype \
@@ -29,8 +29,8 @@ RUN pecl install redis xdebug && \
     filter \
     mbstring \
     pdo \
-    session
-RUN docker-php-ext-install xml
+    session \
+    xml
 
 # 不要なパッケージを削除
 RUN apk del $PHPIZE_DEPS linux-headers
