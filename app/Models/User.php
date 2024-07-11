@@ -80,4 +80,16 @@ class User extends Authenticatable
 
         return $result;
     }
+
+    /**
+     * ユーザー情報を取得する
+     */
+    public function getUserInfo($googleId)
+    {
+        $result = User::query()
+            ->where('google_id', $googleId)
+            ->first();
+
+        return $result;
+    }
 }

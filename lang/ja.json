@@ -921,6 +921,8 @@
   "empty_data_message": "登録されているデータはありません。",
 
   "admin_system": "ユーザー管理システム",
-  "admin_register": "管理者登録"
+  "admin_register": "管理者登録",
+
+  "verify_email_message": "確認メール再送"
 
 }

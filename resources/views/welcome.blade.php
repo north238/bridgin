@@ -25,9 +25,9 @@
                 <img class="object-cover object-center border border-slate-50 shadow-lg rounded-lg" alt="logo"
                     src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}">
             </div>
-            <div class="lg:flex-grow md:w-1/2 md:pl-8 px-6 flex flex-col justify-between items-center text-center">
+            <div class="md:w-1/2 md:pl-8 px-6 flex flex-col justify-between items-start text-start">
                 <h1
-                    class="mx-2 mb-5 block text-3xl font-bold text-gray-800 sm:text-4xl lg:leading-tight dark:text-white">
+                    class="mx-2 mb-5 block text-2xl font-bold text-gray-800 sm:text-4xl lg:leading-tight dark:text-white">
                     資産管理のかけ橋<span><br>もっと身近に</span></h1>
                 <div class="mb-5 bg-slate-50 p-5 border-0 rounded-lg">
                     <div class="flex gap-2 items-center">
@@ -45,12 +45,12 @@
                         <div>
                             @auth
                                 <a href="{{ url('/dashboard') }}"
-                                    class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-lg text-base">{{ __('dashboard') }}</a><i
+                                    class="inline-flex text-white bg-blue-600 border-0 py-2 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('dashboard') }}</a><i
                                     class="fa-solid fa-angle-right ml-2"></i>
                             @else
                                 <div class="flex gap-4">
                                     <a href="{{ route('login') }}"
-                                        class="inline-flex items-center text-white bg-blue-500 border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded-lg text-base">{{ __('login') }}<i
+                                        class="inline-flex items-center text-white bg-blue-600 border-0 py-3 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('login') }}<i
                                             class="fa-solid fa-angle-right ml-2"></i>
                                     </a>
                                     @if (Route::has('register'))
