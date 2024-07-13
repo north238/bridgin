@@ -238,7 +238,7 @@
   "Editor users have the ability to read, create, and update.": "編集者は読み込み、作成、更新ができます。",
   "Egypt": "エジプト",
   "El Salvador": "エルサルバドル",
-  "Email": "メール",
+  "Email": "メールアドレス",
   "Email Address": "メールアドレス",
   "Email Addresses": "メールアドレス",
   "Email Password Reset Link": "送信",
@@ -806,6 +806,7 @@
   "You are currently within your free trial period. Your trial will expire on :date. Starting a new subscription will end your trial.": "現在試用期間中です。試用期間は:dateに期限切れとなります。新しいサブスクリプションに契約すると試用期間は終了します。",
   "You are logged in!": "ログイン成功",
   "You are receiving this email because we received a password reset request for your account.": "パスワード再設定のリクエストを受け付けました。",
+  "password_reset_email": "再設定メール送信",
   "You have been invited to join the :team team!": ":Teamに招待されました。",
   "You have enabled two factor authentication.": "二要素認証が有効です。",
   "You have not enabled two factor authentication.": "二要素認証が未設定です。",
@@ -883,7 +884,8 @@
   "select_message": "選択してください",
 
   "login": "ログイン",
-  "register": "ユーザー登録",
+  "user_login": "会員ログイン",
+  "register": "新規会員登録",
   "download": "ダウンロード",
   "edit_asset": "資産編集",
   "deleted_at": "削除日",
@@ -919,6 +921,8 @@
   "empty_data_message": "登録されているデータはありません。",
 
   "admin_system": "ユーザー管理システム",
-  "admin_register": "管理者登録"
+  "admin_register": "管理者登録",
+
+  "verify_email_message": "確認メール再送"
 
 }
