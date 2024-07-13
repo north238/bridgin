@@ -16,125 +16,54 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="antialiased">
-    <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        <a href="{{ url('/dashboard') }}"
-                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('dashboard') }}</a>
-                    @else
-                        <a href="{{ route('login') }}"
-                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('login') }}
-                        </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}"
-                                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">{{ __('register') }}</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">{{ __('my_assets') }}
-                </h1>
-                <p class="lg:w-1/2 w-full leading-relaxed text-gray-500">
-                    ようこそ、My資産へ。このアプリケーションにあなたの資産をすべて登録することで資産管理をお手軽にします。</p>
-
+<body class="font-sans antialiased h-dvh sm:h-svh bg-slate-50">
+    <section class="sm:relative sm:top-2/4 sm:translate-y-[-50%] text-slate-800">
+        <div
+            class="mx-auto max-w-[1100px] py-12 bg-white border-0 rounded-lg flex gap-0 sm:gap-6 scroll-px-56 sm:px-24 sm:py-24 md:flex-row flex-col items-center">
+            <div class="lg:max-w-md md:w-1/2 w-5/6 mb-10 md:mb-0">
+                <img class="object-cover object-center border border-slate-50 shadow-lg rounded-lg" alt="logo"
+                    src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}">
             </div>
-            <div class="flex flex-wrap -m-4">
-                <div class="xl:w-1/3 md:w-1/2 p-4">
-                    <div class="border border-gray-200 p-6 rounded-lg">
-                        <div
-                            class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-green-100 text-green-500 mb-4">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Shooting Stars</h2>
-                        <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway
-                            tile poke farm.</p>
+            <div class="md:w-1/2 md:pl-8 px-6 flex flex-col justify-between items-start text-start">
+                <h1
+                    class="mx-2 mb-5 block text-2xl font-bold text-gray-800 sm:text-4xl lg:leading-tight dark:text-white">
+                    資産管理のかけ橋<span><br>もっと身近に</span></h1>
+                <div class="mb-5 bg-slate-50 p-5 border-0 rounded-lg">
+                    <div class="flex gap-2 items-center">
+                        <i class="fa-regular fa-thumbs-up text-2xl text-blue-600"></i>
+                        <p class="text-lg font-semibold">資産管理のお悩みを解決</p>
                     </div>
+                    <ul class="py-3 px-5 text-base text-slate-500 list-disc leading-relaxed text-start">
+                        <li>お金の流れを『見える化』したい</li>
+                        <li>エクセルでの入力はめんどう</li>
+                        <li>そもそも管理していない</li>
+                    </ul>
                 </div>
-                <div class="xl:w-1/3 md:w-1/2 p-4">
-                    <div class="border border-gray-200 p-6 rounded-lg">
-                        <div
-                            class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-green-100 text-green-500 mb-4">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                                <circle cx="6" cy="6" r="3"></circle>
-                                <circle cx="6" cy="18" r="3"></circle>
-                                <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg text-gray-900 font-medium title-font mb-2">The Catalyzer</h2>
-                        <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway
-                            tile poke farm.</p>
-                    </div>
-                </div>
-                <div class="xl:w-1/3 md:w-1/2 p-4">
-                    <div class="border border-gray-200 p-6 rounded-lg">
-                        <div
-                            class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-green-100 text-green-500 mb-4">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Neptune</h2>
-                        <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway
-                            tile poke farm.</p>
-                    </div>
-                </div>
-                <div class="xl:w-1/3 md:w-1/2 p-4">
-                    <div class="border border-gray-200 p-6 rounded-lg">
-                        <div
-                            class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-green-100 text-green-500 mb-4">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Melanchole</h2>
-                        <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway
-                            tile poke farm.</p>
-                    </div>
-                </div>
-                <div class="xl:w-1/3 md:w-1/2 p-4">
-                    <div class="border border-gray-200 p-6 rounded-lg">
-                        <div
-                            class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-green-100 text-green-500 mb-4">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Bunker</h2>
-                        <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway
-                            tile poke farm.</p>
-                    </div>
-                </div>
-                <div class="xl:w-1/3 md:w-1/2 p-4">
-                    <div class="border border-gray-200 p-6 rounded-lg">
-                        <div
-                            class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-green-100 text-green-500 mb-4">
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Ramona Falls</h2>
-                        <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway
-                            tile poke farm.</p>
-                    </div>
+                <div class="flex justify-center items-center">
+                    @if (Route::has('login'))
+                        @auth
+                            <a href="{{ route('assets.dashboard') }}"
+                                class="inline-flex items-center text-white bg-blue-600 border-0 py-3 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('dashboard') }}<i
+                                    class="fa-solid fa-angle-right ml-2"></i></a>
+                        @else
+                            <div class="flex gap-4">
+                                <a href="{{ route('login') }}"
+                                    class="inline-flex items-center text-white bg-blue-600 border-0 py-3 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('login') }}<i
+                                        class="fa-solid fa-angle-right ml-2"></i>
+                                </a>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}"
+                                        class="inline-flex items-center text-slate-500 bg-white border border-slate-600 py-3 px-6 focus:outline-none hover:bg-slate-50 rounded-lg text-base">{{ __('register') }}<i
+                                            class="fa-solid fa-angle-right ml-2"></i></a>
+                                @endif
+                            </div>
+                        @endauth
+                    @endif
                 </div>
             </div>
-            <button
-                class="flex mx-auto mt-16 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">{{__('regster')}}</button>
         </div>
+    </section>
+    @vite('resources/js/app.js')
 </body>
 
 </html>
