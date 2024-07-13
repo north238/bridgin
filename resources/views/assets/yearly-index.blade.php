@@ -6,6 +6,13 @@
             </x-alert-message>
         </div>
     @endif
+    @if (session('error-message'))
+        <div class="alert-message">
+            <x-alert-message name="error" color="rose">
+                {{ session('error-message') }}
+            </x-alert-message>
+        </div>
+    @endif
     <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
         <div class="flex flex-row items-center text-start">
             <div class="grow">

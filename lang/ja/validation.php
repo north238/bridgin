@@ -196,7 +196,8 @@ return [
         "category" => "カテゴリ",
         "genre" => "ジャンル",
         "email" => "メールアドレス",
-        "password" => "パスワード"
+        "password" => "パスワード",
+        "current_password" => "現在のパスワード",
     ],
 
 ];

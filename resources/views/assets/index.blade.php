@@ -14,6 +14,9 @@
         </div>
     @endif
     @php
+        if ($latestMonthDate == null) {
+            $latestMonthDate = now();
+        }
         $firstDayOfMonth = date('Y-m-01', strtotime($latestMonthDate));
         $lastDayOfMonth = date('Y-m-t', strtotime($latestMonthDate));
         $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
