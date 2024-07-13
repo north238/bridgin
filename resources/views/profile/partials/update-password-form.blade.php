@@ -3,45 +3,57 @@
         <h2 class="text-lg font-medium text-gray-900 dark:text-white">
             {{ __('Update Password') }}
         </h2>
+        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
 
         <p class="mt-1 text-sm text-gray-600 dark:text-white">
             {{ __('Ensure your account is using a long, random password to stay secure.') }}
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('password.update') }}" class="mt-6">
         @csrf
         @method('put')
 
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        <div class="flex justify-between items-center">
+            <x-input-label for="password">
+                <i class="fa-solid fa-key text-slate-600 pr-2"></i>{{ __('Current Password') }}
+            </x-input-label>
+            @if (Route::has('password.request'))
+                <a class="text-sm text-blue-600 hover:underline font-medium"
+                    href="{{ route('password.request') }}">お忘れの方はこちら<i class="fa-solid fa-angle-right ml-2"></i></a>
+            @endif
         </div>
+        <x-text-input id="update_password_current_password" name="current_password" type="password"
+            class="mt-0 block w-full" autocomplete="current-password" />
+        <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+        <div class="mt-4">
+            <x-input-label for="password">
+                <i class="fa-solid fa-key text-slate-600 pr-2"></i>{{ __('New Password') }}
+            </x-input-label>
+            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full"
+                autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+        <div class="mt-4">
+            <x-input-label for="password">
+                <i class="fa-solid fa-key text-slate-600 pr-2"></i>{{ __('Confirm Password') }}
+            </x-input-label>
+            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password"
+                class="mt-1 block w-full" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="flex items-center gap-4 mt-4">
+            <button
+                class="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                {{ __('Save') }}
+            </button>
 
             @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600">{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>

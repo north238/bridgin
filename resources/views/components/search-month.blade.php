@@ -1,4 +1,7 @@
 @php
+    if($value === null) {
+        $value = now();
+    }
     $firstOfMonth = date('Y-m', strtotime($value));
 @endphp
 <form id="month-form-data" class="flex items-center" method="POST" action="{{ route('search.index') }}">
