@@ -33,6 +33,10 @@ class CurrentMonthAssetController extends Controller
         $assetsByMonthData = $this->assetService->groupByMonthOfRegistration($assetsAllData);
         $processAssetGroups = $this->assetService->processAssetGroups($assetsByMonthData);
         $monthOverMonthRatios = $this->assetService->calcMonthOverMonthRatios($processAssetGroups);
+        // 資産が登録されていない場合は、エラーメッセージを表示
+        if($monthOverMonthRatios->isEmpty()) {
+            return redirect()->route('assets.dashboard')->with('error-message', '現在、登録されている資産はありません。');
+        }
 
         $latestTotalAmount = $monthOverMonthRatios->last()['totalAmount'];
         $firstMonth = $monthOverMonthRatios->first()['month'];

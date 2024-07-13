@@ -249,6 +249,9 @@ class AssetService
      */
     public function getFormatYearMonth($date)
     {
+        if ($date === null) {
+            $date = Carbon::now();
+        }
         return date('Y年m月', strtotime($date));
     }
 
