@@ -17,8 +17,7 @@
 </head>
 
 <body class="font-sans antialiased h-dvh sm:h-svh bg-slate-50">
-    <section
-        class="sm:relative sm:top-2/4 sm:translate-y-[-50%] text-slate-800">
+    <section class="sm:relative sm:top-2/4 sm:translate-y-[-50%] text-slate-800">
         <div
             class="mx-auto max-w-[1100px] py-12 bg-white border-0 rounded-lg flex gap-0 sm:gap-6 scroll-px-56 sm:px-24 sm:py-24 md:flex-row flex-col items-center">
             <div class="lg:max-w-md md:w-1/2 w-5/6 mb-10 md:mb-0">
@@ -40,27 +39,25 @@
                         <li>そもそも管理していない</li>
                     </ul>
                 </div>
-                <div class="flex justify-center">
+                <div class="flex justify-center items-center">
                     @if (Route::has('login'))
-                        <div>
-                            @auth
-                                <a href="{{ url('/dashboard') }}"
-                                    class="inline-flex text-white bg-blue-600 border-0 py-2 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('dashboard') }}</a><i
-                                    class="fa-solid fa-angle-right ml-2"></i>
-                            @else
-                                <div class="flex gap-4">
-                                    <a href="{{ route('login') }}"
-                                        class="inline-flex items-center text-white bg-blue-600 border-0 py-3 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('login') }}<i
-                                            class="fa-solid fa-angle-right ml-2"></i>
-                                    </a>
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}"
-                                            class="inline-flex items-center text-slate-500 bg-white border border-slate-600 py-3 px-6 focus:outline-none hover:bg-slate-50 rounded-lg text-base">{{ __('register') }}<i
-                                                class="fa-solid fa-angle-right ml-2"></i></a>
-                                    @endif
-                                </div>
-                            @endauth
-                        </div>
+                        @auth
+                            <a href="{{ route('assets.dashboard') }}"
+                                class="inline-flex items-center text-white bg-blue-600 border-0 py-3 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('dashboard') }}<i
+                                    class="fa-solid fa-angle-right ml-2"></i></a>
+                        @else
+                            <div class="flex gap-4">
+                                <a href="{{ route('login') }}"
+                                    class="inline-flex items-center text-white bg-blue-600 border-0 py-3 px-6 focus:outline-none hover:bg-blue-700 rounded-lg text-base">{{ __('login') }}<i
+                                        class="fa-solid fa-angle-right ml-2"></i>
+                                </a>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}"
+                                        class="inline-flex items-center text-slate-500 bg-white border border-slate-600 py-3 px-6 focus:outline-none hover:bg-slate-50 rounded-lg text-base">{{ __('register') }}<i
+                                            class="fa-solid fa-angle-right ml-2"></i></a>
+                                @endif
+                            </div>
+                        @endauth
                     @endif
                 </div>
             </div>

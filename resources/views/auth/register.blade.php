@@ -5,7 +5,7 @@
         </div>
         <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
         <div class="mt-5">
-            <a href="{{ route('login.google')}}"
+            <a href="{{ route('login.google') }}"
                 class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
                 <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
                     <path
@@ -23,6 +23,10 @@
                 </svg>
                 Log in with Google
             </a>
+            <div
+                class="py-5 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+                Or</div>
+
             <form method="POST" action="{{ route('register') }}" novalidate>
                 @csrf
                 <div class="grid gap-y-4">

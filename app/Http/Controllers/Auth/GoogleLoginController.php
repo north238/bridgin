@@ -29,8 +29,9 @@ class GoogleLoginController extends Controller
         try {
             return Socialite::driver('google')->redirect();
         } catch (\Exception $e) {
+            Log::alert("Google認証に失敗しました");
             Log::alert($e->getMessage());
-            return redirect()->route('login')->withErrors(['error' => 'Failed to authenticate with Google.']);
+            return redirect()->route('login')->withErrors(['error' => 'google認証に失敗しました']);
         }
     }
 
@@ -44,17 +45,22 @@ class GoogleLoginController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->user();
+
+            // ユーザー情報をDBから取得
+            $user = $this->users->getUserInfo($googleUser->id, $googleUser->email);
+            // 登録されていないユーザーの場合は新規登録
+            if ($user === null) {
+                $user = $this->createUserByGoogle($googleUser);
+            }
+
+            Auth::login($user);
+
+            return redirect()->route('assets.dashboard'); // ログイン後の遷移先
         } catch (\Exception $e) {
+            Log::alert("Google認証に失敗しました: handleGoogleCallback");
             Log::alert($e->getMessage());
             return redirect()->route('login')->withErrors(['error' => 'google認証に失敗しました。']);
         }
-
-        // 登録されていないユーザーの場合は新規登録
-        if (!$this->users->getUserInfo($googleUser)) {
-            $this->createUserByGoogle($googleUser);
-        }
-
-        return redirect('assets.dashboard'); // ログイン後の遷移先
     }
 
     /**
@@ -74,6 +80,6 @@ class GoogleLoginController extends Controller
         ]);
 
         event(new Registered($user));
-        Auth::login($user);
+        return $user;
     }
 }

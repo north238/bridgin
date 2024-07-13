@@ -12,9 +12,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guarded = [
-        'id',
-    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id',
+        'google_token'
     ];
 
     /**
@@ -83,11 +82,16 @@ class User extends Authenticatable
 
     /**
      * ユーザー情報を取得する
+     * @param string $googleId googleID
+     * @param string $googleEmail googleメール
+     * @return query $result
      */
-    public function getUserInfo($googleId)
+    public function getUserInfo($googleId, $googleEmail)
     {
         $result = User::query()
             ->where('google_id', $googleId)
+            ->where('email', $googleEmail)
+            ->where('google_token', '!=', null)
             ->first();
 
         return $result;

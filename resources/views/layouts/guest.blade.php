@@ -32,6 +32,13 @@
             </div>
         </div>
     </nav>
+    @if (session('error-message'))
+        <div class="alert-message">
+            <x-alert-message name="error" color="red">
+                {{ session('error') }}
+            </x-alert-message>
+        </div>
+    @endif
     <div class="relative top-2/4 translate-y-[-58%] dark:bg-dark_bg">
         <div class="mx-auto max-w-[360px] sm:max-w-[430px] bg-white border border-slate-100 rounded-lg shadow-sm">
             {{ $slot }}
