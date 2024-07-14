@@ -52,12 +52,10 @@ class NewPasswordController extends Controller
         );
 
         if ($status == Password::PASSWORD_RESET) {
+            // ログアウト処理
             Auth::logout();
-
             $request->session()->invalidate();
-
             $request->session()->regenerateToken();
-
             return redirect('/')->with('status', __($status));
         }
 
