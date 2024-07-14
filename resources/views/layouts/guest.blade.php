@@ -32,10 +32,24 @@
             </div>
         </div>
     </nav>
-    @if (session('error-message'))
+    @if (session('error'))
         <div class="alert-message">
             <x-alert-message name="error" color="red">
                 {{ session('error') }}
+            </x-alert-message>
+        </div>
+    @endif
+    @if (session('status'))
+        <div class="alert-message">
+            <x-alert-message name="success" color="green">
+                {{ session('status') }}
+            </x-alert-message>
+        </div>
+    @endif
+    @if (session('email'))
+        <div class="alert-message">
+            <x-alert-message name="success" color="green">
+                {{ session('email') }}
             </x-alert-message>
         </div>
     @endif

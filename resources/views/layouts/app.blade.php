@@ -26,7 +26,6 @@
     @include('components.loading-animation')
     <div class="min-h-screen">
         @include('layouts.navigation')
-
         <!-- Page Content -->
         <main id="page-content" class="flex max-w-full flex-auto flex-col">
             {{ $slot }}
