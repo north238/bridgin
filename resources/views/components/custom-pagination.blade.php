@@ -1,3 +1,3 @@
 <div class="my-6">
-  {{ $displayAllData->links('vendor.pagination.custom') }}
+  {{ $displayAllData->onEachSide(0)->links('vendor.pagination.custom') }}
 </div>
