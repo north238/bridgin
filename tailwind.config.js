@@ -14,7 +14,6 @@ export default {
     ],
     theme: {
         colors: {
-            red: colors.red,
             gray: colors.gray,
             sky: colors.sky,
             rose: colors.rose,
@@ -47,7 +46,6 @@ export default {
         },
         extend: {
             colors: {
-                red: colors.red,
                 primary: {
                     50: "#eff6ff",
                     100: "#dbeafe",

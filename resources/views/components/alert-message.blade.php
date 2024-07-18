@@ -1,7 +1,7 @@
 @props(['message', 'name', 'color'])
 
 <div id="{{ $name }}-alert-message"
-    class="flex items-center p-4 mt-4 bg-{{ $color }}-100 text-{{ $color }}-500"
+    class="flex items-center p-4 mt-4 bg-{{ $color }}-50 text-{{ $color }}-500"
     role="alert">
     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
         viewBox="0 0 20 20">

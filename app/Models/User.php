@@ -21,8 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id',
-        'google_token'
+        'provider',
+        'provider_id',
+        'provider_token',
+        'provider_refresh_token'
     ];
 
     /**
@@ -92,7 +94,7 @@ class User extends Authenticatable
             ->where('provider', $provider)
             ->where('provider_id', $providerId)
             ->where('email', $email)
-            ->where('token', '!=', null)
+            ->where('provider_token', '!=', null)
             ->first();
 
         return $result;

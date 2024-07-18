@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Registered;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class SocialiteLoginController extends Controller
@@ -18,83 +19,67 @@ class SocialiteLoginController extends Controller
         $this->users = $users;
     }
     /**
-     * Google認証のリダイレクト処理
+     * 認証のリダイレクト処理
      *
-     * @return \Illuminate\Http\RedirectResponse Google認証のリダイレクト
-     * @throws \Illuminate\Support\Facades\Auth\AuthenticationException Google認証できなかった場合
+     * @param string $provider 認証プロバイダー
+     * @return \Illuminate\Http\RedirectResponse 認証のリダイレクト
+     * @throws \Illuminate\Support\Facades\Auth\AuthenticationException 認証できなかった場合
      */
-    public function redirectToGoogle()
+    public function redirectToProvider($provider)
     {
         try {
-            return Socialite::driver('google')->redirect();
+            return Socialite::driver($provider)->redirect();
         } catch (\Exception $e) {
-            Log::alert("Google認証に失敗しました");
+            Log::alert($provider . "認証に失敗しました");
             Log::alert($e->getMessage());
-            return redirect()->route('login')->withErrors(['error' => 'google認証に失敗しました']);
-        }
-    }
-
-    /**
-     * Github認証のリダイレクト処理
-     *
-     * @return \Illuminate\Http\RedirectResponse Github認証のリダイレクト
-     * @throws \Illuminate\Support\Facades\Auth\AuthenticationException Github認証できなかった場合
-     */
-    public function redirectToGithub()
-    {
-        try {
-            return Socialite::driver('github')->redirect();
-        } catch (\Exception $e) {
-            Log::alert("Github認証に失敗しました");
-            Log::alert($e->getMessage());
-            return redirect()->route('login')->withErrors(['error' => 'Github認証に失敗しました']);
+            return redirect()->route('login')->withErrors(['error-message' => $provider . '認証に失敗しました']);
         }
     }
 
     /**
      * 認証のコールバック処理
      *
+     * @param string $provider 認証プロバイダー
      * @throws \Exception ユーザー情報を取得する際にエラーが発生した場合
      * @return \Illuminate\Http\RedirectResponse エラーメッセージを含むログインページへのリダイレクトレスポンス
      */
     public function handleSocialiteCallback($provider)
     {
         try {
+            DB::beginTransaction();
             $socialiteUser = Socialite::driver($provider)->user();
-
-            // ユーザー情報をDBから取得
-            $user = $this->users->getUserInfo($provider, $socialiteUser->id, $socialiteUser->email);
-            // 登録されていないユーザーの場合は新規登録
-            if ($user === null) {
-                $user = $this->createUserByGoogle($provider, $socialiteUser);
-            }
+            // 常に最新のユーザー情報にするためアップデートする
+            $user = $this->createUserByProvider($provider, $socialiteUser);
 
             Auth::login($user);
-
-            return redirect()->route('assets.dashboard'); // ログイン後の遷移先
+            DB::commit();
+            return redirect()->route('assets.dashboard')->with(['success-message' => $user->name . 'さん、ようこそ。資産管理を始めましょう']);
         } catch (\Exception $e) {
             Log::alert("認証に失敗しました: handleSocialiteCallback");
             Log::alert($e->getMessage());
-            return redirect()->route('login')->withErrors(['error' => '認証に失敗しました。']);
+            DB::rollBack();
+            return redirect()->route('login')->withErrors(['error-message' => '認証に失敗しました。']);
         }
     }
 
     /**
      * 取得したユーザー情報をDBに保存する
      *
-     *  @param $provider 認証プロバイダ
-     *  @param $socialiteUser 取得したユーザー情報
-     *  @return void
+     * @param string $provider 認証プロバイダ
+     * @param \Laravel\Socialite\Contracts\User $socialiteUser 取得したユーザー情報
+     * @return \App\Models\User
      */
-    public function createUserByGoogle($provider, $socialiteUser)
+    public function createUserByProvider($provider, $socialiteUser)
     {
-        $user = User::create([
-            'name' => $socialiteUser->name,
-            'email' => $socialiteUser->email,
+        $user = User::updateOrCreate([
+            'email' => $socialiteUser->getEmail(),
             'provider' => $provider,
-            'provider_id' => $socialiteUser->id,
-            'password' => Hash::make($socialiteUser->id),
-            'token' => $socialiteUser->token,
+        ], [
+            'name' => $socialiteUser->getName(),
+            'password' => Hash::make($socialiteUser->getId()),
+            'provider_id' => $socialiteUser->getId(),
+            'provider_token' => $socialiteUser->token,
+            'provider_refresh_token' => $socialiteUser->refreshToken
         ]);
 
         event(new Registered($user));

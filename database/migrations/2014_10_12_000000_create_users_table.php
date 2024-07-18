@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->dateTime('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
             $table->string('provider')->nullable()->comment('認証プロバイダ名');
             $table->string('provider_id')->nullable()->comment('認証プロバイダID');
-            $table->string('token')->nullable()->comment('認証トークン');
+            $table->string('provider_token')->nullable()->comment('認証トークン');
+            $table->string('provider_refresh_token')->nullable()->comment('認証リフレッシュトークン');
+            $table->dateTime('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             $table->softDeletes();

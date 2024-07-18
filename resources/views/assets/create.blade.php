@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="alert-message">
         @if (session('error-message'))
-            <x-alert-message name="error" color="red">
+            <x-alert-message name="error" color="rose">
                 {{ session('error-message') }}
             </x-alert-message>
         @endif
