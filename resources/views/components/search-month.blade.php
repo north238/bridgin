@@ -1,5 +1,5 @@
 @php
-    if($value === null) {
+    if(empty($value)) {
         $value = now();
     }
     $firstOfMonth = date('Y-m', strtotime($value));

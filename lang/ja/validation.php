@@ -190,11 +190,11 @@ return [
     */
 
     'attributes' => [
-        "name" => "資産名",
-        "amount" => "資産額",
+        "name" => "名称",
+        "amount" => "金額",
         "registration_date" => "登録日",
-        "category" => "カテゴリ",
-        "genre" => "ジャンル",
+        "category_id" => "カテゴリ名",
+        "genre_id" => "ジャンル名",
         "email" => "メールアドレス",
         "password" => "パスワード",
         "current_password" => "現在のパスワード",

@@ -85,7 +85,7 @@
                             @endforeach
                         </select>
                         <input type="hidden" name="{{ $assetData->genre_name }}" value="{{ $assetData->genre_id }}">
-                        <x-input-error :messages="$errors->get('genre')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('genre_id')" class="mt-2" />
                     </div>
                     <div class="catagory-select-box">
                         <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
@@ -97,7 +97,7 @@
                         </select>
                         <input type="hidden" name="{{ $assetData->category_name }}"
                             value="{{ $assetData->category_id }}">
-                        <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                     </div>
                     <div class="sm:col-span-2">
                         <p class="mb-2 text-sm font-medium text-gray-900 dark:text-white"><i

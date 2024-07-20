@@ -43,6 +43,9 @@ class CsvFileDownloadController extends Controller
     public function getFormRequestData(Request $request)
     {
         $requestData = $request->input('export-data');
+        if(empty($requestData)) {
+            return back()->with(['error-message' => 'ダウンロードできる資産データがありません。']);
+        }
         $csvData = json_decode($requestData, true);
 
         return $this->downloadCSV($csvData);
@@ -80,7 +83,7 @@ class CsvFileDownloadController extends Controller
 
             $handle = fopen('php://output', 'w');
             fputcsv($handle, $headers);
-            if (empty($data) === true) {
+            if (empty($data)) {
                 fputcsv($handle, ['データが存在しません。']);
             } else {
                 $this->insertRows($handle, $data);
@@ -130,7 +133,7 @@ class CsvFileDownloadController extends Controller
 
         $latestDate = $csvData[0]['registration_date'];
         $formatDataString = $this->assetService->getCsvFilename($latestDate);
-        $fileName = 'brigen_' . $formatDataString . '.csv';
+        $fileName = 'bridgin_' . $formatDataString . '.csv';
 
         return $fileName;
     }

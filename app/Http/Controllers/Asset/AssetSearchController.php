@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Asset;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AssetSearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Asset;
@@ -25,13 +26,18 @@ class AssetSearchController extends Controller
      * @param  Request $request
      * @return \Illuminate\View\View 検索結果の表示ビュー
      */
-    public function receiveSearchRequest(Request $request)
+    public function receiveSearchRequest(AssetSearchRequest $request)
     {
-        $requestFormDate = $request->input('search-date');
-        $formatDateBetween = $this->assetService->createSearchTargetMonth($requestFormDate);
-        $debutStatus = $request->input('debutStatus');
-        $debutSearchFlg = $request->input('debut-search-flg');
+        $validated = $request->validated();
+        $requestFormDate = $validated['search-date'];
+        $debutStatus = $validated['debutStatus'];
+        $debutSearchFlg = $validated['debut-search-flg'];
 
+        if(empty($requestFormDate)) {
+            return back()->with(['error-message' => '資産の検索に失敗しました。入力値をご確認ください。']);
+        }
+
+        $formatDateBetween = $this->assetService->createSearchTargetMonth($requestFormDate);
         if ($debutSearchFlg === "1") {
             return $this->searchDebutAssets($requestFormDate, $formatDateBetween);
         }
