@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\GoogleLoginController;
+use App\Http\Controllers\Auth\SocialiteLoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -23,10 +23,12 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    // Google認証
-    Route::get('auth/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
+    // social認証（google, github)
+    Route::get('auth/login/{provider}', [SocialiteLoginController::class, 'authenticateReturningUser'])->name('login.return');
 
-    Route::get('auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('login.google.callback');
+    Route::get('auth/{provider}/redirect', [SocialiteLoginController::class, 'redirectToProvider'])->name('login.provider');
+
+    Route::get('auth/callback/{provider}', [SocialiteLoginController::class, 'handleSocialiteCallback'])->name('login.callback');
 });
 
 Route::middleware('auth')->group(function () {
