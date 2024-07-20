@@ -21,7 +21,7 @@ class CustomizeFormatter extends LineFormatter
    * @param LogRecord $record The log record to format.
    * @return string The formatted record.
    */
-  public function format(LogRecord $record): string
+  public function __invoke(LogRecord $record): string
   {
     $output = parent::format($record);
 

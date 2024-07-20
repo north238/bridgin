@@ -87,7 +87,6 @@ class AssetTrendController extends Controller
      * @return array $data 検索結果のデータ
      *     - 'formatMonthDateBetween': Carbonオブジェクトの配列（指定された月の範囲）
      *     - 'formatYearDateBetween': Carbonオブジェクトの配列（指定された年の範囲）
-     * @throws \Exception パラメータが不正またはデータ取得に失敗した場合に例外をスローする
      */
     public function searchAssetData(Request $request)
     {
@@ -110,9 +109,6 @@ class AssetTrendController extends Controller
             return
                 $this->showAssetTrend(null, $formatYearDateBetween);
         }
-
-        // リクエストに適切なパラメータが含まれていない場合の処理
-        throw new \Exception('Invalid request parameters');
     }
 
     /**

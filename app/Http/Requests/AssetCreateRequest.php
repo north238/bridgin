@@ -22,11 +22,12 @@ class AssetCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:20',
-            'amount' => 'required|min:-9999999999999|max:9999999999999',
-            'registration_date' => 'required|before_or_equal:today',
-            'category_id' => 'required',
-            'asset_type_flg' => 'required'
+            'name' => 'required|string|max:30',
+            'amount' => 'required|string|min:-9999999999999|max:9999999999999',
+            'registration_date' => 'required|string|before_or_equal:today',
+            'genre_id' => 'required|string',
+            'category_id' => 'required|string',
+            'asset_type_flg' => 'required|string'
         ];
     }
 }
