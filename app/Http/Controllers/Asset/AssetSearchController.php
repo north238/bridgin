@@ -30,8 +30,8 @@ class AssetSearchController extends Controller
     {
         $validated = $request->validated();
         $requestFormDate = $validated['search-date'];
-        $debutStatus = $validated['debutStatus'];
         $debutSearchFlg = $validated['debut-search-flg'];
+        $debutStatus = $request->input('debutStatus');
 
         if(empty($requestFormDate)) {
             return back()->with(['error-message' => '資産の検索に失敗しました。入力値をご確認ください。']);

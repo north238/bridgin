@@ -4,7 +4,7 @@
     }
     $firstOfMonth = date('Y-m', strtotime($value));
 @endphp
-<form id="month-form-data" class="flex items-center" method="POST" action="{{ route('search.index') }}">
+<form id="month-form-data" class="flex items-center" method="POST" action="{{ route('search.index') }}" novalidate>
     @csrf
     <div class="calender-input-icon">
         <input type="month" name="search-date" id="search-date" value="{{ $firstOfMonth }}"

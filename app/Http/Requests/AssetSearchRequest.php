@@ -23,9 +23,8 @@ class AssetSearchRequest extends FormRequest
     {
         return [
             'search-date' => 'required|date',
-            'debutStatus' => 'integer',
             'debut-search-flg' => 'string',
-            'first-day-of-mont' => 'required|date',
+            'first-day-of-month' => 'date',
         ];
     }
 
@@ -34,10 +33,8 @@ class AssetSearchRequest extends FormRequest
         return [
             'search-date.required' => '日付を入力してください。',
             'search-date.date' => '検索日付は有効な日付形式で入力してください。',
-            'debutStatus.integer' => '負債ステータスは整数で入力してください。',
             'debut-search-flg.string' => '負債検索フラグは文字列でなければなりません。',
-            'first-day-of-mont.required' => '月初日を入力してください。',
-            'first-day-of-mont.date' => '月初日は有効な日付形式で入力してください。',
+            'first-day-of-month.date' => '月初日は有効な日付形式で入力してください。',
         ];
     }
 }
