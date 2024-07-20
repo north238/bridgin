@@ -14,6 +14,7 @@ export default {
     ],
     theme: {
         colors: {
+            red: colors.red,
             gray: colors.gray,
             sky: colors.sky,
             rose: colors.rose,

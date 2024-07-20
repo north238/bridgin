@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Registered;
@@ -10,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class SocialiteLoginController extends Controller
 {
@@ -47,13 +49,15 @@ class SocialiteLoginController extends Controller
     {
         try {
             DB::beginTransaction();
+            // 認証情報を取得する
             $socialiteUser = Socialite::driver($provider)->user();
             // 常に最新のユーザー情報にするためアップデートする
             $user = $this->createUserByProvider($provider, $socialiteUser);
-
+            // セッションIDを生成する
+            Session::regenerate();
             Auth::login($user);
             DB::commit();
-            return redirect()->route('assets.dashboard')->with(['success-message' => $user->name . 'さん、ようこそ。資産管理を始めましょう']);
+            return redirect()->intended('dashboard')->with(['success-message' => $user->name . 'さん、ようこそ。資産管理を始めましょう']);
         } catch (\Exception $e) {
             Log::alert("認証に失敗しました: handleSocialiteCallback");
             Log::alert($e->getMessage());
@@ -71,7 +75,7 @@ class SocialiteLoginController extends Controller
      */
     public function createUserByProvider($provider, $socialiteUser)
     {
-        $user = User::updateOrCreate([
+        $user = $this->users->updateOrCreate([
             'email' => $socialiteUser->getEmail(),
             'provider' => $provider,
         ], [

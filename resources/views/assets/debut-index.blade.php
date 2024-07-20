@@ -14,7 +14,7 @@
         </div>
     @endif
     @php
-        if ($latestMonthDate == null) {
+        if (empty($latestMonthDate)) {
             $latestMonthDate = now();
         }
         $firstDayOfMonth = date('Y-m-01', strtotime($latestMonthDate));
