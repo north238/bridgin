@@ -47,7 +47,6 @@ export default {
         },
         extend: {
             colors: {
-                red: colors.red,
                 primary: {
                     50: "#eff6ff",
                     100: "#dbeafe",

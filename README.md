@@ -14,12 +14,12 @@
 - Windows10
 - wsl2
 - ubuntu22.04
-- github
-- Docker
+- github:2.34.1
+- Docker:25.0.1
 
 # ツール・ライブラリの名前
 
-- laravel:10
+- laravel:10.48.15
 - PHP:8.3
 - mysql:8.0
 - nginx:stable-alpine

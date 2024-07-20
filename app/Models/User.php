@@ -21,8 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id',
-        'google_token'
+        'provider',
+        'provider_id',
+        'provider_token',
+        'provider_refresh_token'
     ];
 
     /**
@@ -82,16 +84,17 @@ class User extends Authenticatable
 
     /**
      * ユーザー情報を取得する
-     * @param string $googleId googleID
-     * @param string $googleEmail googleメール
+     * @param string $providerId 認証プロバイダID
+     * @param string $email メールアドレス
      * @return query $result
      */
-    public function getUserInfo($googleId, $googleEmail)
+    public function getUserInfo($provider, $providerId, $email)
     {
         $result = User::query()
-            ->where('google_id', $googleId)
-            ->where('email', $googleEmail)
-            ->where('google_token', '!=', null)
+            ->where('provider', $provider)
+            ->where('provider_id', $providerId)
+            ->where('email', $email)
+            ->where('provider_token', '!=', null)
             ->first();
 
         return $result;

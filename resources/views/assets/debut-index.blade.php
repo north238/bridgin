@@ -8,13 +8,13 @@
     @endif
     @if (session('error-message'))
         <div class="alert-message">
-            <x-alert-message name="error" color="red">
+            <x-alert-message name="error" color="rose">
                 {{ session('error-message') }}
             </x-alert-message>
         </div>
     @endif
     @php
-        if ($latestMonthDate == null) {
+        if (empty($latestMonthDate)) {
             $latestMonthDate = now();
         }
         $firstDayOfMonth = date('Y-m-01', strtotime($latestMonthDate));

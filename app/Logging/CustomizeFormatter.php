@@ -2,20 +2,29 @@
 
 namespace App\Logging;
 
-use Illuminate\Log\Logger;
 use Monolog\Formatter\LineFormatter;
+use Monolog\LogRecord;
 
-class CustomizeFormatter
+class CustomizeFormatter extends LineFormatter
 {
-  /**
-   * 指定するロガーインスタンスをカスタマイズ
-   */
-  public function __invoke(Logger $logger): void
+  public function __construct()
   {
-    foreach ($logger->getHandlers() as $handler) {
-      $handler->setFormatter(new LineFormatter(
-        '[%datetime%] %channel%.%level_name%: %message% %context% %extra% \n\n',
-      ));
-    }
+    $lineFormat = "%datetime% [%channel%.%level_name%] %message%" . PHP_EOL;
+    $dateFormat = "Y-m-d H:i:s.v";
+
+    parent::__construct($lineFormat, $dateFormat, true, true);
+  }
+
+  /**
+   * Formats a log record.
+   *
+   * @param LogRecord $record The log record to format.
+   * @return string The formatted record.
+   */
+  public function format(LogRecord $record): string
+  {
+    $output = parent::format($record);
+
+    return $output;
   }
 }
