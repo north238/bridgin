@@ -17,12 +17,10 @@
             </div>
             @php
                 $monthArray = $assetsYearlyData['betweenMonthArray'];
-                $firstDayOfMonth = date('Y-m-01', strtotime($monthArray[0]));
-                $lastDayOfMonth = date('m-t', strtotime($monthArray[1]));
-                $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
+                $year = date('Y年', strtotime($monthArray[0]));
             @endphp
-            <p class="inline-flex items-center text-slate-800 dark:text-white"><span
-                    class="w-1.5 h-1.5 bg-blue-600 rounded-full me-2"></span>{{ __('period') }}&nbsp;{{ $monthSelectorVal }}
+            <p class="mt-1 inline-flex items-center text-slate-800 dark:text-white"><span
+                    class="w-1.5 h-1.5 bg-blue-600 rounded-full me-2"></span>{{ __('period') }}&nbsp;{{ $year }}
             </p>
         </div>
         <div data-popover id="yearly-chart-info" role="tooltip"
@@ -48,9 +46,11 @@
             </a>
         </div>
     @else
-        <div class="pb-3 flex justify-center items-center my-5 h-full w-full mx-auto">
+    <div class="w-full h-[350px]">
+        <div class="relative w-full h-full">
             <canvas id="yearly-chart"></canvas>
         </div>
+    </div>
     @endif
 
     <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">

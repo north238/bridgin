@@ -25,11 +25,11 @@
                 <div>
                     @php
                         $monthArray = $assetsMonthlyData['betweenMonthArray'];
-                        $firstDayOfMonth = date('Y-m-01', strtotime($monthArray[0]));
-                        $lastDayOfMonth = date('m-t', strtotime($monthArray[1]));
+                        $firstDayOfMonth = date('Y/m/01', strtotime($monthArray[0]));
+                        $lastDayOfMonth = date('Y/m/t', strtotime($monthArray[1]));
                         $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
                     @endphp
-                    <p class="inline-flex items-center text-slate-800 dark:text-white"><span
+                    <p class="mt-1 inline-flex items-center text-slate-800 dark:text-white"><span
                             class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
                         {{ __('period') }}&nbsp;{{ $monthSelectorVal }}
                     </p>
@@ -58,9 +58,11 @@
             </a>
         </div>
     @else
-        <div class="pb-3 flex justify-center items-center my-5 mx-auto max-w-80">
+    <div class="w-full h-[300px]">
+        <div class="relative w-full h-[93%] sm:h-full">
             <canvas id="monthly-chart"></canvas>
         </div>
+    </div>
     @endif
 
     <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">

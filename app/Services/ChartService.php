@@ -173,7 +173,7 @@ class ChartService
         $diffInMonths = $minDate->diffInMonths($maxDate) + 1;
 
         for ($i = 0; $i < $diffInMonths; $i++) {
-            $allMonths[] = $minDate->copy()->addMonths($i)->format('Y-m');
+            $allMonths[] = $minDate->copy()->addMonths($i)->format('n');
         }
 
         return $allMonths;
