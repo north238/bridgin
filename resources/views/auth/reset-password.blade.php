@@ -1,9 +1,9 @@
 <x-guest-layout>
     <div class="p-4 sm:p-7">
         <div class="text-start">
-            <h1 class="block text-xl font-semibold text-gray-800 dark:text-white">{{ __('Reset Password') }}</h1>
+            <h1 class="block text-xl font-semibold text-gray-800">{{ __('Reset Password') }}</h1>
         </div>
-        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
+        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1">
 
         <form method="POST" action="{{ route('password.store') }}" novalidate>
             @csrf

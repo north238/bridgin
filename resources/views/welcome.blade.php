@@ -26,7 +26,7 @@
             </div>
             <div class="md:w-1/2 md:pl-8 px-6 flex flex-col justify-between items-start text-start">
                 <h1
-                    class="mx-2 mb-5 block text-2xl font-bold text-gray-800 sm:text-4xl lg:leading-tight dark:text-white">
+                    class="mx-2 mb-5 block text-2xl font-bold text-gray-800 sm:text-4xl lg:leading-tight">
                     資産管理のかけ橋<span><br>もっと身近に</span></h1>
                 <div class="mb-5 bg-slate-50 p-5 border-0 rounded-lg">
                     <div class="flex gap-2 items-center">

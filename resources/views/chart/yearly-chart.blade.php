@@ -19,17 +19,17 @@
                 $monthArray = $assetsYearlyData['betweenMonthArray'];
                 $year = date('Y年', strtotime($monthArray[0]));
             @endphp
-            <p class="mt-1 inline-flex items-center text-slate-800 dark:text-white"><span
+            <p class="mt-1 inline-flex items-center text-slate-800 dark:text-dark_sub_text"><span
                     class="w-1.5 h-1.5 bg-blue-600 rounded-full me-2"></span>{{ __('period') }}&nbsp;{{ $year }}
             </p>
         </div>
         <div data-popover id="yearly-chart-info" role="tooltip"
             class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
             <div class="p-3 space-y-2">
-                <h3 class="font-semibold text-gray-900 dark:text-white">年間チャート詳細</h3>
-                <p>登録された資産を年単位で表示しています。チャートの特性上、登録されていない月の資産も表示されております。</p>
-                <h3 class="font-semibold text-gray-900 dark:text-white">表示期間</h3>
-                <p>表示期間は年単位です。表示期間を変更したい場合はグラフ下の検索窓に入力し検索してください。</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white">{{ __('yearly_chart_detail') }}</h3>
+                <p>{{__("yearly_chart_detail_message")}}</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white">{{ __('display_period') }}</h3>
+                <p>{{ __('year_display_period_message') }}</p>
             </div>
             <div data-popper-arrow></div>
         </div>
@@ -41,16 +41,17 @@
                 {{ __('search_error_message') }}
             </div>
             <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">
-                資産登録は<span class="text-blue-600 dark:text-blue-500 hover:underline">こちら</span><i
+                {{ __('asset_create_page') }}<span
+                    class="text-blue-600 dark:text-blue-500 hover:underline">{{ __('link_tag') }}</span><i
                     class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500 ml-2"></i>
             </a>
         </div>
     @else
-    <div class="w-full h-[350px]">
-        <div class="relative w-full h-full">
-            <canvas id="yearly-chart"></canvas>
+        <div class="w-full h-[350px]">
+            <div class="relative w-full h-full">
+                <canvas id="yearly-chart"></canvas>
+            </div>
         </div>
-    </div>
     @endif
 
     <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
@@ -63,7 +64,7 @@
                 @csrf
                 <div class="calender-input-icon">
                     <input type="month" name="search-year-date" id="search-year-date" value="{{ $displayYear }}"
-                        class="py-3 border-0 border-b-2 text-sm sm:text-base border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-28 sm:w-32 dark:border-gray-700 dark:text-white dark:focus:border-blue-500"
+                        class="py-3 border-0 border-b-2 text-sm sm:text-base border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-28 sm:w-32 dark:border-white dark:text-white dark:focus:border-blue-500"
                         required>
                 </div>
                 <button type="submit"

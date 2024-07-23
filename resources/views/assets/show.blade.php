@@ -114,7 +114,8 @@
                                         </div>
                                         <div class="w-full text-sm">
                                             <i class="fa-solid fa-circle-info text-green-500 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動する</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('fluctuate') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>
@@ -130,7 +131,8 @@
                                         </div>
                                         <div class="w-full text-sm"><i
                                                 class="fa-solid fa-circle-info text-blue-600 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動しない</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('no_change') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>
@@ -167,7 +169,7 @@
                         </svg>
                         <span id="updated-text">{{ __('update') }}</span></button>
                     <a id="deleted-btn" data-modal-target="deleted-modal" data-modal-toggle="deleted-modal"
-                        class="cursor-pointer text-red-500 focus:outline-none bg-white border-2 border-red-500 hover:bg-red-50 focus:z-10 focus:ring-4 focus:ring-red-600 font-semibold rounded-lg px-5 py-2.5 text-center inline-flex items-center"><svg
+                        class="cursor-pointer text-red-500 focus:outline-none border-2 border-red-500 hover:bg-red-200 focus:z-10 focus:ring-4 focus:ring-red-600 font-semibold rounded-lg px-5 py-2.5 text-center inline-flex items-center"><svg
                             id="deleted-icon" class="w-6 h-6 me-2 text-red-500" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

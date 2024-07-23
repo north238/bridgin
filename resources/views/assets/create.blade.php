@@ -88,7 +88,8 @@
                                         </div>
                                         <div class="w-full text-sm">
                                             <i class="fa-solid fa-circle-info text-green-500 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動する</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('fluctuate') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>
@@ -104,7 +105,8 @@
                                         </div>
                                         <div class="w-full text-sm"><i
                                                 class="fa-solid fa-circle-info text-blue-600 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動しない</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('no_change') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>

@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center overflow-hidden">
                     <a href="{{ route('assets.dashboard') }}" class="max-w-[170px] sm:max-w-[200px]">
-                        <img src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}">
+                        <img src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}" class="dark:invert dark:brightness-0 dark:saturate-0 transition-all duration-200">
                     </a>
                 </div>
 

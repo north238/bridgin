@@ -67,9 +67,9 @@
                             @foreach ($assetsData as $item)
                                 <tr
                                     class="border-b border-slate-100 dark:bg-dark_table dark:border-dark_border hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="p-3 text-start text-slate-600 dark:text-white">
+                                    <td class="p-3 text-start text-slate-600 dark:text-dark_sub_text">
                                         {{ $item['registration_date'] }}</td>
-                                    <td class="text-slate-800 dark:text-white p-3 font-medium text-start">
+                                    <td class="text-slate-800 dark:text-dark_sub_text p-3 font-medium text-start">
                                         @if ($item['asset_type_flg'] === 0)
                                             <i class="fa-solid fa-money-bill-trend-up text-green-500 me-1"></i>
                                         @else
@@ -77,11 +77,11 @@
                                         @endif
                                         {{ $item['name'] }}
                                     </td>
-                                    <td class="p-3 text-start text-slate-600 dark:text-white"
+                                    <td class="p-3 text-start text-slate-600 dark:text-dark_sub_text"
                                         data-genre_id="{{ $item['genre_id'] }}">
                                         {{ $item['genre_name'] }}
                                     </td>
-                                    <td class="p-3 text-start text-slate-600 dark:text-white">
+                                    <td class="p-3 text-start text-slate-600 dark:text-dark_sub_text">
                                         {{ $item['category_name'] }}
                                     </td>
                                     <td class="amount-cell p-3 text-start font-medium text-green-500">
