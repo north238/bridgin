@@ -4,6 +4,7 @@ import forms from "@tailwindcss/forms";
 const colors = require("tailwindcss/colors");
 
 export default {
+    important: true,
     darkMode: "class",
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
@@ -78,5 +79,6 @@ export default {
             forms: true,
             tooltips: true,
         }),
+        require("@tailwindcss/forms"),
     ],
 };
