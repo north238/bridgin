@@ -33,10 +33,11 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                {{-- お知らせ通知機能 --}}
+                <x-notification-icon />
                 {{-- ダークモード切替アイコン --}}
-                @include('components.dark-with-light')
+                <x-dark-with-light />
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
