@@ -1,4 +1,4 @@
-<a data-tooltip-target="tooltip-notification" data-tooltip-placement="bottom" href=""
+<a data-tooltip-target="tooltip-notification" data-tooltip-placement="bottom" href="{{ route('notification.index') }}"
     class="inline-flex items-center text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2.5 mt-1 mx-2">
     <i class="fa-solid fa-bell"></i>
 </a>

@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -47,24 +48,53 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * ユーザーが所有するアセットとのリレーションシップを定義
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function assets(): HasMany
     {
         return $this->hasMany(Asset::class);
     }
 
+    /**
+     * ユーザーが投稿したコメントとのリレーションシップを定義
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function userComments(): HasMany
     {
         return $this->hasMany(UserComment::class);
     }
 
+    /**
+     * ユーザーが関連するアセットターゲットとのリレーションシップを定義
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function assetTargets(): HasMany
     {
         return $this->hasMany(AssetTarget::class);
     }
 
+    /**
+     * ユーザーが所有するアセットスイッチステータスとのリレーションシップを定義
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function assetSwitchStatuses(): HasMany
     {
         return $this->hasMany(AssetSwitchStatus::class);
+    }
+    /**
+     * ユーザーが持つお知らせとのリレーションシップを定義
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function notifications(): BelongsToMany
+    {
+        return $this->belongsToMany(Notification::class, 'notification_user')->withPivot('read_at')->withTimestamps();
     }
 
     /**
