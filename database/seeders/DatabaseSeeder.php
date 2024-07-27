@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(AssetsSeeder::class);
         $this->call(NotificationSeeder::class);
-        $this->call(NotificationSeeder::class);
+        $this->call(NotificationUserSeeder::class);
         $this->call(AssetTargetSeeder::class);
         $this->call(AssetChangesSeeder::class);
         $this->call(AssetSwitchStatusSeeder::class);

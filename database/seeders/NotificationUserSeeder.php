@@ -5,14 +5,14 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class NotificationSeeder extends Seeder
+class NotificationUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $notifications = [
+        $notificationUser = [
             [
                 'notification_id' => 1,
                 'user_id' => 1,
@@ -44,6 +44,6 @@ class NotificationSeeder extends Seeder
                 'read_at' => null,
             ],
         ];
-        DB::table('notifications')->insert($notifications);
+        DB::table('notification_user')->insert($notificationUser);
     }
 }
