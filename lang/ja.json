@@ -916,6 +916,10 @@
   "asset_create_page": "資産登録は",
   "link_tag": "こちら",
 
+  "notification_message": "お知らせ一覧",
+  "all_view": "すべて見る",
+  "notification_detail": "お知らせ詳細",
+
   "checked_message": "資産を複製する場合はチェックしてください",
   "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。",
   "create_success_message": "新しい資産が資産が登録されました。",

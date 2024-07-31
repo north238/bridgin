@@ -1,3 +1,5 @@
+@props(['displayData'])
+
 <div class="my-6">
-  {{ $displayAllData->onEachSide(0)->links('vendor.pagination.custom') }}
+  {{ $displayData->onEachSide(0)->links('vendor.pagination.custom') }}
 </div>

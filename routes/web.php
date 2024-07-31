@@ -37,7 +37,8 @@ Route::middleware('auth')->group(function () {
 
 // お知らせ機能
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard/notification', [NotificationMessageController::class, 'notificationIndex'])->name('notification.index');
+    Route::get('/dashboard/notification-message', [NotificationMessageController::class, 'index'])->name('notification.index');
+    Route::get('/dashboard/notification-message/{notificationId}', [NotificationMessageController::class, 'detail'])->name('notification.detail');
 });
 
 // 検索機能

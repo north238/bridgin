@@ -35,7 +35,7 @@
         <div class="pt-6">
             @include('pages.m-yearly-table')
         </div>
-        @include('components.custom-pagination')
+        <x-custom-pagination :displayData="$displayAllData" />
     </div>
 
     @push('script-files')

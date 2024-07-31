@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Notification extends Model
 {
@@ -29,20 +30,46 @@ class Notification extends Model
      * ユーザーとのリレーションシップを定義
      * このお知らせがどのユーザーに関連しているかを示します
      *
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'notification_user')->withPivot('read_at')->withTimestamps();
     }
 
-    public function markNotificationAsRead($notificationId)
+    /**
+     * ユーザーIDに基づいて通知を取得
+     *
+     * @param int $userId ユーザーID
+     * @param int $limit 表示件数
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getNotificationsByUser($userId)
     {
-        $this->notifications()->updateExistingPivot($notificationId, ['read_at' => now()]);
+        $result = User::findOrFail($userId)
+            ->notifications()
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return $result;
     }
 
-    public function isNotificationRead($notificationId)
+    /**
+     * ユーザーIDに基づいて未読の通知を取得
+     *
+     * @param int $userId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getUnreadNotificationsByUser($userId)
     {
-        return $this->notifications()->where('notification_id', $notificationId)->whereNotNull('read_at')->exists();
+        return User::findOrFail($userId)->notifications()->wherePivot('read_at', null)->get();
+    }
+
+    /**
+     * 指定されたお知らせを取得
+     */
+    public static function getNotification($notificationId)
+    {
+        return Notification::find($notificationId);
     }
 }
