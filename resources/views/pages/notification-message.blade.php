@@ -17,7 +17,7 @@
                         }
                     @endphp
                     <a href="{{ route('notification.detail', ['notificationId' => $item->id]) }}"
-                        class="cursor-pointer h-16 sm:h-20 flex flex-col justify-center border-dashed border-b hover:bg-slate-50">
+                        class="cursor-pointer h-16 sm:h-20 flex flex-col justify-center border-dashed border-b hover:bg-slate-50 dark:hover:bg-dark_bg">
                         <div class="p-2 sm:p-4 flex flex-col gap-2 sm:gap-4">
                             <div class="flex flex-row sm:items-center">
                                 <span class="text-sm text-blue-600 dark:text-blue-500">{{ $item->formattedDate }}</span>
@@ -26,11 +26,11 @@
                                     class="ml-2 sm:ml-4 {{ $color }} text-sm sm:px-5 px-2 py-0 rounded-full">{{ $item->type }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <h2 class="text-base text-slate-600 font-semibold truncate">
+                                <h2 class="text-base text-slate-600 dark:text-white font-semibold truncate">
                                     {{ $item->title }}
                                 </h2>
                                 <div class="pr-2">
-                                    <i class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500"></i></span>
+                                    <i class="fa-solid fa-angle-right text-blue-600 dark:text-blue-500"></i>
                                 </div>
                             </div>
                         </div>

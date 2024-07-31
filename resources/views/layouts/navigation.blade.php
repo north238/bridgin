@@ -76,6 +76,8 @@
 
             <!-- Hamburger -->
             <div id="mobile-hamburger" class="flex items-center sm:hidden">
+                {{-- お知らせ通知機能 --}}
+                <x-notification-icon />
                 <div class="switch-dark-with-light-sp flex items-center">
                     <button id="theme-toggle-sp" type="button"
                         class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2 m-2 text-sm">

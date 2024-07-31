@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mt-6 mx-auto lg:p-8 xl:max-w-7xl">
+    <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
         <div class="px-2">
             <h1 class="mb-5 text-2xl font-semibold text-slate-700 dark:text-white">{{ __('notification_detail') }}</h1>
         </div>
