@@ -55,6 +55,19 @@ class Notification extends Model
     }
 
     /**
+     * ユーザーの通知を既読としてマークする
+     *
+     * @param int $userId ユーザーID
+     * @param int $notificationId 通知ID
+     * @return bool 更新が成功したかどうか
+     */
+    public static function markNotificationAsRead($userId, $notificationId)
+    {
+        $user = User::findOrFail($userId);
+        return $user->notifications()->updateExistingPivot($notificationId, ['read_at' => now()]);
+    }
+
+    /**
      * ユーザーIDに基づいて未読の通知を取得
      *
      * @param int $userId

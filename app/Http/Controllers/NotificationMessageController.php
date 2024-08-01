@@ -46,6 +46,10 @@ class NotificationMessageController extends Controller
      */
     public function detail($notificationId)
     {
+        $userId = Auth::user()->id;
+
+        // 既読時間を更新
+        Notification::markNotificationAsRead($userId, $notificationId);
         $notification = Notification::getNotification($notificationId);
         // 経過時間をフォーマット
         $notification = $this->formatNotificationUpdateDates($notification);
