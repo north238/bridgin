@@ -54,7 +54,7 @@
                         <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
-                            class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="form-select cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="">--{{ __('select_message') }}--</option>
                             @foreach ($genres as $genre)
@@ -67,7 +67,7 @@
                         <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('category_name') }}</label>
                         <select id="category_id" name="category_id"
-                            class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="form-select cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required disabled>
                             <option value="">--{{ __('select_message') }}--</option>
                         </select>
@@ -88,7 +88,8 @@
                                         </div>
                                         <div class="w-full text-sm">
                                             <i class="fa-solid fa-circle-info text-green-500 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動する</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('fluctuate') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>
@@ -104,7 +105,8 @@
                                         </div>
                                         <div class="w-full text-sm"><i
                                                 class="fa-solid fa-circle-info text-blue-600 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動しない</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('no_change') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>

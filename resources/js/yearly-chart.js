@@ -52,6 +52,7 @@ const config = {
         animation: false,
         normalized: true,
         maintainAspectRatio: false,
+        responsive: true,
         scales: {
             x: {
                 title: {

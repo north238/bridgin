@@ -76,7 +76,7 @@
                         <label for="genre_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('genre_name') }}</label>
                         <select id="genre_id" name="genre_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="form-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="{{ $assetData->genre_id }}">{{ $assetData->genre_name }}</option>
                             @foreach ($genres as $genre)
@@ -91,7 +91,7 @@
                         <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('category_name') }}</label>
                         <select id="category_id" name="category_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
+                            class="form-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             required>
                             <option value="{{ $assetData->category_id }}">{{ $assetData->category_name }}</option>
                         </select>
@@ -114,7 +114,8 @@
                                         </div>
                                         <div class="w-full text-sm">
                                             <i class="fa-solid fa-circle-info text-green-500 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動する</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('fluctuate') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>
@@ -130,7 +131,8 @@
                                         </div>
                                         <div class="w-full text-sm"><i
                                                 class="fa-solid fa-circle-info text-blue-600 mb-0.5"></i>
-                                            資産の価値が毎月<u class="underline font-semibold">変動しない</u>場合はこちらを選択してください
+                                            {{ __('asset_each_month') }}<u
+                                                class="underline font-semibold">{{ __('no_change') }}</u>{{ __('this_select') }}
                                         </div>
                                     </div>
                                 </label>
@@ -167,7 +169,7 @@
                         </svg>
                         <span id="updated-text">{{ __('update') }}</span></button>
                     <a id="deleted-btn" data-modal-target="deleted-modal" data-modal-toggle="deleted-modal"
-                        class="cursor-pointer text-red-500 focus:outline-none bg-white border-2 border-red-500 hover:bg-red-50 focus:z-10 focus:ring-4 focus:ring-red-600 font-semibold rounded-lg px-5 py-2.5 text-center inline-flex items-center"><svg
+                        class="cursor-pointer text-red-500 focus:outline-none border-2 border-red-500 hover:bg-red-200 focus:z-10 focus:ring-4 focus:ring-red-600 font-semibold rounded-lg px-5 py-2.5 text-center inline-flex items-center"><svg
                             id="deleted-icon" class="w-6 h-6 me-2 text-red-500" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('m_chart_colors', function (Blueprint $table) {
+        Schema::create('chart_colors', function (Blueprint $table) {
             $table->id();
             $table->string('color_code')->comment('HEX（色コード）'); // チャートで使用する色コード
             $table->dateTime('created_at')->useCurrent();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('m_chart_colors');
+        Schema::dropIfExists('chart_colors');
     }
 };

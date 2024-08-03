@@ -1,13 +1,13 @@
 <x-guest-layout>
     <div class="p-4 sm:p-7">
         <div class="text-start">
-            <h1 class="block text-xl font-semibold text-gray-800 dark:text-white">{{ __('user_login') }}</h1>
+            <h1 class="block text-xl font-semibold text-gray-800 ">{{ __('user_login') }}</h1>
         </div>
-        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
+        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1">
 
         <div class="mt-5">
             <a href="{{ route('login.provider', ['provider' => 'google']) }}"
-                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
                 <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
                     <path
                         d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z"
@@ -25,7 +25,7 @@
                 Log in with Google
             </a>
             <a href="{{ route('login.provider', ['provider' => 'github']) }}"
-                class="mt-2 w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+                class="mt-2 w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                     <path
                         d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -34,7 +34,7 @@
             </a>
 
             <div
-                class="py-5 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
+                class="py-5 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">
                 Or</div>
 
             <form method="POST" action="{{ route('login') }}" novalidate>
@@ -71,7 +71,7 @@
                             <input id="remember_me" type="checkbox"
                                 class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"
                                 name="remember">
-                            <span class="ms-2 text-sm text-gray-600 dark:text-white">{{ __('Remember me') }}</span>
+                            <span class="ms-2 text-sm text-gray-600 ">{{ __('Remember me') }}</span>
                         </label>
                     </div>
                     <div>
@@ -82,7 +82,7 @@
                         </button>
                     </div>
                     <div class="flex gap-2 justify-center items-center">
-                        <p class="block font-medium text-sm text-slate-600 dark:text-white">アカウントは未登録ですか？</p>
+                        <p class="block font-medium text-sm text-slate-600 ">アカウントは未登録ですか？</p>
                         @if (Route::has('register'))
                             <a class="text-sm text-blue-600 hover:underline font-medium"
                                 href="{{ route('register') }}">新規作成する<i class="fa-solid fa-angle-right ml-2"></i></a>

@@ -25,7 +25,8 @@ class Asset extends Model
         'category_id',
         'created_at',
         'updated_at',
-        'asset_type_flg'
+        'asset_type_flg',
+        'memo'
     ];
 
     /**
@@ -66,7 +67,7 @@ class Asset extends Model
         $result = Asset::query()
             ->join('categories as c', 'assets.category_id', '=', 'c.id')
             ->join('genres as g', 'c.genre_id', '=', 'g.id')
-            ->join('m_chart_colors as mcc', 'g.color_id', '=', 'mcc.id')
+            ->join('chart_colors as mcc', 'g.color_id', '=', 'mcc.id')
             ->select(['assets.*', 'assets.id as asset_id', 'c.name as category_name', 'g.id as genre_id', 'g.name as genre_name', 'g.risk_rank', 'mcc.color_code'])
             ->where('user_id', $userId);
 

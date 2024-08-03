@@ -839,6 +839,8 @@
   "assets_trend": "資産推移",
   "assets_create": "資産登録",
   "assets_restore": "資産復元",
+  "switch-dark-with-light": "ダークモード切替",
+  "notification_info": "お知らせ通知",
 
   "monthly_assets_data": "月間資産データ",
   "debut_data": "負債データ",
@@ -847,10 +849,13 @@
   "total_asset": "資産件数:",
   "total_count": "合計数",
   "period": "期間:",
+  "all_period": "全期間",
   "count": "件",
-
-  "yearly_chart": "年間データ",
-  "monthly_chart": "月間チャート",
+  "current_amount": "増減額",
+  "debut_total": "負債合計額",
+  "more_view": "詳細を見る",
+  "display_detail": "画面詳細",
+  "display_detail_message": "資産や取引履歴など、各種ページで削除されたデータはこちらの画面で管理できます。『復元』をタップすれば、ワンタップで以前登録した年月にデータを戻せます。",
 
   "action": "操作",
   "back_btn": "戻る",
@@ -870,6 +875,10 @@
   "fixed-asset": "固定資産",
   "delete_check_message": "この資産を削除してもよろしいでしょうか？",
   "cancel_btn": "キャンセル",
+  "fluctuate": "変動する",
+  "no_change": "変動しない",
+  "asset_each_month": "資産の価値が毎月",
+  "this_select": "場合はこちらを選択してください",
 
   "asset_name_placeholder": "名称を入力してください",
   "asset_amount_placeholder": "金額を入力してください",
@@ -891,8 +900,27 @@
   "debut_amount": "負債額",
   "total_asset_amount": "資産合計額",
   "JPY": "（円）",
+  "jpy": "円",
   "ratio": "比率",
   "genre": "（ジャンル）",
+
+  "yearly_chart": "年間データ",
+  "monthly_chart": "月間チャート",
+  "monthly_chart_detail": "月間チャート詳細",
+  "yearly_chart_detail": "年間チャート詳細",
+  "display_period": "表示期間",
+  "monthly_chart_detail_message": "登録されたジャンルとカテゴリごとに分類して表示しています。ここでは負債データは表示しておりません。",
+  "yearly_chart_detail_message": "登録された資産を年単位で表示しています。チャートの特性上、登録されていない月の資産も表示されております。",
+  "display_period_message": "表示期間は月単位です。表示期間を変更したい場合はチャート下の検索窓に入力し検索してください。",
+  "year_display_period_message": "表示期間は年単位です。表示期間を変更したい場合はグラフ下の検索窓に入力し検索してください。",
+  "asset_create_page": "資産登録は",
+  "link_tag": "こちら",
+
+  "notification_message": "お知らせ一覧",
+  "all_view": "すべて見る",
+  "notification_detail": "お知らせ詳細",
+  "all_notification": "すべて",
+  "unread_notification": "未読",
 
   "checked_message": "資産を複製する場合はチェックしてください",
   "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。",
@@ -908,13 +936,19 @@
   "delete_success_message": "資産を削除しました。削除されたデータは保存されています。",
   "delete_error_log": "資産削除時にエラーが発生しています",
   "delete_error_message": "資産の削除に失敗しました。",
+  "profile_updated_message": "プロフィールの更新が完了しました。",
+  "password_updated_message": "パスワードが更新されました。",
 
   "search_error_message": "検索結果はありません。資産を登録してください。",
   "empty_data_message": "登録されているデータはありません。",
+  "unread_notification_error_message": "未読のお知らせはありません。",
 
   "admin_system": "ユーザー管理システム",
   "admin_register": "管理者登録",
 
+  "forget_link": "お忘れの方はこちら",
+
+  "update_token_error_message": "ユーザー認証でエラーが発生しています。",
   "verification-link-sent": "確認メールを送信しました。",
   "If you did not create an account, no further action is required.": "アカウント作成にお心当たりがない場合は、本メールは破棄して頂けるようお願いいたします。",
   "verify_email_message": "確認メール再送",
@@ -925,5 +959,4 @@
   "This password reset link will expire in :count minutes.": "このリンクの有効期限は受信してから :count 分です。",
   "If you did not request a password reset, no further action is required.": "内容にお心当たりがない場合は、本メールは破棄して頂けるようお願いいたします。",
   "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:": "もしもボタンをクリックしてもサイトへいかない場合は、下記のURLをコピーして、ブラウザに貼り付けてアクセスしてください。"
-
 }

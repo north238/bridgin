@@ -25,18 +25,22 @@ function assetUpdate() {
         const greenClass = [
             "bg-green-500",
             "hover:bg-green-600",
-            "focus:ring-green-300",
+            "peer-focus:ring-green-300",
             "dark:bg-green-500",
             "dark:hover:bg-green-600",
+            "dark:peer-focus:ring-green-700",
+            "focus:ring-green-700",
             "dark:focus:ring-green-700",
         ];
 
         const blueClass = [
             "bg-blue-500",
             "hover:bg-blue-600",
-            "focus:ring-blue-500",
+            "peer-focus:ring-blue-500",
             "dark:bg-blue-500",
             "dark:hover:bg-blue-600",
+            "dark:peer-focus:ring-blue-700",
+            "focus:ring-blue-700",
             "dark:focus:ring-blue-700",
         ];
 
@@ -66,17 +70,20 @@ function assetUpdate() {
     function handleUpdatedFormSubmit() {
         const updatedBtn = document.getElementById("updated-btn");
         const updatedIcon = document.getElementById("updated-icon");
+        const PlusIcon = document.getElementById("plus-icon");
         const updatedLoadingIcon = document.getElementById(
             "updated-loading-icon"
         );
 
         updatedBtn.disabled = true;
         updatedIcon.classList.add("hidden");
+        PlusIcon.classList.add("hidden");
         updatedLoadingIcon.classList.remove("hidden");
 
         setTimeout(function () {
             updatedBtn.disabled = false;
             updatedLoadingIcon.classList.add("hidden");
+            PlusIcon.classList.remove("hidden");
             updatedIcon.classList.remove("hidden");
         }, 5000);
 

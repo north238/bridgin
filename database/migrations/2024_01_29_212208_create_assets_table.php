@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('amount')->nullable(false)->comment('資産額');
             $table->date('registration_date')->comment('登録日');
             $table->tinyInteger('asset_type_flg')->nullable(false)->comment('資産の種類');
+            $table->text('memo')->nullable()->comment('資産情報');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             $table->softDeletes();

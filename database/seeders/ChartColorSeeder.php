@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MChartColorSeeder extends Seeder
+class ChartColorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -59,6 +59,6 @@ class MChartColorSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ];
-        DB::table('m_chart_colors')->insert($colors);
+        DB::table('chart_colors')->insert($colors);
     }
 }
