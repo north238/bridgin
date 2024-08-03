@@ -20,19 +20,51 @@ class NotificationMessageController extends Controller
     }
 
     /**
-     * 通知一覧を表示する
+     * 未読のお知らせ一覧画面表示
      *
      * @return \Illuminate\View\View
      */
-    private function show()
+    public function unreadNotification()
     {
         $userId = Auth::user()->id;
+        // 未読のお知らせを取得
+        $unreadNotifications = Notification::getUnreadNotificationsByUser($userId);
+        $unreadTotalCount = $unreadNotifications->total();
+        if (empty($unreadTotalCount)) {
+            return redirect()->route('notification.index')->with(['error-message' => __('unread_notification_error_message')]);
+        }
+
+        $data = [
+            'unreadNotifications' => $unreadNotifications,
+            'unreadTotalCount' => $unreadTotalCount
+        ];
+        return $this->show($data);
+    }
+
+    /**
+     * 通知一覧を表示する
+     *
+     * @param null|int $unread 画面遷移先を判別するもの
+     * @return \Illuminate\View\View
+     */
+    private function show($unread = null)
+    {
+        $userId = Auth::user()->id;
+
         $notifications = Notification::getNotificationsByUser($userId);
+        $totalCount = $notifications->total();
+
+
+        if (!empty($unread)) {
+            $notifications = $unread['unreadNotifications'];
+        }
 
         // 経過時間をフォーマット
         $notifications = $this->formatNotificationUpdateDates($notifications);
         $data = [
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'totalCount' => $totalCount,
+            'unreadTotalCount' => $unread['unreadTotalCount'] ?? 0
         ];
 
         return view('assets.notification-index', $data);

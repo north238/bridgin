@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 // お知らせ機能
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/notification-message', [NotificationMessageController::class, 'index'])->name('notification.index');
+    Route::get('/dashboard/notification-message/unread', [NotificationMessageController::class, 'unreadNotification'])->name('notification.unread');
     Route::get('/dashboard/notification-message/{notificationId}', [NotificationMessageController::class, 'detail'])->name('notification.detail');
 });
 

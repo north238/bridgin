@@ -919,6 +919,8 @@
   "notification_message": "お知らせ一覧",
   "all_view": "すべて見る",
   "notification_detail": "お知らせ詳細",
+  "all_notification": "すべて",
+  "unread_notification": "未読",
 
   "checked_message": "資産を複製する場合はチェックしてください",
   "isEmpty_asset_error_message": "現在、登録されている資産がありません。新しい資産を追加してください。",
@@ -939,6 +941,7 @@
 
   "search_error_message": "検索結果はありません。資産を登録してください。",
   "empty_data_message": "登録されているデータはありません。",
+  "unread_notification_error_message": "未読のお知らせはありません。",
 
   "admin_system": "ユーザー管理システム",
   "admin_register": "管理者登録",

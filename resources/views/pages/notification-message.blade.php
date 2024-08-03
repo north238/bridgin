@@ -1,6 +1,5 @@
 <section id="notification-message">
-    <div
-        class="bg-white py-6 sm:py-8 lg:py-12 rounded-lg border dark:bg-dark_table dark:border-dark_border overflow-hidden">
+    <div class="bg-white py-6 rounded-lg border dark:bg-dark_table dark:border-dark_border overflow-hidden">
         <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
 
             <div class="grid gap-6 grid-cols-1">
@@ -21,7 +20,8 @@
                         <div class="p-2 sm:p-4 flex flex-col gap-2 sm:gap-4">
                             <div class="flex flex-row sm:items-center">
                                 <span class="text-sm text-blue-600 dark:text-blue-500">{{ $item->formattedDate }}</span>
-                                <span class="ml-2 text-sm text-blue-600 dark:text-blue-500">{{ $item->elapsedTime }}</span>
+                                <span
+                                    class="ml-2 text-sm text-blue-600 dark:text-blue-500">{{ $item->elapsedTime }}</span>
                                 <span
                                     class="ml-2 sm:ml-4 {{ $color }} text-sm sm:px-5 px-2 py-0 rounded-full">{{ $item->type }}</span>
                             </div>

@@ -70,12 +70,18 @@ class Notification extends Model
     /**
      * ユーザーIDに基づいて未読の通知を取得
      *
-     * @param int $userId
+     * @param int $userId ユーザーID
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function getUnreadNotificationsByUser($userId)
     {
-        return User::findOrFail($userId)->notifications()->wherePivot('read_at', null)->get();
+        $result = User::findOrFail($userId)
+            ->notifications()
+            ->wherePivot('read_at', null)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return $result;
     }
 
     /**
