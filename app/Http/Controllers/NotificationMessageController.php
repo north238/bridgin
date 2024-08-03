@@ -14,9 +14,9 @@ class NotificationMessageController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->show();
+        return $this->show($request, null);
     }
 
     /**
@@ -24,7 +24,7 @@ class NotificationMessageController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function unreadNotification()
+    public function unreadNotification(Request $request)
     {
         $userId = Auth::user()->id;
         // 未読のお知らせを取得
@@ -38,7 +38,7 @@ class NotificationMessageController extends Controller
             'unreadNotifications' => $unreadNotifications,
             'unreadTotalCount' => $unreadTotalCount
         ];
-        return $this->show($data);
+        return $this->show($request, $data);
     }
 
     /**
@@ -47,10 +47,11 @@ class NotificationMessageController extends Controller
      * @param null|int $unread 画面遷移先を判別するもの
      * @return \Illuminate\View\View
      */
-    private function show($unread = null)
+    private function show(Request $request, $unread)
     {
         $userId = Auth::user()->id;
 
+        $unreadNotificationCount = $request->unreadNotificationCount;
         $notifications = Notification::getNotificationsByUser($userId);
         $totalCount = $notifications->total();
 
@@ -64,7 +65,7 @@ class NotificationMessageController extends Controller
         $data = [
             'notifications' => $notifications,
             'totalCount' => $totalCount,
-            'unreadTotalCount' => $unread['unreadTotalCount'] ?? 0
+            'unreadTotalCount' => $unreadNotificationCount
         ];
 
         return view('assets.notification-index', $data);

@@ -17,11 +17,18 @@ class NotificationBadge
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $userId = Auth::user()->id;
-        // 未読のお知らせを取得
-        $unreadNotifications = Notification::getUnreadNotificationsByUser($userId);
-        $unreadNotificationCount = $unreadNotifications->total();
-        view()->share('unreadNotificationCount', $unreadNotificationCount);
+        if (Auth::check()) {
+            $userId = Auth::user()->id;
+
+            // 未読のお知らせを取得
+            $unreadNotifications = Notification::getUnreadNotificationsByUser($userId);
+            $unreadNotificationCount = $unreadNotifications->total();
+
+            $request->merge(['unreadNotificationCount' => $unreadNotificationCount]);
+            view()->share('unreadNotificationCount', $unreadNotificationCount);
+        } else {
+            view()->share('unreadNotificationCount', 0);
+        }
 
         return $next($request);
     }

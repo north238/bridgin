@@ -1,7 +1,6 @@
 <section id="notification-message">
     <div class="bg-white py-6 rounded-lg border dark:bg-dark_table dark:border-dark_border overflow-hidden">
         <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-
             <div class="grid gap-6 grid-cols-1">
                 @foreach ($notifications as $item)
                     @php
