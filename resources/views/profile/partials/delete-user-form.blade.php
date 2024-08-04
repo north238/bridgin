@@ -5,7 +5,7 @@
         </h2>
         <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-white">
+        <p class="mt-1 text-sm text-gray-600 dark:text-dark_sub_text">
             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
         </p>
     </header>
@@ -28,9 +28,9 @@
             </p>
 
             <div class="mt-6 flex flex-col items-center">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only dark:text-white" />
 
-                <x-text-input id="password" name="password" type="password" class="mt-1 block w-3/4"
+                <x-text-input id="password" name="password" type="password" class="mt-1 block w-3/4 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                     placeholder="{{ __('Password') }}" />
 
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />

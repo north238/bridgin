@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="p-4 sm:p-7">
         <div class="text-start">
-            <h1 class="block text-xl font-semibold text-gray-800 dark:text-white">{{ __('password_reset_email') }}</h1>
+            <h1 class="block text-xl font-semibold text-gray-800">{{ __('password_reset_email') }}</h1>
         </div>
-        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
+        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1">
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-white">
+        <div class="mb-4 text-sm text-gray-600">
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
 

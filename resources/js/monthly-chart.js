@@ -15,21 +15,52 @@ const config = {
                 backgroundColor: categoryColorArrays,
                 datalabels: {
                     color: function (context) {
-                        var value = context.dataset.data[context.dataIndex];
-                        return value.amount < 16000
+                        const val = context.dataset.data[context.dataIndex];
+                        const data = context.dataset.data;
+                        const totalAmount = data.reduce(
+                            (sum, item) => sum + item.amount,
+                            0
+                        );
+                        const amount = val.amount;
+                        const ratio = (amount / totalAmount) * 100;
+                        return ratio < 4
                             ? context.dataset.backgroundColor
                             : "white";
                     },
                     anchor: function (context) {
-                        var value = context.dataset.data[context.dataIndex];
-                        return value.amount < 16000 ? "end" : "center";
+                        const val = context.dataset.data[context.dataIndex];
+                        const data = context.dataset.data;
+                        const totalAmount = data.reduce(
+                            (sum, item) => sum + item.amount,
+                            0
+                        );
+                        const amount = val.amount;
+                        const ratio = (amount / totalAmount) * 100;
+                        return ratio < 4 ? "end" : "center";
                     },
                     align: function (context) {
-                        var value = context.dataset.data[context.dataIndex];
-                        return value.amount < 16000 ? "end" : "center";
+                        const val = context.dataset.data[context.dataIndex];
+                        const data = context.dataset.data;
+                        const totalAmount = data.reduce(
+                            (sum, item) => sum + item.amount,
+                            0
+                        );
+                        const amount = val.amount;
+                        const ratio = (amount / totalAmount) * 100;
+                        return ratio < 4 ? "end" : "center";
                     },
-                    offset: -6,
-                    display: "auto",
+                    offset: -5,
+                    display: function (context) {
+                        const val = context.dataset.data[context.dataIndex];
+                        const data = context.dataset.data;
+                        const totalAmount = data.reduce(
+                            (sum, item) => sum + item.amount,
+                            0
+                        );
+                        const amount = val.amount;
+                        const ratio = (amount / totalAmount) * 100;
+                        return ratio < 4 ? false : "auto";
+                    },
                 },
             },
             {
@@ -63,6 +94,7 @@ const config = {
     plugins: [ChartDataLabels],
     options: {
         maintainAspectRatio: false,
+        responsive: true,
         normalized: true,
         parsing: {
             key: "amount",
@@ -116,29 +148,32 @@ const config = {
                     label: function (context) {
                         let label = "";
                         const data = context.raw;
+                        const dataArr = context.dataset.data;
                         if (data) {
-                            const name = data.name;
+                            const name = "資産名：" + data.name;
+
+                            // 資産合計額を取得
+                            const totalAmount = dataArr.reduce(
+                                (sum, item) => sum + item.amount,
+                                0
+                            );
+                            const percentage = (data.amount / totalAmount) * 100;
+                            const roundedPercentage = parseFloat(
+                                percentage.toFixed(0)
+                            );
+                            const ratio =
+                                "資産比率：" + roundedPercentage + "%";
+
+                            // 金額を円マークを付けて取得
                             const amount = new Intl.NumberFormat("ja-JP", {
                                 style: "currency",
                                 currency: "JPY",
                             }).format(data.amount);
-                            label = ["資産名：" + name, "金額：" + amount];
+                            const amountStr = "金額：" + amount;
+
+                            label = [name, amountStr, ratio];
                         }
                         return label;
-                    },
-                    footer: function (context) {
-                        const data = context[0].dataset.data;
-                        const parsed = context[0].parsed;
-                        const totalAmount = data.reduce(
-                            (sum, item) => sum + item.amount,
-                            0
-                        );
-                        const percentage = (parsed / totalAmount) * 100;
-                        const roundedPercentage = parseFloat(
-                            percentage.toFixed(0)
-                        );
-                        const footer = "資産比率：" + roundedPercentage + "%";
-                        return footer;
                     },
                 },
             },

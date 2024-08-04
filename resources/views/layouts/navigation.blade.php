@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center overflow-hidden">
                     <a href="{{ route('assets.dashboard') }}" class="max-w-[170px] sm:max-w-[200px]">
-                        <img src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}">
+                        <img src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}" class="dark:invert dark:brightness-0 dark:saturate-0 transition-all duration-200">
                     </a>
                 </div>
 
@@ -33,10 +33,11 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                {{-- お知らせ通知機能 --}}
+                <x-notification-icon />
                 {{-- ダークモード切替アイコン --}}
-                @include('components.dark-with-light')
+                <x-dark-with-light />
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
@@ -75,6 +76,8 @@
 
             <!-- Hamburger -->
             <div id="mobile-hamburger" class="flex items-center sm:hidden">
+                {{-- お知らせ通知機能 --}}
+                <x-notification-icon />
                 <div class="switch-dark-with-light-sp flex items-center">
                     <button id="theme-toggle-sp" type="button"
                         class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2 m-2 text-sm">

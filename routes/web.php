@@ -10,6 +10,7 @@ use App\Http\Controllers\Asset\AssetTrendController;
 use App\Http\Controllers\Asset\CurrentMonthAssetController;
 use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFileDownloadController;
+use App\Http\Controllers\NotificationMessageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,6 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('/dashboard/assets', AssetsController::class);
     Route::get('/dashboard/debut', [DebutAssetController::class, 'debutAssetsIndex'])->name('assets.debut.index');
     Route::get('/dashboard/current-month', [CurrentMonthAssetController::class, 'currentMonthAssetsIndex'])->name('assets.currentMonth.index');
+});
+
+// お知らせ機能
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/notification-message', [NotificationMessageController::class, 'index'])->name('notification.index');
+    Route::get('/dashboard/notification-message/unread', [NotificationMessageController::class, 'unreadNotification'])->name('notification.unread');
+    Route::get('/dashboard/notification-message/{notificationId}', [NotificationMessageController::class, 'detail'])->name('notification.detail');
 });
 
 // 検索機能

@@ -1,11 +1,11 @@
 <x-guest-layout>
     <div class="p-4 sm:p-7">
         <div class="text-start">
-            <h1 class="block text-xl font-semibold text-gray-800 dark:text-white">{{ __('verify_email_message') }}</h1>
+            <h1 class="block text-xl font-semibold text-gray-800">{{ __('verify_email_message') }}</h1>
         </div>
-        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
+        <hr class="h-px mb-6 mt-3 bg-gray-200 border-1">
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-white">
+        <div class="mb-4 text-sm text-gray-600">
             {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
         </div>
 

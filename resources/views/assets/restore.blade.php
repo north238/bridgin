@@ -35,14 +35,14 @@
         <div data-popover id="restore-info" role="tooltip"
             class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
             <div class="p-3 space-y-2">
-                <h3 class="font-semibold text-gray-900 dark:text-white">画面詳細</h3>
-                <p>資産や取引履歴など、各種ページで削除されたデータはこちらの画面で管理できます。『復元』をタップすれば、ワンタップで以前登録した年月にデータを戻せます。</p>
+                <h3 class="font-semibold text-gray-900 dark:text-white">{{ __('display_detail') }}</h3>
+                <p>{{ __('display_detail_message') }}</p>
             </div>
             <div data-popper-arrow></div>
         </div>
         <hr class="h-px mb-6 mt-3 bg-gray-200 border-1 dark:border-dark_border dark:bg-dark_bg">
         <p class="ml-2 text-sm sm:text-base text-slate-700 dark:text-white">
-            {{__('total_count')}}:&nbsp;{{ $totalCount }}<span>{{ __('count') }}</span>
+            {{ __('total_count') }}:&nbsp;{{ $totalCount }}<span>{{ __('count') }}</span>
         </p>
         @include('pages.restore-table')
     </div>

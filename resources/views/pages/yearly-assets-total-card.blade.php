@@ -2,9 +2,10 @@
     class="overflow-x-auto sm:rounded-lg rounded-lg border border-slate-200 dark:border-dark_border bg-white dark:bg-dark_table hover:bg-cyan-50 dark:hover:bg-gray-600 hover:border-slate-300 active:border-cyan-300">
     <div class="flex grow items-center justify-between p-5">
         <dl>
-            <dt class="text-xl sm:text-2xl font-semibold">{{ number_format($monthlyTotalAmount) }}<span>&nbsp;円</span>
+            <dt class="text-xl sm:text-2xl font-semibold">{{ number_format($monthlyTotalAmount) }}<span>&nbsp;{{ __('jpy') }}</span>
             </dt>
-            <dd class="text-sm sm:text-base font-medium text-slate-500 dark:text-white mt-2">{{ __('total_amount') }}
+            <dd class="text-sm sm:text-base font-medium text-slate-500 dark:text-dark_sub_text mt-2">
+                {{ __('total_amount') }}
             </dd>
         </dl>
         <div
@@ -17,9 +18,10 @@
         </div>
     </div>
     <div
-        class="flex justify-between border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-white">
+        class="flex justify-between border-t border-slate-100 dark:border-dark_border px-5 py-3 text-xs font-medium text-slate-500 dark:text-dark_sub_text">
         <p>{{ $formatDate }}</p>
-        <p class="text-blue-600 dark:text-blue-500 hover:underline">詳細を見る<i class="fa-solid fa-angle-right ml-2"></i>
+        <p class="text-blue-600 dark:text-blue-500 hover:underline">{{ __('more_view') }}<i
+                class="fa-solid fa-angle-right ml-2"></i>
         </p>
     </div>
 </a>

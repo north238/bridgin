@@ -1,6 +1,6 @@
 <div class="switch-dark-with-light">
-    <button id="theme-toggle" data-tooltip-target="tooltip-toggle" data-tooltip-placement="bottom" type="button"
-        class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2 me-2 text-sm">
+    <button id="theme-toggle" data-tooltip-target="tooltip-toggle" data-tooltip-placement="bottom"
+        class="text-gray-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2 mx-2 text-sm">
         <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
@@ -12,7 +12,9 @@
                 fill-rule="evenodd" clip-rule="evenodd"></path>
         </svg>
     </button>
-    <x-tooltip>
-        ダークモード切替
-    </x-tooltip>
+    <div id="tooltip-toggle" role="tooltip"
+        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-dark_table">
+        {{__('switch-dark-with-light')}}
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
 </div>

@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('genres', function (Blueprint $table) {
+        Schema::create('notification_user', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(false)->comment('ジャンル名');
-            $table->foreignId('color_id')->constrained('chart_colors')->comment('カラーID');  // color_idの外部キー制約の付与
-            $table->tinyInteger('risk_rank')->comment('リスクランク1:なし 2:あり 3:その他');
+            $table->foreignId('notification_id')->constrained('notifications')->onDelete('cascade')->comment('通知ID');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->comment('ユーザーID');
+            $table->dateTime('read_at')->nullable()->comment('既読日時');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('genres');
+        Schema::dropIfExists('notification_user');
     }
 };

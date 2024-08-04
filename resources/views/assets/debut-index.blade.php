@@ -27,7 +27,7 @@
             <h1 class="mb-1 text-2xl font-semibold text-slate-700 dark:text-white">{{ __('debut_data') }}</h1>
             <p class="flex items-center text-sm sm:text-base text-slate-800 dark:text-white">
                 <span class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>{{ __('total_amount') }}:&nbsp;<span
-                    class="text-rose-500">{{ number_format($debutTotalAmount) }}&nbsp;円</span>
+                    class="text-rose-500">{{ number_format($debutTotalAmount) }}&nbsp;{{ __('jpy') }}</span>
             </p>
             <p class="flex items-center text-sm sm:text-base text-slate-800 dark:text-white"><span
                     class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>{{ __('period') }}&nbsp;{{ $monthSelectorVal }}
