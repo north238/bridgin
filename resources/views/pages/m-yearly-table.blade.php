@@ -99,7 +99,7 @@
         </div>
     @else
         <div class="p-5">
-            <div class="text-center text-slate-700 dark:text-white">
+            <div class="text-center text-slate-700 dark:text-white text-sm sm:text-base font-medium">
                 {{ __('empty_data_message') }}
             </div>
         </div>
