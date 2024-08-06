@@ -457,7 +457,7 @@
   "Oman": "オマーン",
   "Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.": "チームを削除すると、全てのデータが完全に削除されます。残しておきたいデータなどは削除前にダウンロードしてください。",
   "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "アカウントを削除すると、全てのデータが完全に削除されます。残しておきたいデータなどは削除前にダウンロードしてください。",
-  "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "アカウントを削除すると、全てのデータが完全に削除されます。よろしければパスワードを入力してください。",
+  "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your name to confirm you would like to permanently delete your account.": "アカウントを削除すると、全てのデータが完全に削除されます。よろしければ氏名（ユーザー名）を入力してください。",
   "Only Trashed": "削除済のみ",
   "Open Invoices": "請求書を開く",
   "Original": "オリジナル",
@@ -938,6 +938,7 @@
   "delete_error_message": "資産の削除に失敗しました。",
   "profile_updated_message": "プロフィールの更新が完了しました。",
   "password_updated_message": "パスワードが更新されました。",
+  "delete_user_name_error_message": "削除できませんでした。入力内容をご確認ください。",
 
   "search_error_message": "検索結果はありません。資産を登録してください。",
   "empty_data_message": "登録されているデータはありません。",
@@ -947,6 +948,7 @@
   "admin_register": "管理者登録",
 
   "forget_link": "お忘れの方はこちら",
+  "delete_user_name": "氏名（ユーザー名）",
 
   "update_token_error_message": "ユーザー認証でエラーが発生しています。",
   "verification-link-sent": "確認メールを送信しました。",
