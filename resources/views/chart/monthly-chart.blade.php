@@ -17,7 +17,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="inline-flex items-center text-slate-800 dark:text-dark_sub_text">
+                    <p class="inline-flex items-center text-sm sm:text-base font-medium text-slate-800 dark:text-dark_sub_text">
                         <span class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
                         {{ __('total_amount') }}:&nbsp;{{ number_format($assetsMonthlyData['totalAmount']) }}&nbsp;円
                     </p>
@@ -29,7 +29,7 @@
                         $lastDayOfMonth = date('Y/m/t', strtotime($monthArray[1]));
                         $monthSelectorVal = $firstDayOfMonth . ' ~ ' . $lastDayOfMonth;
                     @endphp
-                    <p class="mt-1 inline-flex items-center text-slate-800 dark:text-dark_sub_text"><span
+                    <p class="mt-1 inline-flex items-center text-sm sm:text-base font-medium text-slate-800 dark:text-dark_sub_text"><span
                             class="w-1.5 h-1.5 bg-blue-600 rounded-full me-1.5"></span>
                         {{ __('period') }}&nbsp;{{ $monthSelectorVal }}
                     </p>
@@ -49,7 +49,7 @@
     </div>
     @if ($isChartDataEmpty)
         <div class="pb-3 flex flex-col justify-center items-center">
-            <div>
+            <div class="text-sm sm:text-base font-medium">
                 {{ __('search_error_message') }}
             </div>
             <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">

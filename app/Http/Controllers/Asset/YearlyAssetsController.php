@@ -32,7 +32,7 @@ class YearlyAssetsController extends Controller
 
         // すべてのデータを取得
         $assetsAllData = $this->assets->fetchUserAssets($userId, $sort);
-        $displayAllData = $this->assets->getAssetsPagination($userId)->paginate(10);
+        $displayAllData = $this->assets->getAssetsPagination($userId)->paginate(30);
         $totalCount = $this->assets->calculateTotalCount($assetsAllData);
         $latestMonthDate = $this->assets->getLatestRegistrationDate($assetsAllData);
         $formatDate = $this->assetService->getFormatYearMonth($latestMonthDate);
