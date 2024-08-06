@@ -76,7 +76,7 @@
                 @csrf
                 <div class="calender-input-icon">
                     <input type="month" name="search-month-date" id="search-month-date" value="{{ $displayMonth }}"
-                        class="text-sm sm:text-base py-3 border-0 border-b-2 border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-28 sm:w-32 dark:border-white dark:text-white dark:focus:border-blue-500"
+                        class="text-sm sm:text-base border-0 border-b-2 border-gray-300 bg-transparent focus:border-blue-400 focus:outline-none appearance-non focus:ring-0 text-slate-600 block w-28 sm:w-32 dark:border-white dark:text-white dark:focus:border-blue-500"
                         required>
                 </div>
                 <button type="submit"
