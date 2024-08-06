@@ -3,7 +3,7 @@
         @if ($isAssetsDataEmpty === false)
             <div class="bg-white dark:bg-dark_table sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col justify-center items-center w-full p-6">
-                    <div class="text-slate-700 dark:text-white">
+                    <div class="text-slate-700 dark:text-white text-sm sm:text-base font-medium">
                         {{ __('empty_data_message') }}
                     </div>
                     <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">

@@ -19,7 +19,7 @@
                 $monthArray = $assetsYearlyData['betweenMonthArray'];
                 $year = date('Y年', strtotime($monthArray[0]));
             @endphp
-            <p class="mt-1 inline-flex items-center text-slate-800 dark:text-dark_sub_text"><span
+            <p class="mt-1 inline-flex items-center text-sm sm:text-base font-medium text-slate-800 dark:text-dark_sub_text"><span
                     class="w-1.5 h-1.5 bg-blue-600 rounded-full me-2"></span>{{ __('period') }}&nbsp;{{ $year }}
             </p>
         </div>
@@ -37,7 +37,7 @@
 
     @if ($assetsYearlyData['assetsYearlyData']->isEmpty())
         <div class="pb-3 flex flex-col justify-center items-center">
-            <div>
+            <div class="text-sm sm:text-base font-medium">
                 {{ __('search_error_message') }}
             </div>
             <a href="{{ route('assets.create') }}" class="mt-2 text-sm sm:text-base font-medium">
