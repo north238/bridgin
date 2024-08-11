@@ -2,15 +2,21 @@ import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 
 export default defineConfig({
-    server: {
-        host: true,
-        hmr: {
-            host: "localhost",
-        },
-        watch: {
-            // usePolling: true,
-            interval: 2000,
-        },
+    // 本番環境では不要のためコメント
+    // server: {
+    //     host: true,
+    //     hmr: {
+    //         host: "localhost",
+    //     },
+    //     watch: {
+    //         // usePolling: true,
+    //         interval: 2000,
+    //     },
+    // },
+    build: {
+        outDir: 'public/build', // ビルド結果を出力するディレクトリ
+        sourcemap: false, // 本番環境ではソースマップを生成しない
+        minify: 'esbuild', // コードの最小化
     },
     plugins: [
         laravel({
@@ -19,7 +25,7 @@ export default defineConfig({
                 "resources/scss/app.scss",
                 "resources/js/app.js",
             ],
-            refresh: true,
+            refresh: false,
         }),
     ],
     resolve: {
