@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
     ports:
-      - 80:80
+      - 9000:80
     volumes:
       - .:/var/www/html
     networks:
@@ -31,6 +31,7 @@ services:
   db:
     image: mysql:8.0
     container_name: bridgin_db
+    command: mysqld --default-authentication-plugin=mysql_native_password
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=${DB_USERNAME}
@@ -40,6 +41,7 @@ services:
     volumes:
       - ./docker/mysql/logs:/var/log/mysql
       - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     ports:
       - 13306:3306
     networks:
