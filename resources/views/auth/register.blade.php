@@ -40,12 +40,12 @@
                 <div class="grid gap-y-4">
                     <!-- Name -->
                     <div>
-                        <x-input-label for="name">
+                        <x-input-label for="user_name">
                             <i class="fa-solid fa-user text-slate-600 pr-2"></i>{{ __('Name') }}
                         </x-input-label>
-                        <x-text-input id="name" class="block mt-1 w-full py-3 px-4" type="text" name="name"
-                            :value="old('name')" required autofocus autocomplete="name" />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        <x-text-input id="user_name" class="block mt-1 w-full py-3 px-4" type="text" name="user_name"
+                            :value="old('user_name')" required autofocus autocomplete="user_name" />
+                        <x-input-error :messages="$errors->get('user_name')" class="mt-2" />
                     </div>
                     <!-- Email Address -->
                     <div>
@@ -53,7 +53,7 @@
                             <i class="fa-solid fa-envelope text-slate-600 pr-2"></i>{{ __('Email') }}
                         </x-input-label>
                         <x-text-input id="email" class="block mt-1 w-full py-3 px-4" type="email" name="email"
-                            :value="old('email')" required autofocus autocomplete="username" />
+                            :value="old('email')" required autofocus autocomplete="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <!-- Password -->
@@ -64,7 +64,7 @@
                             </x-input-label>
                         </div>
                         <x-text-input id="password" class="block mt-1 w-full py-3 px-4" type="password" name="password"
-                            required autocomplete="current-password" />
+                            required autocomplete="password" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
                     <!-- Confirm Password -->
@@ -73,8 +73,12 @@
                             <i class="fa-solid fa-key text-slate-600 pr-2"></i>{{ __('Confirm Password') }}
                         </x-input-label>
                         <x-text-input id="password_confirmation" class="block mt-1 w-full py-3 px-4" type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                            name="password_confirmation" required autocomplete="password_confirmation" />
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    </div>
+                    <div>
+                        <p class="ms-2 text-xs text-gray-600">アカウントを登録することにより、<a class="text-blue-600 hover:underline"
+                                href="{{ route('privacy-policy') }}">プライバシーポリシー</a>に同意したとみなされます。</p>
                     </div>
                     <div class="mt-4">
                         <button
