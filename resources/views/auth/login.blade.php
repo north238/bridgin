@@ -46,7 +46,7 @@
                             <i class="fa-solid fa-envelope text-slate-600 pr-2"></i>{{ __('Email') }}
                         </x-input-label>
                         <x-text-input id="email" class="block mt-1 w-full py-3 px-4" type="email" name="email"
-                            :value="old('email')" required autofocus autocomplete="username" />
+                            :value="old('email')" required autofocus autocomplete="email" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <!-- Password -->
@@ -62,7 +62,7 @@
                             @endif
                         </div>
                         <x-text-input id="password" class="block mt-1 w-full py-3 px-4" type="password" name="password"
-                            required autocomplete="current-password" />
+                            required autocomplete="password" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
                     <!-- Remember Me -->
