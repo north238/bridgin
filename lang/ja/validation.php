@@ -190,6 +190,7 @@ return [
     */
 
     'attributes' => [
+        "user_name" => "氏名",
         "name" => "名称",
         "amount" => "金額",
         "registration_date" => "登録日",
