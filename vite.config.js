@@ -15,7 +15,7 @@ export default defineConfig({
         //     interval: 2000,
         // },
     },
-    // base: 'https://bridgin-app.com/', // HTTPSを強制する
+    base: 'https://bridgin-app.com/', // HTTPSを強制する
     build: {
         outDir: 'public/build', // ビルド結果を出力するディレクトリ
         sourcemap: false, // 本番環境ではソースマップを生成しない
