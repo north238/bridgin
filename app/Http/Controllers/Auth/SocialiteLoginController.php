@@ -7,11 +7,12 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Registered;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Mail\MaliSender;
+use Illuminate\Support\Facades\Mail;
 
 class SocialiteLoginController extends Controller
 {
@@ -59,6 +60,8 @@ class SocialiteLoginController extends Controller
             // セッションIDを生成する
             Session::regenerate();
             Auth::login($user);
+            // adminにメール送信
+            Mail::to(config('mail.admin'))->send(new MaliSender($user));
             DB::commit();
 
             return redirect()->intended('dashboard')->with(['success-message' => $user->name . 'さん、ようこそ。資産管理を始めましょう']);

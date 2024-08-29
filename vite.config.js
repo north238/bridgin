@@ -26,7 +26,7 @@ export default defineConfig({
                 "resources/js/app.js",
             ],
             // 本番ではfalse
-            refresh: true,
+            refresh: false,
         }),
     ],
     resolve: {
