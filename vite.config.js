@@ -6,16 +6,16 @@ export default defineConfig({
     // 本番環境では不要のためコメント
     server: {
         https: true,
-    //     host: true,
-    //     hmr: {
-    //         host: "localhost",
-    //     },
-    //     watch: {
-    //         // usePolling: true,
-    //         interval: 2000,
-    //     },
+        // host: true,
+        // hmr: {
+        //     host: "localhost",
+        // },
+        // watch: {
+        //     // usePolling: true,
+        //     interval: 2000,
+        // },
     },
-    base: 'https://bridgin-app.com/', // HTTPSを強制する
+    // base: 'https://bridgin-app.com/', // HTTPSを強制する
     build: {
         outDir: 'public/build', // ビルド結果を出力するディレクトリ
         sourcemap: false, // 本番環境ではソースマップを生成しない

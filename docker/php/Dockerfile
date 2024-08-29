@@ -2,8 +2,8 @@ FROM node:20.15.0-alpine3.20 AS node
 FROM php:8.2-fpm-alpine AS php-fpm
 
 # 開発環境でViteに接続するため
-EXPOSE 5173
-# EXPOSE 9000
+# EXPOSE 5173
+EXPOSE 9000
 
 # PHPの依存関係をインストール
 RUN apk add --no-cache \
