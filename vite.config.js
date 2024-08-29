@@ -38,6 +38,7 @@ export default defineConfig({
                 "resources/js/switch-dark-with-light.js",
                 "resources/js/yearly-chart.js",
             ],
+            // 本番ではfalse
             refresh: false,
         }),
     ],

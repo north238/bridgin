@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use Illuminate\Support\Str;
+use App\Mail\MaliSender;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -38,15 +39,17 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'user_name' => $request->name,
+            'name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'email_verified_at' => now()
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
+
+        // adminにメール送信
+        Mail::to(config('mail.admin'))->send(new MaliSender($user));
 
         return redirect(RouteServiceProvider::HOME);
     }
