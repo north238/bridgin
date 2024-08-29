@@ -1,9 +1,6 @@
 services:
   app:
     container_name: bridgin_app
-    # 本番では削除
-    # ports:
-    #   - 5173:5173
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -44,6 +41,7 @@ services:
     volumes:
       - ./docker/mysql/logs:/var/log/mysql
       - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     ports:
       - 13306:3306
     restart: unless-stopped
