@@ -1,6 +1,6 @@
 #!/bin/bash
 
-composer install --optimize-autoloader
+composer install --optimize-autoloader --no-dev
 
 # APP_KEY生成
 php artisan key:generate

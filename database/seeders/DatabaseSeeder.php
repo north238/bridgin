@@ -15,16 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AdminSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(CommentSeeder::class);
-        $this->call(UserCommentSeeder::class);
+        // $this->call(CommentSeeder::class);
+        // $this->call(UserCommentSeeder::class);
         $this->call(ChartColorSeeder::class);
         $this->call(GenreSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(AssetsSeeder::class);
         $this->call(NotificationSeeder::class);
-        $this->call(NotificationUserSeeder::class);
-        $this->call(AssetTargetSeeder::class);
-        $this->call(AssetChangesSeeder::class);
-        $this->call(AssetSwitchStatusSeeder::class);
+        // $this->call(NotificationUserSeeder::class);
+        // $this->call(AssetTargetSeeder::class);
+        // $this->call(AssetChangesSeeder::class);
+        // $this->call(AssetSwitchStatusSeeder::class);
     }
 }

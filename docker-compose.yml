@@ -46,6 +46,7 @@ services:
       - ./docker/mysql/data:/var/lib/mysql
     ports:
       - 13306:3306
+    restart: unless-stopped
     networks:
       - bridgin_network
     env_file:
@@ -66,7 +67,6 @@ volumes:
   app_node_modules:
   app_vender:
 
-# コンテナ間を接続
 networks:
   bridgin_network:
     driver: bridge

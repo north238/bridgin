@@ -19,11 +19,9 @@ class UserSeeder extends Seeder
     {
         $user = [
             'name' => '北山文哉',
-            'email' => 'fumiyama02@kitayama.co.jp',
+            'email' => 'i.make.a.studious.effort@gmail.com',
             'password' => static::$password ??= Hash::make('password')
         ];
         DB::table('users')->insert($user);
-
-        User::factory()->count(20)->create();
     }
 }

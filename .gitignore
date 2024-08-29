@@ -17,7 +17,9 @@ yarn-error.log
 /.idea
 /.vscode
 # docker
-docker/mysql/*
+docker/mysql/data
+docker/mysql/logs
+
 docker/redis/data
 
 # logs

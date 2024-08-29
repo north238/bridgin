@@ -7,10 +7,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- 各種iconの設定 --}}
+    <link rel="manifest" href="{{ asset('/build/manifest.json') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/images/bridgin_v2/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/images/bridgin_v2/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/images/bridgin_v2/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('/images/bridgin_v2/site.webmanifest') }}">
+    <link href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet">
     <meta name="apple-mobile-web-app-title" content="Bridgin">
     <meta name="application-name" content="Bridgin">
     <meta name="msapplication-TileColor" content="#2d89ef">
@@ -18,7 +20,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
     @vite(['resources/scss/app.scss', 'resources/css/app.css'])
 </head>
 
