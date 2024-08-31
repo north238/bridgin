@@ -56,12 +56,12 @@ class SocialiteLoginController extends Controller
             $user = $this->loginUserCheck($provider, $socialiteUser);
             if (empty($user)) {
                 $user = $this->createUserByProvider($provider, $socialiteUser);
+                // adminにメール送信
+                Mail::to(config('mail.admin'))->send(new MaliSender($user));
             }
             // セッションIDを生成する
             Session::regenerate();
             Auth::login($user);
-            // adminにメール送信
-            Mail::to(config('mail.admin'))->send(new MaliSender($user));
             DB::commit();
 
             return redirect()->intended('dashboard')->with(['success-message' => $user->name . 'さん、ようこそ。資産管理を始めましょう']);
@@ -136,7 +136,7 @@ class SocialiteLoginController extends Controller
         try {
             DB::beginTransaction();
             $user->save();
-            DB::beginTransaction();
+            DB::commit();
         } catch (\Exception $e) {
             Log::alert("認証に失敗しました: updateToken");
             Log::alert($e->getMessage());
