@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\AssetService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Storage;
 
 class CsvFileDownloadController extends Controller
 {
@@ -136,5 +137,21 @@ class CsvFileDownloadController extends Controller
         $fileName = 'bridgin_' . $formatDataString . '.csv';
 
         return $fileName;
+    }
+
+    /**
+     * テンプレートファイルダウンロード
+     */
+    public function downloadTemplateCSV()
+    {
+        $filename = 'csv_template.xlsx';
+
+        // ファイルが存在するか確認
+        if (!Storage::disk('public')->exists($filename)) {
+            return abort(404);
+        }
+
+        // ファイルをダウンロードレスポンスとして返す
+        return Storage::disk('public')->download($filename);
     }
 }

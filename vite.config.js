@@ -9,12 +9,16 @@ export default defineConfig(() => {
         server: {
             https: isProduction,
             host: !isProduction ? true : undefined,
-            hmr: !isProduction ? {
-                host: "localhost",
-            } : undefined,
-            watch: !isProduction ? {
-                interval: 2000,
-            } : undefined,
+            hmr: !isProduction
+                ? {
+                      host: "localhost",
+                  }
+                : undefined,
+            watch: !isProduction
+                ? {
+                      interval: 2000,
+                  }
+                : undefined,
         },
         base: isProduction ? "https://bridgin-app.com/" : "/", // HTTPSを強制する
         build: {
@@ -38,6 +42,7 @@ export default defineConfig(() => {
                     "resources/js/reorder-asset.js",
                     "resources/js/switch-dark-with-light.js",
                     "resources/js/yearly-chart.js",
+                    "resources/js/csv-upload.js"
                 ],
                 // 本番ではfalse
                 refresh: !isProduction,
