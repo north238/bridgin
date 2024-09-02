@@ -9,11 +9,11 @@
                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
             </svg>
             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
-                    class="font-semibold">クリックしてファイルを選択してください</span>
-            <p class="text-xs text-gray-500 dark:text-gray-400">CSVファイルのみ（MAX: 5MB）</p>
+                    class="font-semibold">{{ __('file_upload_to_click') }}</span>
+            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('csv_file_only') }}</p>
         </div>
         <input type="file" id="upload-file" name="upload-file" class="hidden" accept="text/csv, .csv">
-        <p id="file-name" class="mt-5 text-sm text-gray-500 dark:text-gray-400">選択されていません</p>
+        <p id="file-name" class="mt-5 text-sm text-gray-500 dark:text-gray-400">{{ __('no_select') }}</p>
     </label>
     <div class="mt-5 flex justify-center">
         <button

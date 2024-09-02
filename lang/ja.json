@@ -897,6 +897,9 @@
   "download": "ダウンロード",
   "upload": "アップロード",
   "template_file_download": "テンプレートファイル取得",
+  "file_upload_to_click": "アップロードファイルを選択してください",
+  "csv_file_only": "CSVファイルのみ（MAX: 5MB）",
+  "no_select": "選択されていません",
 
   "year_month": "年月",
   "asset_amount": "資産額",
