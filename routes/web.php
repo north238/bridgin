@@ -46,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // 表示切替、CSVダウンロード機能
     Route::post('/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
-    Route::post('/assets/csv-download', [CsvFileDownloadController::class, 'getFormRequestData'])->name('post.assets.csvDownload');
+    Route::post('/csv-download', [CsvFileDownloadController::class, 'getFormRequestData'])->name('post.assets.csvDownload');
     Route::get('/download-template-csv', [CsvFileDownloadController::class, 'downloadTemplateCSV'])->name('get.template.csv');
 
     // CSVアップロード

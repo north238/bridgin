@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\AssetService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Facades\Storage;
 
@@ -148,6 +149,7 @@ class CsvFileDownloadController extends Controller
 
         // ファイルが存在するか確認
         if (!Storage::disk('public')->exists($filename)) {
+            Log::error(__('download_file_nothing'));
             return abort(404);
         }
 

@@ -13,6 +13,10 @@
             </x-alert-message>
         </div>
     @endif
+    {{-- CSVファイルアップロード時のエラーメッセージ --}}
+    @if (session('errorList'))
+        <x-csv-upload-error-message />
+    @endif
     @php
         if (empty($latestMonthDate)) {
             $latestMonthDate = now();
