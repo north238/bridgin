@@ -106,11 +106,9 @@ class AssetsController extends Controller
             DB::commit();
 
             return redirect()->route('assets.dashboard')->with('success-message', __('create_success_message'));
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error(__('create_error_log'), [
-                'stack_trace' => $e->getTraceAsString(),
                 'error_message' => $e->getMessage(),
                 'method' => request()->method(),
                 'parameters' => request()->all(),
@@ -154,6 +152,7 @@ class AssetsController extends Controller
         $userId = Auth::user()->id;
         $validated = $request->validated();
         $changedTypeFlg = $request->input('changed_type_flg');
+        $parsedUrl = $this->assetService->generateRedirectUrl($request);
 
         // 追加の場合の処理
         if ($changedTypeFlg == 1) {
@@ -165,11 +164,10 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect()->back()->with('success-message', __('update_success_message'));
+                return redirect($parsedUrl)->with('success-message', __('update_success_message'));
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error(__('update_error_log'), [
-                    'stack_trace' => $e->getTraceAsString(),
                     'error_message' => $e->getMessage(),
                     'method' => request()->method(),
                     'parameters' => request()->all(),
@@ -186,11 +184,10 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect()->back()->with('success-message', __('new_success_message'));
+                return redirect($parsedUrl)->with('success-message', __('new_success_message'));
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error(__('new_error_log'), [
-                    'stack_trace' => $e->getTraceAsString(),
                     'error_message' => $e->getMessage(),
                     'method' => request()->method(),
                     'parameters' => request()->all(),
@@ -206,21 +203,26 @@ class AssetsController extends Controller
      * @return \Illuminate\Http\RedirectResponse リダイレクトレスポンスを返す
      * @throws \Exception 資産削除時に例外が発生した場合
      */
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
 
+        $parsedUrl = $this->assetService->generateRedirectUrl($request);
+
         $asset = Asset::find($id);
+        if (empty($asset)) {
+            Log::error(__('destroy_error_message'));
+            return back()->withInput()->with('error-message', __('delete_error_message'));
+        }
 
         try {
             DB::beginTransaction();
             $asset->delete();
             DB::commit();
 
-            return redirect()->route('assets.index')->with('success-message', __('delete_success_message'));
+            return redirect($parsedUrl)->with('success-message', __('delete_success_message'));
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error(__('delete_error_log'), [
-                'stack_trace' => $e->getTraceAsString(),
                 'error_message' => $e->getMessage(),
                 'method' => request()->method(),
                 'parameters' => request()->all(),

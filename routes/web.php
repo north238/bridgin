@@ -10,6 +10,7 @@ use App\Http\Controllers\Asset\AssetTrendController;
 use App\Http\Controllers\Asset\CurrentMonthAssetController;
 use App\Http\Controllers\AssetSwitchStatusController;
 use App\Http\Controllers\CsvFileDownloadController;
+use App\Http\Controllers\CsvFileUploadController;
 use App\Http\Controllers\NotificationMessageController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // 表示切替、CSVダウンロード機能
     Route::post('/asset-switch', [AssetSwitchStatusController::class, 'userDisplayMethodChange'])->name('assets.userDisplayMethodChange');
     Route::post('/csv-download', [CsvFileDownloadController::class, 'getFormRequestData'])->name('post.assets.csvDownload');
+    Route::get('/download-template-csv', [CsvFileDownloadController::class, 'downloadTemplateCSV'])->name('get.template.csv');
+
+    // CSVアップロード
+    Route::post('/upload-csv', [CsvFileUploadController::class, 'upload'])->name('post.upload.csv');
 
     // 削除した資産の復元
     Route::get('/restore/show', [AssetRestoreController::class, 'showDeletedAssets'])->name('assets.showDeletedAssets');
