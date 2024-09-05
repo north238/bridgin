@@ -152,6 +152,7 @@ class AssetsController extends Controller
         $userId = Auth::user()->id;
         $validated = $request->validated();
         $changedTypeFlg = $request->input('changed_type_flg');
+        $parsedUrl = $this->assetService->generateRedirectUrl($request);
 
         // 追加の場合の処理
         if ($changedTypeFlg == 1) {
@@ -163,7 +164,7 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect()->back()->with('success-message', __('update_success_message'));
+                return redirect($parsedUrl)->with('success-message', __('update_success_message'));
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error(__('update_error_log'), [
@@ -183,7 +184,7 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect()->back()->with('success-message', __('new_success_message'));
+                return redirect($parsedUrl)->with('success-message', __('new_success_message'));
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error(__('new_error_log'), [

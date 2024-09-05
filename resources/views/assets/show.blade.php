@@ -26,6 +26,8 @@
                 action="{{ route('assets.update', [$assetData->id]) }}" novalidate>
                 @csrf
                 @method('PATCH')
+                {{-- 編集画面遷移前の画面へ戻るためのパスを取得 --}}
+                <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
                 <div class="grid gap-3 sm:grid-cols-2 sm:gap-6">
                     <div class="action-checkbox flex justify-between items-start sm:col-span-2">
                         <input type="hidden" name="changed_type_flg" value="0">
@@ -211,7 +213,7 @@
                                 action="{{ route('assets.destroy', [$assetData->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                {{-- 削除処理実行後に戻る画面の情報 --}}
+                                {{-- 削除遷移前の画面へ戻るためのパスを取得 --}}
                                 <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
                                 <button type="submit" id="deleted-modal-btn"
                                     class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 text-md font-medium rounded-lg inline-flex items-center px-5 py-2.5 text-center">
