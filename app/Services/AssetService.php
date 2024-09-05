@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use App\Models\Asset;
+use Illuminate\Support\Facades\Log;
 
 class AssetService
 {
@@ -322,5 +323,32 @@ class AssetService
         $asset->user_id = $userId;
 
         return $asset;
+    }
+
+    /**
+     * 資産データ削除のリダイレクトするURLを取得
+     * @param Illuminate\Http\Request $request リクエストオブジェクト
+     * @return string $parseUrl 整形された相対パス
+     */
+    public function generateRedirectUrl($request)
+    {
+        // リダイレクト対象のURLを指定
+        $allowedUrls = [
+            route('assets.dashboard'),
+            route('assets.index')
+        ];
+
+        $redirectUrl = $request->input('redirect_to', route('assets.dashboard'));
+        if (!in_array($redirectUrl, $allowedUrls)) {
+            $redirectUrl = route('assets.dashboard');
+        }
+        // 相対パスを取得
+        $parsedUrl = parse_url($redirectUrl, PHP_URL_PATH);
+        if (empty($parsedUrl)) {
+            Log::error(__('nothing_url_error'), ['parsedUrl' => $parsedUrl]);
+            abort(404);
+        }
+
+        return $parsedUrl;
     }
 }

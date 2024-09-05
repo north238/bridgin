@@ -23,6 +23,9 @@ return new class extends Migration
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             $table->softDeletes();
+
+            // user_id, name, registration_date の組み合わせにユニーク制約を追加
+            $table->unique(['user_id', 'name', 'registration_date']);
         });
     }
 

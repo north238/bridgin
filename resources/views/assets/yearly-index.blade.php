@@ -13,16 +13,20 @@
             </x-alert-message>
         </div>
     @endif
+    {{-- CSVファイルアップロード時のエラーメッセージ --}}
+    @if (session('errorList'))
+        <x-csv-upload-error-message />
+    @endif
     <div class="container mx-auto p-4 lg:p-8 xl:max-w-7xl">
         <div class="flex flex-row items-center text-start">
             <div class="grow">
-                <h1 class="text-2xl sm:text-2xl font-semibold text-slate-900 dark:text-white">{{__('assets_data')}}</h1>
+                <h1 class="text-2xl sm:text-2xl font-semibold text-slate-900 dark:text-white">{{ __('assets_data') }}
+                </h1>
             </div>
-            <div
-                class="flex items-center px-2">
+            <div class="flex items-center px-2">
                 <a href="{{ route('assets.create') }}"
                     class="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                    <span>{{__('asset_create_btn')}}</span><i class="fa-solid fa-angle-right ml-2"></i>
+                    <span>{{ __('asset_create_btn') }}</span><i class="fa-solid fa-angle-right ml-2"></i>
                 </a>
             </div>
         </div>
