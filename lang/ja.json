@@ -854,6 +854,7 @@
   "current_amount": "増減額",
   "debut_total": "負債合計額",
   "more_view": "詳細を見る",
+  "more_error_list": "全件表示する",
   "display_detail": "画面詳細",
   "display_detail_message": "資産や取引履歴など、各種ページで削除されたデータはこちらの画面で管理できます。『復元』をタップすれば、ワンタップで以前登録した年月にデータを戻せます。",
 
