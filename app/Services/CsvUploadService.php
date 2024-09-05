@@ -31,6 +31,9 @@ class CsvUploadService
 
     // 除外するカラム
     private $withoutColumns = ["id", "user_id", "asset_type_flg", "memo", "created_at", "updated_at", "deleted_at"];
+
+    // 許可するファイル形式
+    private $allowedMimeTypes = ['text/csv', 'text/plain'];
     private  $asset;
 
     public function __construct(Asset $asset)
@@ -59,7 +62,7 @@ class CsvUploadService
             return false;
         }
 
-        if ($mineType !== 'text/csv') {
+        if (!in_array($mineType, $this->allowedMimeTypes)) {
             Log::error('選択しているファイル形式はCSVではありません。', ['mineType' => $mineType]);
             session()->flash('error-message', '選択しているファイル形式はCSVではありません。');
             return false;

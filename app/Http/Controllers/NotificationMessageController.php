@@ -55,7 +55,6 @@ class NotificationMessageController extends Controller
         $notifications = Notification::getNotificationsByUser($userId);
         $totalCount = $notifications->total();
 
-
         if (!empty($unread)) {
             $notifications = $unread['unreadNotifications'];
         }
