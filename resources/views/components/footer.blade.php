@@ -3,12 +3,12 @@
         <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="{{ route('assets.dashboard') }}"
                 class="hover:underline">bridgin</a>. All Rights Reserved.
         </span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        <ul class="flex flex-wrap justify-end items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
             <li>
-                <a href="{{ route('privacy-policy') }}" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                <a href="{{ route('privacy-policy') }}" class="hover:underline me-4 md:me-6">プライバシー</a>
             </li>
             <li>
-                <a href="mailto:support@bridgin-app.com" class="hover:underline me-4 md:me-6">Contact</a>
+                <a href="mailto:support@bridgin-app.com" class="hover:underline me-4 md:me-6">お問い合わせ</a>
             </li>
         </ul>
     </div>
