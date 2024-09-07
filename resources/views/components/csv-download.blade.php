@@ -8,16 +8,18 @@
 <div id="drop-down-list"
     class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-50 dark:bg-gray-700 dark:divide-gray-600">
     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="drop-down-list">
-        <li>
-            <form action="{{ route('post.assets.csvDownload') }}" method="post">
-                @csrf
-                <input type="hidden" id="export-data" name="export-data" value="{{ $assets }}">
-                <button type="submit"
-                    class="block w-full text-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                    <i class="fa-solid fa-download mr-3"></i>{{ __('download') }}
-                </button>
-            </form>
-        </li>
+        @if ($assets->isNotEmpty())
+            <li>
+                <form action="{{ route('post.assets.csvDownload') }}" method="post">
+                    @csrf
+                    <input type="hidden" id="export-data" name="export-data" value="{{ $assets }}">
+                    <button type="submit"
+                        class="block w-full text-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <i class="fa-solid fa-download mr-3"></i>{{ __('download') }}
+                    </button>
+                </form>
+            </li>
+        @endif
         <li>
             <button type="button" data-modal-target="csv-modal" data-modal-toggle="csv-modal"
                 class="block w-full text-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><i

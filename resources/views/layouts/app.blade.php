@@ -25,12 +25,13 @@
 
 <body class="font-sans antialiased bg-slate-50 dark:bg-dark_bg text-slate-800 dark:text-white">
     @include('components.loading-animation')
-    <div class="min-h-screen">
+    <div class="min-h-screen flex flex-col">
         @include('layouts.navigation')
         <!-- Page Content -->
-        <main id="page-content" class="flex max-w-full flex-auto flex-col">
+        <main id="page-content" class="flex max-w-full flex-1 flex-col h-full">
             {{ $slot }}
         </main>
+        @include('components.footer')
     </div>
 
     <!-- Scripts -->
