@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\Auth\SocialiteLoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -43,6 +42,16 @@ Route::middleware('auth')->group(function () {
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+    // メール認証（メールが送信される前にログインしている状態）
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+    // メール認証されているか確認
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    ->middleware(['throttle:6,1'])
+    ->name('verification.send');
 });
 
 // ログイン画面からもアクセスできる必要があるため
@@ -61,10 +70,3 @@ Route::post('reset-password', [NewPasswordController::class, 'store'])
 Route::get('verify-email', EmailVerificationPromptController::class)
     ->name('verification.notice');
 
-Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['auth', 'signed', 'throttle:6,1'])
-    ->name('verification.verify');
-
-Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    ->middleware(['auth', 'throttle:6,1'])
-    ->name('verification.send');
