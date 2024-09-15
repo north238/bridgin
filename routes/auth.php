@@ -32,13 +32,6 @@ Route::middleware('guest')->group(function () {
     Route::get('auth/callback/{provider}', [SocialiteLoginController::class, 'handleSocialiteCallback'])->name('login.callback');
 });
 
-// ユーザー作成時にメール送信
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect()->route('assets.dashboard');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
 Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
@@ -69,9 +62,9 @@ Route::get('verify-email', EmailVerificationPromptController::class)
     ->name('verification.notice');
 
 Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['signed', 'throttle:6,1'])
+    ->middleware(['auth', 'signed', 'throttle:6,1'])
     ->name('verification.verify');
 
 Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    ->middleware('throttle:6,1')
+    ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.send');

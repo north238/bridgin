@@ -9,6 +9,8 @@ EXPOSE 5173
 RUN apk add --no-cache \
     $PHPIZE_DEPS \
     zlib-dev \
+    icu-libs \
+    icu-dev \
     libzip-dev \
     libxml2-dev \
     oniguruma-dev \
@@ -21,8 +23,10 @@ RUN apk add --no-cache \
 
 # PHP拡張機能をインストール
 RUN pecl install redis && \
+    docker-php-ext-configure intl &&\
     docker-php-ext-enable redis && \
     docker-php-ext-install zip \
+    intl \
     pdo_mysql \
     ctype \
     dom \
