@@ -33,9 +33,8 @@ class SocialiteLoginController extends Controller
         try {
             return Socialite::driver($provider)->redirect();
         } catch (\Exception $e) {
-            Log::alert($provider . "認証に失敗しました");
-            Log::alert($e->getMessage());
-            return redirect()->route('login')->withErrors(['error-message' => $provider . '認証に失敗しました']);
+            Log::alert(["error-message" => $provider . "認証に失敗しました", "getMessage" => $e->getMessage()]);
+            return redirect()->route('login')->with(['error-message' => $provider . '認証に失敗しました']);
         }
     }
 
@@ -66,10 +65,9 @@ class SocialiteLoginController extends Controller
 
             return redirect()->intended('dashboard')->with(['success-message' => $user->name . 'さん、ようこそ。資産管理を始めましょう']);
         } catch (\Exception $e) {
-            Log::alert("認証に失敗しました: handleSocialiteCallback");
-            Log::alert($e->getMessage());
+            Log::alert(["error-message" => "認証に失敗しました: handleSocialiteCallback", "getMessage" => $e->getMessage()]);
             DB::rollBack();
-            return redirect()->route('login')->withErrors(['error-message' => $provider . '認証に失敗しました。']);
+            return redirect()->route('login')->with(['error-message' => $provider . '認証に失敗しました。既に登録済みの可能性があります。']);
         }
     }
 
@@ -138,10 +136,9 @@ class SocialiteLoginController extends Controller
             $user->save();
             DB::commit();
         } catch (\Exception $e) {
-            Log::alert("認証に失敗しました: updateToken");
-            Log::alert($e->getMessage());
+            Log::alert(["error-message" => "認証に失敗しました: updateToken", "getMessage" => $e->getMessage()]);
             DB::rollBack();
-            return redirect()->route('login')->withErrors(['error-message' => __('update_token_error_message')]);
+            return redirect()->route('login')->with(['error-message' => __('update_token_error_message')]);
         }
     }
 }
