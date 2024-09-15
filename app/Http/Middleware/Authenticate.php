@@ -19,11 +19,16 @@ class Authenticate extends Middleware
         } else {
             if (Route::is('admin.*')) {
                 return route('admin.login');
-            } else {
-                Log::alert('Authenticate::redirectTo()認証が正しくないようです。');
-                session()->flash('error-message', '認証に失敗しました。ログイン情報をご確認ください。');
-                return route('login');
             }
+
+            if (Route::is('verification.verify')) {
+                Log::alert('Authenticate::redirectTo(), Path: ' . $request->path());
+                return route('verification.notice');
+            }
+
+            Log::alert('Authenticate::redirectTo()認証が正しくないようです。Path: ' . $request->path());
+            session()->flash('error-message', '認証に失敗しました。ログイン情報をご確認ください。');
+            return route('login');
         }
     }
 }

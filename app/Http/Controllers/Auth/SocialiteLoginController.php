@@ -58,9 +58,10 @@ class SocialiteLoginController extends Controller
                 // adminにメール送信
                 Mail::to(config('mail.admin'))->send(new MaliSender($user));
             }
+
+            Auth::login($user);
             // セッションIDを生成する
             Session::regenerate();
-            Auth::login($user);
             DB::commit();
 
             return redirect()->intended('dashboard')->with(['success-message' => $user->name . 'さん、ようこそ。資産管理を始めましょう']);
