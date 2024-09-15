@@ -43,10 +43,21 @@ class AssetService
     {
         $result = $this->groupByMonthOfRegistration($data);
 
-        foreach ($allMonths as $month) {
-            if (!isset($result[$month])) {
-                $result[$month] = collect([['registration_date' => $month, 'amount' => 0]]);
+        // 今年の1月から12月までの範囲を設定
+        $startMonth = Carbon::create(2024, 1, 1);  // 2024年1月
+        $endMonth = Carbon::create(2024, 12, 1);   // 2024年12月
+
+        // 全ての月をループし、不足している月を補完
+        while ($startMonth->lessThanOrEqualTo($endMonth)) {
+            $formattedMonth = $startMonth->format('Y-m'); // 例えば "2024-09"
+
+            // $result に月が存在しない場合は 0 のデータで補完
+            if (!isset($result[$formattedMonth])) {
+                $result[$formattedMonth] = collect([['registration_date' => $formattedMonth, 'amount' => 0]]);
             }
+
+            // 次の月へ進む
+            $startMonth->addMonth();
         }
 
         return $result->sortKeys();
