@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -19,9 +20,9 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
-        $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $response = $this->withoutMiddleware([VerifyCsrfToken::class])->post('/register', [
+            'user_name' => 'Test User',
+            'email' => 'test.register.mail@gmail.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);

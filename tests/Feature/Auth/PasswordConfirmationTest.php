@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class PasswordConfirmationTest extends TestCase
@@ -21,11 +23,16 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_password_can_be_confirmed(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->post('/confirm-password', [
-            'password' => 'password',
+        $user = User::factory()->create([
+            'password' => Hash::make('password'),
         ]);
+
+        // CSRFミドルウェアを無効化
+        $response = $this->withoutMiddleware([VerifyCsrfToken::class])
+            ->actingAs($user)
+            ->post('/confirm-password', [
+                'password' => 'password',
+            ]);
 
         $response->assertRedirect();
         $response->assertSessionHasNoErrors();
@@ -35,7 +42,9 @@ class PasswordConfirmationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post('/confirm-password', [
+        $response = $this->withoutMiddleware([VerifyCsrfToken::class])
+            ->actingAs($user)
+            ->post('/confirm-password', [
             'password' => 'wrong-password',
         ]);
 
