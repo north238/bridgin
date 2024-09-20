@@ -26,11 +26,12 @@ jobs:
       # Docker Compose でプロジェクトのコンテナをビルド＆起動する
       - name: Set up and run Docker Compose
         run: |
-          cp .env.example .env
+          cp .env.testing .env
           docker-compose up -d --build
           docker-compose exec app composer install --prefer-dist --no-progress --no-suggest --ansi
           docker-compose exec app php artisan key:generate
           docker-compose exec app php artisan migrate:refresh --seed
+          docker-compose exec app npm run dev
 
       # コンテナ内でのテスト実行
       - name: Run tests in Docker
