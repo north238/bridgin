@@ -29,6 +29,7 @@ jobs:
           cp .env.testing .env
           docker-compose up -d --build
           docker-compose ps
+          docker-compose logs db
           docker-compose exec -T app composer install --prefer-dist --no-progress --no-suggest --ansi
           docker-compose exec -T app php artisan key:generate
           docker-compose exec -T app php artisan migrate:refresh --seed
