@@ -46,11 +46,12 @@ jobs:
       # Docker Compose でプロジェクトのコンテナ内のセットアップ
       - name: Set up and run Docker Compose Setup
         run: |
+          set -e
           docker-compose exec -T app composer install --prefer-dist --no-progress --no-suggest --ansi
           docker-compose exec -T app php artisan key:generate
           docker-compose exec -T app php artisan migrate:refresh --seed
           docker-compose exec -T app bash -c "npm install"
-          docker-compose exec -T app bash -c "npm run dev"
+          docker-compose exec -T app bash -c "npm run build"
 
       # コンテナ内でのテスト実行
       - name: Run tests in Docker
