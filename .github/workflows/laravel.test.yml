@@ -60,7 +60,6 @@ jobs:
 
       # エラーログの取得（テストが失敗した場合のログ確認）
       - name: Fetch Laravel logs on failure
-        if: failure()
         run: docker-compose exec -T app bash -c "tail -n 100 storage/logs/laravel.log"
 
       # Docker Compose で立ち上げたコンテナの停止・削除
