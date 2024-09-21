@@ -21,8 +21,8 @@ class RegistrationTest extends TestCase
     public function test_new_users_can_register(): void
     {
         $response = $this->withoutMiddleware([VerifyCsrfToken::class])->post('/register', [
-            'user_name' => 'Test User',
-            'email' => 'test.register.mail@gmail.com',
+            'user_name' => '山田 太郎',
+            'email' => 'test.new.register.mail@gmail.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
