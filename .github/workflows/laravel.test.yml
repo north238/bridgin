@@ -32,13 +32,16 @@ jobs:
       # MySQLの接続確認
       - name: Wait for MySQL
         run: |
-          for i in {1..30}; do
-            if mysql -h db -u db-user -pdb-pass -e 'select 1'; then
-              break
-            fi
-            echo "Waiting for MySQL..."
-            sleep 5
-          done
+          docker-compose exec -T app bash -c "
+            for i in {1..10}; do
+              if mysql -h db -u db-user -pdb-pass -e 'select 1'; then
+                echo 'MySQL is up!'
+                break
+              fi
+              echo 'Waiting for MySQL...'
+              sleep 5
+            done
+          "
 
       # Docker Compose でプロジェクトのコンテナ内のセットアップ
       - name: Set up and run Docker Compose Setup
@@ -46,6 +49,7 @@ jobs:
           docker-compose exec -T app composer install --prefer-dist --no-progress --no-suggest --ansi
           docker-compose exec -T app php artisan key:generate
           docker-compose exec -T app php artisan migrate:refresh --seed
+          docker-compose exec -T app npm run install
           docker-compose exec -T app npm run dev
 
       # コンテナ内でのテスト実行
