@@ -23,13 +23,26 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-      # Docker Compose でプロジェクトのコンテナをビルド＆起動する
+      # Docker Compose でプロジェクトのコンテナをビルド
       - name: Set up and run Docker Compose
         run: |
           cp .env.testing .env
           docker-compose up -d --build
-          docker-compose ps
-          docker-compose logs db
+
+      # MySQLの接続確認
+      - name: Wait for MySQL
+        run: |
+          for i in {1..30}; do
+            if mysql -h db -u db-user -pdb-pass -e 'select 1'; then
+              break
+            fi
+            echo "Waiting for MySQL..."
+            sleep 5
+          done
+
+      # Docker Compose でプロジェクトのコンテナ内のセットアップ
+      - name: Set up and run Docker Compose Setup
+        run: |
           docker-compose exec -T app composer install --prefer-dist --no-progress --no-suggest --ansi
           docker-compose exec -T app php artisan key:generate
           docker-compose exec -T app php artisan migrate:refresh --seed
