@@ -55,7 +55,7 @@ jobs:
 
       # コンテナ内でのテスト実行
       - name: Run tests in Docker
-        run: docker-compose exec -T app php artisan test --verbose
+        run: docker-compose exec -T app php artisan test
         continue-on-error: true
 
       # Docker Compose で立ち上げたコンテナの停止・削除
