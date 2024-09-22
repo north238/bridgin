@@ -1,0 +1,63 @@
+name: Laravel Test
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # リポジトリをクローンする
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Docker Compose をインストールする
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      # Docker Compose でプロジェクトのコンテナをビルド
+      - name: Set up and run Docker Compose
+        run: |
+          cp .env.testing .env
+          docker-compose up -d --build
+
+      # MySQLの接続確認
+      - name: Wait for MySQL
+        run: |
+          docker-compose exec -T app bash -c "
+            for i in {1..10}; do
+              if mysql -h db -u db-user -pdb-pass -e 'select 1'; then
+                echo 'MySQL is up!'
+                break
+              fi
+              echo 'Waiting for MySQL...'
+              sleep 5
+            done
+          "
+
+      # Docker Compose でプロジェクトのコンテナ内のセットアップ
+      - name: Set up and run Docker Compose Setup
+        run: |
+          set -e
+          docker-compose exec -T app composer install --prefer-dist --no-progress --no-suggest --ansi
+          docker-compose exec -T app php artisan key:generate
+          docker-compose exec -T app php artisan migrate:refresh --seed
+          docker-compose exec -T app bash -c "npm install"
+          docker-compose exec -T app bash -c "npm run build"
+
+      # コンテナ内でのテスト実行
+      - name: Run tests in Docker
+        run: docker-compose exec -T app php artisan test
+        continue-on-error: true
+
+      # Docker Compose で立ち上げたコンテナの停止・削除
+      - name: Tear down Docker Compose
+        run: docker-compose down

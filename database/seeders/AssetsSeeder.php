@@ -81,7 +81,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -91,7 +91,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -101,7 +101,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -111,7 +111,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',
@@ -242,7 +242,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -252,7 +252,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -262,7 +262,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -272,7 +272,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',
@@ -403,7 +403,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -413,7 +413,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -423,7 +423,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -433,7 +433,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',
@@ -564,7 +564,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -574,7 +574,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -584,7 +584,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -594,7 +594,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',
@@ -725,7 +725,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -735,7 +735,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -745,7 +745,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -755,7 +755,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',
@@ -886,7 +886,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -896,7 +896,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -906,7 +906,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -916,7 +916,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',
@@ -1047,7 +1047,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -1057,7 +1057,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -1067,7 +1067,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -1077,7 +1077,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',
@@ -1208,7 +1208,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'HDV',
@@ -1218,7 +1218,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'VTI',
@@ -1228,7 +1228,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => 'SPYD',
@@ -1238,7 +1238,7 @@ class AssetsSeeder extends Seeder
                 'updated_at' => now(),
                 'user_id' => 1,
                 'asset_type_flg' => 1,
-                'category_id' => 12,
+                'category_id' => 13,
             ],
             [
                 'name' => '十六',

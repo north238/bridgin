@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MaliSender extends Mailable
+class MailSender extends Mailable
 {
     use Queueable, SerializesModels;
 

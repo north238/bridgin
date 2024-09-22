@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use App\Mail\MaliSender;
+use App\Mail\MailSender;
 use Illuminate\Support\Facades\Mail;
 
 class SocialiteLoginController extends Controller
@@ -56,7 +56,7 @@ class SocialiteLoginController extends Controller
             if (empty($user)) {
                 $user = $this->createUserByProvider($provider, $socialiteUser);
                 // adminにメール送信
-                Mail::to(config('mail.admin'))->send(new MaliSender($user));
+                Mail::to(config('mail.admin'))->send(new MailSender($user));
             }
 
             Auth::login($user);
