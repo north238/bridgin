@@ -55,12 +55,8 @@ jobs:
 
       # コンテナ内でのテスト実行
       - name: Run tests in Docker
-        run: docker-compose exec -T app php artisan test
+        run: docker-compose exec -T app php artisan test -v
         continue-on-error: true
-
-      # エラーログの取得（テストが失敗した場合のログ確認）
-      - name: Fetch Laravel logs on failure
-        run: docker-compose exec -T app bash -c "tail -n 100 storage/logs/laravel.log"
 
       # Docker Compose で立ち上げたコンテナの停止・削除
       - name: Tear down Docker Compose
