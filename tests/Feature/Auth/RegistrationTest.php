@@ -29,6 +29,10 @@ class RegistrationTest extends TestCase
 
         $response = $this->withoutMiddleware([VerifyCsrfToken::class])->post('/register', $user);
 
+        if ($response->getStatusCode() === 500) {
+            $this->fail('サーバーエラーが発生しました: ' . $response->getContent());
+        }
+
         $this->assertAuthenticated();
 
         $response->assertRedirect('/dashboard');
