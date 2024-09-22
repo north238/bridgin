@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use App\Mail\MaliSender;
+use App\Mail\MailSender;
 use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // adminにメール送信
-        Mail::to(config('mail.admin'))->send(new MaliSender($user));
+        Mail::to(config('mail.admin'))->send(new MailSender($user));
 
         return redirect(RouteServiceProvider::HOME);
     }
