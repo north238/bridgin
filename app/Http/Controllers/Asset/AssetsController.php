@@ -13,6 +13,7 @@ use App\Services\AssetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\ValidationException;
 
 class AssetsController extends Controller
 {
@@ -98,14 +99,23 @@ class AssetsController extends Controller
         $userId = Auth::user()->id;
         $asset = $this->assets;
         $validated = $request->validated();
-        $asset = $this->assetService->assetDataValidated($asset, $validated, $userId);
 
         try {
+            $asset = $this->assetService->assetDataValidated($asset, $validated, $userId);
+
             DB::beginTransaction();
             $asset->save();
             DB::commit();
 
             return redirect()->route('assets.dashboard')->with('success-message', __('create_success_message'));
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            Log::error(__('create_error_log'), [
+                'error_message' => $e->getMessage(),
+                'method' => request()->method(),
+                'parameters' => request()->all(),
+            ]);
+            return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error(__('create_error_log'), [
@@ -165,6 +175,14 @@ class AssetsController extends Controller
                 DB::commit();
 
                 return redirect($parsedUrl)->with('success-message', __('update_success_message'));
+            } catch (ValidationException $e) {
+                DB::rollBack();
+                Log::error(__('create_error_log'), [
+                    'error_message' => $e->getMessage(),
+                    'method' => request()->method(),
+                    'parameters' => request()->all(),
+                ]);
+                return back()->withErrors($e->errors())->withInput();
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error(__('update_error_log'), [
@@ -185,6 +203,14 @@ class AssetsController extends Controller
                 DB::commit();
 
                 return redirect($parsedUrl)->with('success-message', __('new_success_message'));
+            } catch (ValidationException $e) {
+                DB::rollBack();
+                Log::error(__('create_error_log'), [
+                    'error_message' => $e->getMessage(),
+                    'method' => request()->method(),
+                    'parameters' => request()->all(),
+                ]);
+                return back()->withErrors($e->errors())->withInput();
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error(__('new_error_log'), [

@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use App\Models\Asset;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class AssetService
 {
@@ -320,20 +321,44 @@ class AssetService
 
     /**
      * 資産データのバリデーション
-     * @param Illuminate\Http\Request $request リクエストオブジェクト
+     *
+     * @param App\Models\Asset $asset 資産データ
+     * @param array $validated バリデーションされた配列
      * @param int $userId 資産を登録するユーザーのID
      * @return App\Models\Asset バリデーション済みの資産データ
      */
     public function assetDataValidated($asset, $validated, $userId)
     {
         $asset->name = $validated['name'];
-        $asset->amount = $validated['amount'];
+        $asset->amount = $this->validationAmount($validated);
         $asset->registration_date = $validated['registration_date'];
         $asset->category_id = $validated['category_id'];
         $asset->asset_type_flg = $validated['asset_type_flg'];
         $asset->user_id = $userId;
 
         return $asset;
+    }
+
+    /**
+     * 金額のバリデーションおよび整形
+     *
+     * @param array $validated バリデーションされた配列
+     * @throws \Illuminate\Validation\ValidationException 入力データがバリデーションルールに違反している場合
+     * @return int 整形後の金額 (カンマを除去した数値)
+     */
+    private function validationAmount($validated)
+    {
+        $amount = str_replace(',', '', $validated['amount']);
+
+        if ($validated['genre_id'] != 8 && $amount < 0) {
+            throw ValidationException::withMessages(['amount' => 'このジャンルではマイナスの値は許可されていません。']);
+        }
+
+        if ($validated['genre_id'] == 8 && $amount > 0) {
+            throw ValidationException::withMessages(['amount' => 'このジャンルではマイナスの数値を入力して下さい。']);
+        }
+
+        return $amount;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Asset;
+use App\Models\Category;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -35,10 +36,12 @@ class CsvUploadService
     // 許可するファイル形式
     private $allowedMimeTypes = ['text/csv', 'text/plain'];
     private  $asset;
+    private $categories;
 
-    public function __construct(Asset $asset)
+    public function __construct(Asset $asset, Category $categories)
     {
         $this->asset = $asset;
+        $this->categories = $categories;
     }
 
     /**
@@ -123,7 +126,6 @@ class CsvUploadService
      */
     public function validateCsvRecords($records)
     {
-        $userId = Auth::user()->id;
         $errorList = [];
         $errCount = 1;
         foreach ($records as $record) {
@@ -135,18 +137,19 @@ class CsvUploadService
             if ($validator->fails() === true) {
                 $errorList[$errCount] = $validator->errors()->all();
             }
+
+            // 金額のバリデーション
+            if (!$this->validateAmount($record)) {
+                $errorList[$errCount][] = config('validation.message.amount_error');
+            }
+
             // 登録日の厳密なバリデーション
             if (!preg_match(config('validation.patterns.date_format'), $record['登録日'])) {
                 $errorList[$errCount][] = config('validation.message.date_error');
             }
 
             // 既存データの重複をチェック
-            $exists = Asset::where('name', trim($record['名称']))
-                ->where('user_id', $userId)
-                ->where('registration_date', trim($record['登録日']))
-                ->exists();
-
-            if ($exists) {
+            if ($this->ValidateDuplication($record)) {
                 $errorList[$errCount][] = config('validation.message.duplication_error');
             }
             $errCount++;
@@ -214,8 +217,48 @@ class CsvUploadService
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('データの保存中にエラーが発生しました。', ['message' => $e->getMessage()]);
-            session()->flash('error-message', 'データの保存中にエラーが発生しました。');
+            session()->flash('error-message', 'データの保存中にエラーが発生しました。アップロードファイルをご確認ください。');
             return false;
         }
+    }
+
+    /**
+     * 金額のバリデーションと整形
+     * @param array $record アップロードされた資産の配列
+     * @return bool true|false
+     *
+     */
+    private function validateAmount($record)
+    {
+        $amount = str_replace(',', '', trim($record['金額']));
+        $categoryId = trim($record['カテゴリID']);
+        $genreId = $this->categories->getGenreId($categoryId);
+
+        if ($genreId != 8 && $amount < 0) {
+            return false;
+        }
+
+        if ($genreId == 8 && $amount > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 資産の重複をチェック
+     *
+     * @param array $record アップロードされた資産の配列
+     * @return bool true|false 重複していればtrue
+     */
+    private function ValidateDuplication($record)
+    {
+        $userId = Auth::user()->id;
+        $exists = Asset::where('name', trim($record['名称']))
+            ->where('user_id', $userId)
+            ->where('registration_date', trim($record['登録日']))
+            ->exists();
+
+        return $exists;
     }
 }

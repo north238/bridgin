@@ -29,6 +29,19 @@ class Category extends Model
         return $result;
     }
 
+    /**
+     * ジャンルIDを取得する
+     */
+    public function getGenreId($categoryId)
+    {
+        $result = Category::query()
+            ->where('id', $categoryId)
+            ->pluck('genre_id')
+            ->first();
+
+        return $result;
+    }
+
     public function assets(): HasMany
     {
         return $this->hasMany(Asset::class);
