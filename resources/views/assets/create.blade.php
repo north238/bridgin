@@ -32,7 +32,7 @@
                     <div class="w-full">
                         <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><i
                                 class="fa-regular fa-circle-check text-rose-500 me-0.5"></i>{{ __('amount') }}</label>
-                        <input type="number" name="amount" id="amount" value="{{ old('amount') }}"
+                        <input type="text" name="amount" id="amount" value="{{ old('amount') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-blue-400 block w-full p-2.5 dark:bg-dark_input dark:hover:bg-dark_input_border dark:border-dark_input_border dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-400 dark:focus:border-blue-400"
                             placeholder="{{ __('asset_amount_placeholder') }}" required>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
