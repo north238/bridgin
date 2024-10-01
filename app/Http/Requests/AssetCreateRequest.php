@@ -23,7 +23,7 @@ class AssetCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:30',
-            'amount' => 'required|string|min:-9999999999999|max:9999999999999',
+            'amount' => 'required|regex:/^-?\d{1,13}(,\d{3})*(\.\d+)?$/',
             'registration_date' => 'required|string|before_or_equal:today',
             'genre_id' => 'required|string',
             'category_id' => 'required|string',
