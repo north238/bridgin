@@ -36,7 +36,7 @@
                                 </div>
                             </th>
                             <th scope="col"
-                                class="min-w-[180px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
+                                class="min-w-[150px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
                                 {{ __('asset_name') }}</th>
                             <th scope="col"
                                 class="min-w-[150px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
@@ -45,13 +45,13 @@
                                 </div>
                             </th>
                             <th scope="col"
-                                class="min-w-[150px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
+                                class="min-w-[180px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
                                 <div class="flex items-center">
                                     {{ __('category_name') }}
                                 </div>
                             </th>
                             <th scope="col"
-                                class="min-w-[120px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
+                                class="min-w-[140px] px-3 py-2 text-start font-semibold text-slate-700 dark:text-white">
                                 <div class="flex items-center">
                                     {{ __('amount') }}
                                 </div>
@@ -73,7 +73,8 @@
                                     @else
                                         <i class="fa-solid fa-vault text-blue-600 me-1"></i>
                                     @endif
-                                    {{ $asset['name'] }}
+                                    <a href="{{ route('assets.show', [$asset->asset_id]) }}"
+                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ $asset['name'] }}</a>
                                 </td>
                                 <td class="px-3 py-3 text-start text-slate-600 dark:text-white"
                                     data-genre_id="{{ $asset['genre_id'] }}">
