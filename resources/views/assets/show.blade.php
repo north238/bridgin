@@ -16,7 +16,7 @@
         <div class="p-4 mx-auto sm:p-8 sm:max-w-lg">
             <div class="heading-title pr-2 flex items-center justify-between">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ __('edit_asset') }}</h2>
-                <a href="javascript:" data-previous-url="{{ $previousUrl }}" id="show-back-btn"
+                <a href="javascript:" data-previous-url="{{ $parsedPath }}" id="show-back-btn"
                     class="text-sm text-blue-600 dark:text-blue-500"><i class="fa-solid fa-angle-left mr-2"></i><span
                         class="hover:underline">{{ __('back_btn') }}</span></a>
             </div>
