@@ -12,7 +12,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'check.browser'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
@@ -45,12 +45,12 @@ Route::middleware('auth')->group(function () {
 
     // メール認証（メールが送信される前にログインしている状態）
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['signed', 'throttle:6,1'])
+    ->middleware(['signed', 'throttle:6,1', 'check.browser'])
     ->name('verification.verify');
 
     // メール認証されているか確認
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    ->middleware(['throttle:6,1'])
+    ->middleware(['throttle:6,1', 'check.browser'])
     ->name('verification.send');
 });
 

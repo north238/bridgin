@@ -135,6 +135,7 @@ class AssetsController extends Controller
     public function show(string $id)
     {
         $previousUrl = URL::previous();
+        $parsedPath = $this->assetService->generateRedirectUrl($previousUrl);
         $userId = Auth::user()->id;
         $assetData = $this->assets->getAssetData($id, $userId);
         $genres = $this->genres->getGenreData()->get();
@@ -144,7 +145,7 @@ class AssetsController extends Controller
             'assetData' => $assetData,
             'genres' => $genres,
             'categories' => $categories,
-            'previousUrl' => $previousUrl
+            'parsedPath' => $parsedPath
         ];
 
         return view('assets.show', $data);
@@ -162,7 +163,8 @@ class AssetsController extends Controller
         $userId = Auth::user()->id;
         $validated = $request->validated();
         $changedTypeFlg = $request->input('changed_type_flg');
-        $parsedUrl = $this->assetService->generateRedirectUrl($request);
+        $previousUrl = $request->input('redirect_to');
+        $parsedPath = $this->assetService->generateRedirectUrl($previousUrl);
 
         // 追加の場合の処理
         if ($changedTypeFlg == 1) {
@@ -174,7 +176,7 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect($parsedUrl)->with('success-message', __('update_success_message'));
+                return redirect($parsedPath)->with('success-message', __('update_success_message'));
             } catch (ValidationException $e) {
                 DB::rollBack();
                 Log::error(__('create_error_log'), [
@@ -202,7 +204,7 @@ class AssetsController extends Controller
                 $asset->save();
                 DB::commit();
 
-                return redirect($parsedUrl)->with('success-message', __('new_success_message'));
+                return redirect($parsedPath)->with('success-message', __('new_success_message'));
             } catch (ValidationException $e) {
                 DB::rollBack();
                 Log::error(__('create_error_log'), [
@@ -232,7 +234,8 @@ class AssetsController extends Controller
     public function destroy(string $id, Request $request)
     {
 
-        $parsedUrl = $this->assetService->generateRedirectUrl($request);
+        $previousUrl = $request->input('redirect_to');
+        $parsedPath = $this->assetService->generateRedirectUrl($previousUrl);
 
         $asset = Asset::find($id);
         if (empty($asset)) {
@@ -245,7 +248,7 @@ class AssetsController extends Controller
             $asset->delete();
             DB::commit();
 
-            return redirect($parsedUrl)->with('success-message', __('delete_success_message'));
+            return redirect($parsedPath)->with('success-message', __('delete_success_message'));
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error(__('delete_error_log'), [

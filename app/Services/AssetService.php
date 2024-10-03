@@ -363,28 +363,47 @@ class AssetService
 
     /**
      * 資産データ削除のリダイレクトするURLを取得
-     * @param Illuminate\Http\Request $request リクエストオブジェクト
-     * @return string $parseUrl 整形された相対パス
+     * @param string $previousUrl 受け取ったパス
+     * @return string $parsedPath 整形された相対パス
      */
-    public function generateRedirectUrl($request)
+    public function generateRedirectUrl($previousUrl)
     {
+        if (empty($previousUrl)) {
+            Log::error(__('nothing_url_error'), ['parsedUrl' => $previousUrl]);
+            abort(404);
+        }
         // リダイレクト対象のURLを指定
         $allowedUrls = [
             route('assets.dashboard'),
-            route('assets.index')
+            route('assets.index'),
+            route('assets.debut.index')
         ];
 
-        $redirectUrl = $request->input('redirect_to', route('assets.dashboard'));
-        if (!in_array($redirectUrl, $allowedUrls)) {
-            $redirectUrl = route('assets.dashboard');
-        }
-        // 相対パスを取得
-        $parsedUrl = parse_url($redirectUrl, PHP_URL_PATH);
-        if (empty($parsedUrl)) {
-            Log::error(__('nothing_url_error'), ['parsedUrl' => $parsedUrl]);
-            abort(404);
+        $parsedPreviousPath = parse_url($previousUrl, PHP_URL_PATH);
+
+        $isAllowed = false;
+        foreach ($allowedUrls as $allowedUrl) {
+            $parsedAllowedPath = parse_url($allowedUrl, PHP_URL_PATH);
+            if ($parsedPreviousPath === $parsedAllowedPath) {
+                $isAllowed = true;
+                break;
+            }
         }
 
-        return $parsedUrl;
+        // 許可されたURLでない場合はデフォルトのURLにリダイレクト
+        if (!$isAllowed) {
+            $previousUrl = route('assets.dashboard');
+        }
+
+        // パスを取得
+        $parsedPath = parse_url($previousUrl, PHP_URL_PATH);
+        $parsedQuery = parse_url($previousUrl, PHP_URL_QUERY);
+
+        // クエリがあればパスに結合
+        if (!empty($parsedQuery)) {
+            $parsedPath .= '?' . $parsedQuery;
+        }
+
+        return $parsedPath;
     }
 }
