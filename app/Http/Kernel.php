@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'user.status' => \App\Http\Middleware\ConfirmUserStatus::class,
         'unread.notifications' => \App\Http\Middleware\ConfirmUserStatus::class,
+        'check.browser' => \App\Http\Middleware\CheckBrowser::class
     ];
 }
