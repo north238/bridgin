@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckBrowser
@@ -33,7 +34,7 @@ class CheckBrowser
         foreach ($internalBrowsers as $browser) {
             if (strpos($request->header('User-Agent'), $browser) !== false) {
                 // 外部ブラウザで開くようにリダイレクト
-                return redirect()->away($redirectUrl);
+                return redirect()->away($redirectUrl)->with('error-message', 'お使いのブラウザではこのページを表示できません。外部ブラウザで開いてください。');
             }
         }
 
