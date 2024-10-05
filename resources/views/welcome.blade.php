@@ -13,9 +13,16 @@
 </head>
 
 <body class="font-sans antialiased h-dvh sm:h-svh bg-slate-50">
-    <section class="sm:relative sm:top-2/4 sm:translate-y-[-50%] text-slate-800">
+    @if (session('error-message'))
+        <div class="alert-message">
+            <x-alert-message name="error" color="rose">
+                {{ session('error-message') }}
+            </x-alert-message>
+        </div>
+    @endif
+    <section class="flex justify-center items-center h-[calc(100vh-65px)] text-slate-800">
         <div
-            class="mx-auto max-w-[1100px] py-12 bg-white shadow-sm border-0 rounded-lg flex gap-0 sm:gap-6 scroll-px-56 sm:px-24 sm:py-24 md:flex-row flex-col items-center">
+            class="m-auto max-w-[1100px] bg-white shadow-sm border-0 rounded-lg flex gap-0 sm:gap-6 scroll-px-56 py-5 sm:px-24 sm:py-24 md:flex-row flex-col items-center">
             <div class="lg:max-w-md md:w-1/2 w-5/6 mb-10 md:mb-0">
                 <img class="object-cover object-center border border-slate-50 shadow-lg rounded-lg" alt="logo"
                     src="{{ asset('/images/bridgin_v2/bridgin_v2_fill_none.svg') }}">
